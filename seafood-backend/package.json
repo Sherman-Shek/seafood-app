@@ -3,7 +3,13 @@
     "nodemon": "^3.1.14"
   },
   "dependencies": {
-    "concurrently": "^9.2.1"
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.2",
+    "multer": "^2.1.1"
   },
   "name": "seafood_website",
   "version": "1.0.0",
@@ -12,7 +18,8 @@
   "scripts": {
     "server": "node backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

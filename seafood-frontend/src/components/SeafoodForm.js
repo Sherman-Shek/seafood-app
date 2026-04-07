@@ -1,6 +1,12 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 function SeafoodForm({ onAdd }) {
+
+  const [name, setName] = useState("")
+  const [price, setPrice] = useState("")
+  const [description, setDescription] = useState("")
+  const [file, setFile] = useState(null)
+
   const [form, setForm] = useState({
     name: "",
     price: "",
@@ -14,54 +20,50 @@ function SeafoodForm({ onAdd }) {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    fetch("http://localhost:5001/api/seafood", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log("ADDED:", data)
-        onAdd(data)
+    try {
+      const formData = new FormData()
+      formData.append("image", file)
 
-        // 清空表单
-        setForm({ name: "", price: "", description: "" })
+      // 👉 上传图片
+      const uploadRes = await fetch("http://localhost:5001/api/seafood/upload", {
+        method: "POST",
+        body: formData
       })
+
+      const uploadData = await uploadRes.json()
+
+      // 👉 创建商品
+      const newItem = {
+        name,
+        price,
+        description,
+        image: uploadData.imageUrl
+      }
+
+      const res = await fetch("http://localhost:5001/api/seafood", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newItem)
+      })
+
+      const saved = await res.json()
+
+      onAdd(saved)
+
+    } catch (err) {
+      console.error("ERROR:", err)
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add Seafood 🦞</h2>
-
-      <input
-        name="name"
-        placeholder="Name"
-        value={form.name}
-        onChange={handleChange}
-      />
-
-      <input
-        name="price"
-        placeholder="Price"
-        value={form.price}
-        onChange={handleChange}
-      />
-
-      <input
-        name="description"
-        placeholder="Description"
-        value={form.description}
-        onChange={handleChange}
-      />
-
-      <button type="submit">Add</button>
-    </form>
+    <>
+    </>
   )
 }
-
 export default SeafoodForm
+

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
 import SeafoodForm from "./SeafoodForm"
 import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"; // 👈 1. 引入 hook
 
 function SeafoodList() {
+  const navigate = useNavigate(); // 👈 2. 初始化 navigate
   const [seafood, setSeafood] = useState([])
   const [editingId, setEditingId] = useState(null)
   const [editData, setEditData] = useState({
@@ -18,7 +20,7 @@ function SeafoodList() {
 
   const filtered = seafood.filter(item =>
     (category === "all" || item.category === category) &&
-    item.name.toLowerCase().includes(search.toLowerCase())
+    (item.name || "").toLowerCase().includes(search.toLowerCase())
   )
 
   if (sort === "low") {
@@ -63,7 +65,7 @@ function SeafoodList() {
       .then(res => res.json())
       .then(updatedItem => {
         setSeafood(
-          filtered.map(item =>
+          seafood.map(item =>
             item._id === id ? updatedItem : item
           )
         )
@@ -74,7 +76,10 @@ function SeafoodList() {
   useEffect(() => {
     fetch("http://localhost:5001/api/seafood")
       .then(res => res.json())
-      .then(data => setSeafood(data))
+      .then(data => {
+        console.log("DATA:", data)   // 👈 看这里！
+        setSeafood(data)
+      })
   }, [])
 
   // 👉 新增后更新 UI
@@ -86,16 +91,21 @@ function SeafoodList() {
     fetch(`http://localhost:5001/api/seafood/${id}`, {
       method: "DELETE"
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Delete failed")
+        }
+        return res.json()
+      })
       .then(() => {
         // 👉 更新 UI（关键）
-        setSeafood(seafood.filter(item => item._id !== id))
+        setSeafood(prev => prev.filter(item => item._id !== id))
       })
+      .catch(err => console.error("DELETE ERROR:", err))
   }
 
   return (
     <div>
-
       <input
         placeholder="Search seafood..."
         value={search}
@@ -116,21 +126,7 @@ function SeafoodList() {
         <option value="high">Price: High → Low</option>
       </select>
 
-      <div>
-        <button onClick={() => setCategory("all")}>All</button>
-        <button onClick={() => setCategory("fish")}>Fish</button>
-        <button onClick={() => setCategory("crab")}>Crab</button>
-        <button onClick={() => setCategory("lobster")}>Lobster</button>
-      </div>
-
       <div style={{ padding: "20px" }}>
-        <h1>🦞 Seafood Shop</h1>
-
-        <input
-          placeholder="Search seafood..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
 
         <div style={{
           display: "grid",
@@ -142,93 +138,96 @@ function SeafoodList() {
 
       <SeafoodForm onAdd={handleAdd} />
 
-      <h2>Seafood List 🦞</h2>
+      <div style={{ padding: "20px" }}>
 
-      <h2>🛒 Cart</h2>
+        <h2 style={{ marginBottom: "20px" }}>Fresh Seafood 🐟</h2>
 
-      {cart.map((item, index) => (
-        <div key={index}>
-          {item.name} - ${item.price}
-        </div>
-      ))}
-
-      {filtered.map(item => (
-        <div key={item._id} style={{
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          padding: "15px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr)",
+          gap: "20px"
         }}>
 
-          {editingId === item._id ? (
-            <>
-              <input
-                name="name"
-                value={editData.name}
-                onChange={handleEditChange}
-              />
+          {filtered.map(item => (
+            <div key={item._id}>
+              <Link
+                to={`/seafood/${item._id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <div style={{
+                  border: "1px solid #eee",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+                }}>
 
-              <input
-                name="price"
-                value={editData.price}
-                onChange={handleEditChange}
-              />
+                  <img
+                    crossOrigin="anonymous"
+                    src={`http://localhost:5001${item.image}?t=${new Date().getTime()}`}
+                    alt={item.name}
+                    style={{ width: "100%", height: "200px", objectFit: "cover" }}
+                  />
 
-              <input
-                name="description"
-                value={editData.description}
-                onChange={handleEditChange}
-              />
+                  <div style={{ padding: "15px" }}>
+                    <h3>{item.name}</h3>
 
-              <button onClick={() => handleUpdate(item._id)}>
-                💾 Save
-              </button>
-            </>
-          ) : (
-            <>
-              <h3>{item.name}</h3>
-              <p><b>${item.price}</b></p>
-              <p>{item.description}</p>
-
-              <Link to={`/seafood/${item._id}`}>
-                <h3>{item.name}</h3>
+                    <p style={{
+                      color: "green",
+                      fontWeight: "bold"
+                    }}>
+                      ${item.price}
+                    </p>
+                  </div>
+                </div>
               </Link>
 
-              <img
-                src={`/images/${item.image}`}
-                alt={item.name}
-                style={{ width: "10%", borderRadius: "20px" }}
-              />
+              <button onClick={(e) => {
+                e.preventDefault()
+              }}
 
-              <button style={{
-                marginRight: "5px",
-                padding: "5px 10px",
-                borderRadius: "5px",
-                border: "none",
-                background: "#4CAF50",
-                color: "white"
-              }} onClick={() => startEdit(item)}>
-                ✏️ Edit
+                style={{
+                  background: "#f0ad4e",
+                  color: "white",
+                  border: "none",
+                  padding: "8px",
+                  borderRadius: "4px"
+                }}>
+                Add to Cart
               </button>
 
-              <button style={{
-                padding: "5px 10px",
-                borderRadius: "5px",
-                border: "none",
-                background: "red",
-                color: "white"
-              }} onClick={() => handleDelete(item._id)}>
-                ❌ Delete
+              <button
+                onClick={() => navigate(`/edit/${item._id}`)} // 使用反引号和正确的 navigate 语法
+                style={{
+                  background: "#f0ad4e",
+                  color: "black",
+                  border: "none",
+                  padding: "8px",
+                  borderRadius: "4px"
+                }}
+              >
+                Edit
               </button>
 
-              <button onClick={() => addToCart(item)}>
-                🛒 Add
+              <button onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                handleDelete(item._id)
+              }}
+
+                style={{
+                  background: "#f0ad4e",
+                  color: "red",
+                  border: "none",
+                  padding: "8px",
+                  borderRadius: "4px"
+                }}>
+                Delete
               </button>
-            </>
-          )}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </div >
   )
 }
 

@@ -98,13 +98,13 @@ function AddSeafood({ onAdd }) {
                 cursor: 'pointer'
             }}>
                 <input {...getInputProps()} />
-                <p>拖拽图片到这里，或点击选择图片</p>
+                <p>Drag and Drop</p>
             </div>
 
             {/* 图片预览 */}
             {imageUrl && (
                 <div style={{ marginBottom: '20px' }}>
-                    <p>预览：</p>
+                    <p>Preview: </p>
                     <img
                         src={`http://localhost:5001${imageUrl}`}
                         width="200"

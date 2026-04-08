@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import SeafoodForm from "./SeafoodForm"
 import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"; // 👈 1. 引入 hook
+import { useNavigate } from "react-router-dom" // 👈 1. 引入 hook
 
 function SeafoodList() {
   const navigate = useNavigate(); // 👈 2. 初始化 navigate
@@ -29,12 +29,12 @@ function SeafoodList() {
     const fetchProducts = async () => {
       try {
         const res = await fetch("http://localhost:5001/api/seafood");
-        const data = await res.json();
+        const data = await res.json()
 
         // ✅ 关键点：取消注释并使用正确的 setter 函数
         setSeafood(data);
       } catch (err) {
-        console.error("加载产品出错:", err);
+        console.error("加载产品出错:", err)
       }
     }
     fetchProducts();
@@ -131,20 +131,6 @@ function SeafoodList() {
                   </div>
                 </div>
               </Link>
-
-              <button onClick={(e) => {
-                e.preventDefault()
-              }}
-
-                style={{
-                  background: "#f0ad4e",
-                  color: "white",
-                  border: "none",
-                  padding: "8px",
-                  borderRadius: "4px"
-                }}>
-                Add to Cart
-              </button>
 
               <button
                 onClick={() => navigate(`/edit/${item._id}`)} // 使用反引号和正确的 navigate 语法

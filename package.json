@@ -4,7 +4,8 @@
   },
   "dependencies": {
     "concurrently": "^9.2.1",
-    "mongoose": "^9.3.0"
+    "express": "^5.2.1",
+    "mongoose": "^9.4.1"
   },
   "name": "seafood_website",
   "version": "1.0.0",

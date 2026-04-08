@@ -11,8 +11,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node backend/server.js",
-    "client": "npm start --prefix frontend",
+    "server": "node seafood-backend/server.js",
+    "client": "npm start --prefix seafood-frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],

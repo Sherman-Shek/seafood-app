@@ -6,17 +6,10 @@ import { useNavigate } from "react-router-dom"; // 👈 1. 引入 hook
 function SeafoodList() {
   const navigate = useNavigate(); // 👈 2. 初始化 navigate
   const [seafood, setSeafood] = useState([])
-  const [editingId, setEditingId] = useState(null)
-  const [editData, setEditData] = useState({
-    name: "",
-    price: "",
-    description: ""
-  })
 
   const [category, setCategory] = useState("all")
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("low")
-
 
   const filtered = seafood.filter(item =>
     (category === "all" || item.category === category) &&
@@ -31,56 +24,21 @@ function SeafoodList() {
     filtered.sort((a, b) => b.price - a.price)
   }
 
-  const [cart, setCart] = useState([])
-
-  const addToCart = (item) => {
-    setCart([...cart, item])
-  }
-
-
-  const startEdit = (item) => {
-    setEditingId(item._id)
-    setEditData({
-      name: item.name,
-      price: item.price,
-      description: item.description
-    })
-  }
-
-  const handleEditChange = (e) => {
-    setEditData({
-      ...editData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleUpdate = (id) => {
-    fetch(`http://localhost:5001/api/seafood/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(editData)
-    })
-      .then(res => res.json())
-      .then(updatedItem => {
-        setSeafood(
-          seafood.map(item =>
-            item._id === id ? updatedItem : item
-          )
-        )
-        setEditingId(null)
-      })
-  }
-
+  // 修正后的获取数据逻辑
   useEffect(() => {
-    fetch("http://localhost:5001/api/seafood")
-      .then(res => res.json())
-      .then(data => {
-        console.log("DATA:", data)   // 👈 看这里！
-        setSeafood(data)
-      })
-  }, [])
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:5001/api/seafood");
+        const data = await res.json();
+
+        // ✅ 关键点：取消注释并使用正确的 setter 函数
+        setSeafood(data);
+      } catch (err) {
+        console.error("加载产品出错:", err);
+      }
+    }
+    fetchProducts();
+  }, []); // 确保组件加载时执行一次
 
   // 👉 新增后更新 UI
   const handleAdd = (newItem) => {
@@ -89,7 +47,10 @@ function SeafoodList() {
 
   const handleDelete = (id) => {
     fetch(`http://localhost:5001/api/seafood/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}` // ✅
+      }
     })
       .then(res => {
         if (!res.ok) {
@@ -125,16 +86,6 @@ function SeafoodList() {
         <option value="low">Price: Low → High</option>
         <option value="high">Price: High → Low</option>
       </select>
-
-      <div style={{ padding: "20px" }}>
-
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-          gap: "20px"
-        }}>
-        </div>
-      </div>
 
       <SeafoodForm onAdd={handleAdd} />
 
@@ -227,7 +178,7 @@ function SeafoodList() {
           ))}
         </div>
       </div>
-    </div >
+    </div>
   )
 }
 

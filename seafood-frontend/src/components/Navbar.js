@@ -3,7 +3,8 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 function Navbar() {
-     const { token, logout } = useContext(AuthContext)
+    const { token, logout } = useContext(AuthContext)
+    const role = localStorage.getItem("role")
 
     return (
         <div style={{
@@ -28,6 +29,9 @@ function Navbar() {
                     <Link to="/" style={{ color: "red" }}>Home</Link>
 
                     {/* ✅ 登录后才显示 */}
+                    {role === "admin" && (
+                        <Link to="/add">Add Seafood</Link>
+                    )}
                     {token && (
                         <Link to="/add" style={{ color: "red" }}>
                             Add Seafood

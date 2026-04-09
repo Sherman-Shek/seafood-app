@@ -103,7 +103,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE seafood
-router.delete("/:id", auth, isAdmin, async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const item = await Seafood.findById(req.params.id)
     if (!item) return res.status(404).json({ message: "Item not found" })

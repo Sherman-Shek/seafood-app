@@ -21,7 +21,7 @@ function SeafoodDetail() {
 
   return (
     <div style={{ padding: "40px" }}>
-      <h2>← Seafood Detail</h2>
+      <h2>Seafood Detail</h2>
 
       <button
         onClick={() => navigate(-1)}

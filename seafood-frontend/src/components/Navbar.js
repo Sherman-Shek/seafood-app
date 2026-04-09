@@ -16,7 +16,6 @@ function Navbar() {
             gap: "15px"
         }}>
             <h2>🦐 Seafood Shop</h2>
-
             <div>
                 {/* 导航栏 */}
                 <nav style={{
@@ -26,17 +25,18 @@ function Navbar() {
                     padding: "5px 10px",
                     borderRadius: "5px"
                 }}>
-                    <Link to="/" style={{ color: "red" }}>Home</Link>
+                    <Link to="/">Home</Link> |
 
                     {/* ✅ 登录后才显示 */}
                     {role === "admin" && (
                         <Link to="/add">Add Seafood</Link>
                     )}
                     {token && (
-                        <Link to="/add" style={{ color: "red" }}>
-                            Add Seafood
+                        <Link to="/add">
+                            Add Seafood  
                         </Link>
-                    )}
+                    )} |
+                    <Link to="/cart">Cart</Link> |
                     {/* ✅ 登录 / 登出 */}
                     {token ? (
                         <button onClick={logout}>Logout</button>
@@ -45,8 +45,6 @@ function Navbar() {
                             Login
                         </Link>
                     )}
-                    <Link to="/seafood">Seafood</Link> |{" "}
-                    <Link to="/cart">Cart</Link> |{" "}
                 </nav>
             </div >
         </div >

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react"
 import SeafoodForm from "./SeafoodForm"
 import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom" // 👈 1. 引入 hook
+import { useNavigate } from "react-router-dom" //  1. 引入 hook
+import { getUser } from "../utils/auth"
+import { useContext } from "react"
+import { CartContext } from "../context/CartContext"
 
 function SeafoodList() {
-  const navigate = useNavigate(); // 👈 2. 初始化 navigate
+  const navigate = useNavigate(); //  2. 初始化 navigate
   const [seafood, setSeafood] = useState([])
 
   const [category, setCategory] = useState("all")
@@ -15,6 +18,8 @@ function SeafoodList() {
     (category === "all" || item.category === category) &&
     (item.name || "").toLowerCase().includes(search.toLowerCase())
   )
+  const user = getUser()
+  const { addToCart } = useContext(CartContext)
 
   if (sort === "low") {
     filtered.sort((a, b) => a.price - b.price)
@@ -40,7 +45,7 @@ function SeafoodList() {
     fetchProducts();
   }, []); // 确保组件加载时执行一次
 
-  // 👉 新增后更新 UI
+  //  新增后更新 UI
   const handleAdd = (newItem) => {
     setSeafood([...seafood, newItem])
   }
@@ -59,14 +64,22 @@ function SeafoodList() {
         return res.json()
       })
       .then(() => {
-        // 👉 更新 UI（关键）
+        //  更新 UI（关键）
         setSeafood(prev => prev.filter(item => item._id !== id))
       })
-      .catch(err => console.error("DELETE ERROR:", err))
+      .catch(err => {
+        console.error("DELETE ERROR:", err)
+        alert("删除失败（可能没有权限）")
+      }
+      )
   }
 
   return (
     <div>
+      <p>
+        當前用戶：{user ? user.role : "未登入"}
+      </p>
+
       <input
         placeholder="Search seafood..."
         value={search}
@@ -95,7 +108,7 @@ function SeafoodList() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr)",
+          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
           gap: "20px"
         }}>
 
@@ -130,36 +143,47 @@ function SeafoodList() {
                     </p>
                   </div>
                 </div>
-              </Link>
-
-              <button
-                onClick={() => navigate(`/edit/${item._id}`)} // 使用反引号和正确的 navigate 语法
-                style={{
-                  background: "#f0ad4e",
-                  color: "black",
-                  border: "none",
-                  padding: "8px",
-                  borderRadius: "4px"
-                }}
-              >
-                Edit
-              </button>
-
-              <button onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                handleDelete(item._id)
-              }}
-
-                style={{
-                  background: "#f0ad4e",
-                  color: "red",
-                  border: "none",
-                  padding: "8px",
-                  borderRadius: "4px"
+                <button onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  addToCart(item)
+                  alert("Added to your cart!")
                 }}>
-                Delete
-              </button>
+                  加入购物车
+                </button>
+              </Link>
+              {user?.role === "admin" && (
+                <button
+                  onClick={() => navigate(`/edit/${item._id}`)} // 使用反引号和正确的 navigate 语法
+                  style={{
+                    background: "#f0ad4e",
+                    color: "black",
+                    border: "none",
+                    padding: "8px",
+                    borderRadius: "4px"
+                  }}
+                >
+                  Edit
+                </button>
+              )}
+
+              {user?.role === "admin" && (
+                <button onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleDelete(item._id)
+                }}
+
+                  style={{
+                    background: "#f0ad4e",
+                    color: "red",
+                    border: "none",
+                    padding: "8px",
+                    borderRadius: "4px"
+                  }}>
+                  Delete
+                </button>
+              )}
             </div>
           ))}
         </div>

@@ -41,7 +41,7 @@ function SeafoodDetail() {
       <h1>{item.name}</h1>
 
       <img
-        src={`http://localhost:5001${item.image}`}
+        src={item.image}
         style={{
           width: "300px",
           cursor: "pointer",

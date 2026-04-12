@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
+import { getUser } from "../utils/auth"
 
 function Navbar() {
     const { token, logout } = useContext(AuthContext)
     const role = localStorage.getItem("role")
+    const user = getUser()
+    console.log("USER:", user)
 
     return (
         <div style={{
@@ -31,15 +34,23 @@ function Navbar() {
                     {role === "admin" && (
                         <Link to="/add">Add Seafood</Link>
                     )}
-                    {token && (
+                    {user && (
                         <Link to="/add">
-                            Add Seafood  
+                            Add Seafood
                         </Link>
                     )} |
                     <Link to="/cart">Cart</Link> |
                     {/* ✅ 登录 / 登出 */}
-                    {token ? (
-                        <button onClick={logout}>Logout</button>
+                    {user ? (
+                        <>
+                        <span>👤 {user.role}</span>
+                        <button onClick={() => {
+                            localStorage.removeItem("token")
+                            window.location.reload()
+                        }}>
+                            Logout
+                        </button>
+                        </>
                     ) : (
                         <Link to="/login" style={{ color: "red" }}>
                             Login

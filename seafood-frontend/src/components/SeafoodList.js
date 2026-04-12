@@ -51,35 +51,40 @@ function SeafoodList() {
   }
 
   const handleDelete = (id) => {
+    const token = localStorage.getItem("token")
+
+    if (!token) {
+      alert("请先登录")
+      return
+    }
     fetch(`http://localhost:5001/api/seafood/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}` // ✅
+        Authorization: `Bearer ${token}`
       }
     })
-      .then(res => {
+      .then(async res => {
+        const data = await res.json()
+
         if (!res.ok) {
-          throw new Error("Delete failed")
+          throw new Error(res.message || "Delete failed")
         }
-        return res.json()
+        return data
       })
       .then(() => {
         //  更新 UI（关键）
         setSeafood(prev => prev.filter(item => item._id !== id))
+        alert("刪除成功")
       })
       .catch(err => {
         console.error("DELETE ERROR:", err)
-        alert("删除失败（可能没有权限）")
+        alert(`删除失败：${err.message}`)
       }
       )
   }
 
   return (
     <div>
-      <p>
-        當前用戶：{user ? user.role : "未登入"}
-      </p>
-
       <input
         placeholder="Search seafood..."
         value={search}
@@ -127,7 +132,7 @@ function SeafoodList() {
 
                   <img
                     crossOrigin="anonymous"
-                    src={`http://localhost:5001${item.image}?t=${new Date().getTime()}`}
+                    src={item.image}
                     alt={item.name}
                     style={{ width: "100%", height: "200px", objectFit: "cover" }}
                   />

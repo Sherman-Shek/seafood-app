@@ -41,7 +41,7 @@ function EditSeafood() {
             .then(res => res.json())
             .then(() => {
                 alert("更新成功！");
-                navigate("/seafood"); // 跳回列表页
+                navigate("/"); // 跳回列表页
             })
             .catch(err => console.error("Fail!:", err));
     };
@@ -86,7 +86,7 @@ function EditSeafood() {
         })
             .then(() => {
                 alert("Updated Successfully!");
-                navigate("/seafood");
+                navigate("/");
             });
     };
 

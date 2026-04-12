@@ -3,8 +3,9 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
-
 const SECRET = "mysecretkey" // 👉 以后可以换 env
+
+
 
 // 注册
 router.post("/register", async (req, res) => {
@@ -26,7 +27,6 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       role: "user"
     })
-
     await user.save()
 
     res.json({ message: "User registered" })
@@ -37,24 +37,31 @@ router.post("/register", async (req, res) => {
 
 // 登录
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body
+  try {
+    const { email, password } = req.body
 
-  const user = await User.findOne({ email })
-  if (!user) {
-    return res.status(400).json({ error: "User not found" })
+    const user = await User.findOne({ email })
+    if (!user) {
+      return res.status(400).json({ error: "User not found" })
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+      return res.status(400).json({ error: "Wrong password" })
+    }
+
+    // ✅ 关键：生成 token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      "mysecretkey"
+    )
+
+    // ✅ 返回
+    res.json({ token })
+
+  } catch (err) {
+    res.status(500).json({ error: err.message })
   }
-
-  const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) {
-    return res.status(400).json({ error: "Wrong password" })
-  }
-
-  const token = jwt.sign(
-    { id: user._id, role: user.role },
-    SECRET,
-    { expiresIn: "7d" }
-  )
-  res.json({ token })
 })
 
 module.exports = router

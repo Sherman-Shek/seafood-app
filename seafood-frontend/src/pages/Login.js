@@ -1,8 +1,8 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
-import "./Login.css"
 import { Link } from "react-router-dom"
+import "./Login.css"
 
 function Login() {
   const { login } = useContext(AuthContext)
@@ -13,21 +13,26 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    const res = await fetch("http://localhost:5001/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    })
+    try {
+      const res = await fetch("http://localhost:5001/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      })
 
-    const data = await res.json()
+      const data = await res.json()
 
-    if (res.ok) {
-      login(data.token)   // ✅ 不用 reload！
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed")
+      }
+
+      login(data.token) // ⭐ 核心
+
       navigate("/")
-    } else {
-      alert(data.error)
+    } catch (err) {
+      alert("登录失败：" + err.message)
     }
   }
 

@@ -5,6 +5,7 @@
   "dependencies": {
     "concurrently": "^9.2.1",
     "express": "^5.2.1",
+    "jwt-decode": "^4.0.0",
     "mongoose": "^9.4.1"
   },
   "name": "seafood_website",

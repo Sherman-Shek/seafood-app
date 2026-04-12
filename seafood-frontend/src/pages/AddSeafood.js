@@ -54,33 +54,28 @@ function AddSeafood({ onAdd }) {
                 alert("Added successfully!");
 
                 // ✅ 5. 跳转到产品列表页面
-                navigate("/seafood");
+                navigate("/");
             })
             .catch(err => console.error("Added fail:", err));
     }
 
-    const onDrop = (acceptedFiles) => {
+    const onDrop = async (acceptedFiles) => {
         const file = acceptedFiles[0]
-        const formData = new FormData()
-        formData.append("image", file)
 
-        fetch("http://localhost:5001/api/seafood/upload", {
-            method: "POST",
-            body: formData
-        })
-            .then(async res => {
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    throw new Error(`服务器错误: ${res.status} - ${errorText}`);
-                }
-                return res.json();
-            })
-            .then(json => {
-                setImageUrl(json.imageUrl);
-            })
-            .catch(err => {
-                console.error("FETCH ERROR:", err.message);
-            });
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("upload_preset", "ml_default")
+
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/dwhhusuhf/image/upload",
+            {
+                method: "POST",
+                body: formData
+            }
+        )
+        const data = await res.json()
+        //  关键：Cloudinary返回的图片URL
+        setImageUrl(data.secure_url)
     }
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -106,7 +101,7 @@ function AddSeafood({ onAdd }) {
                 <div style={{ marginBottom: '20px' }}>
                     <p>Preview: </p>
                     <img
-                        src={`http://localhost:5001${imageUrl}`}
+                        src={imageUrl}
                         width="200"
                         alt="preview"
                     />

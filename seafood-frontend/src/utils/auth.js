@@ -1,11 +1,15 @@
+import { jwtDecode } from "jwt-decode"
+
 export function getUser() {
   const token = localStorage.getItem("token")
+
   if (!token) return null
 
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]))
-    return payload
+    return jwtDecode(token)
   } catch {
     return null
   }
 }
+
+export default getUser

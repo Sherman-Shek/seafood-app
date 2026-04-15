@@ -21,6 +21,8 @@ function SeafoodList() {
   const user = getUser()
   const { addToCart } = useContext(CartContext)
 
+  console.log("当前登入的用户资料:", user)
+
   if (sort === "low") {
     filtered.sort((a, b) => a.price - b.price)
   }
@@ -104,8 +106,6 @@ function SeafoodList() {
         <option value="low">Price: Low → High</option>
         <option value="high">Price: High → Low</option>
       </select>
-
-      <SeafoodForm onAdd={handleAdd} />
 
       <div style={{ padding: "20px" }}>
 

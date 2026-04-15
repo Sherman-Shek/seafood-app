@@ -31,21 +31,18 @@ router.get("/:id", async (req, res) => {
 })
 
 // CREATE seafood
-router.post("/", auth, async (req, res) => {
+router.post("/", auth, isAdmin, async (req, res) => {
   try {
-    const newSeafood = new Seafood(req.body)
-    if (!req.body.name || !req.body.price) {
-      return res.status(400).json({ error: "Missing fields" })
-    }
-    const saved = await newSeafood.save()
-    res.json(saved)
+    const newItem = new Seafood(req.body)
+    await newItem.save()
+    res.json(newItem)
   } catch (err) {
-    res.status(500).json({ error: "保存失败" })
+    res.status(500).json({ error: err.message })
   }
 })
 
 // UPDATE seafood
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, isAdmin, async (req, res) => {
   try {
     const updated = await Seafood.findByIdAndUpdate(
       req.params.id,
@@ -67,12 +64,12 @@ router.delete("/:id", auth, isAdmin, async (req, res) => {
 
     if (item.image_public_id) {
       const cloudinary = require('cloudinary').v2;
-      await cloudinary.uploader.destroy(product.image_public_id);
+      await cloudinary.uploader.destroy(item.image_public_id);
       console.log("✅ 图片删除成功");
     }
 
     await Seafood.findByIdAndDelete(req.params.id)
-    
+
     res.json({ message: "Deleted successfully" })
   } catch (err) {
     console.error("DELETE ERROR:", err)

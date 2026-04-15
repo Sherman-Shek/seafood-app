@@ -46,7 +46,8 @@ function SeafoodForm({ onAdd }) {
       const res = await fetch("http://localhost:5001/api/seafood", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(newItem)
       })

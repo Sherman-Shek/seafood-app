@@ -9,11 +9,13 @@ import Login from "./pages/Login"
 import EditSeafood from "./components/EditSeafood"
 import Register from "./pages/Register"
 import ProtectedRoute from "./ProtectedRoute"
+import { AuthProvider } from "./context/AuthContext"
 
 function App() {
   const [cart] = useState([])
 
   return (
+    <AuthProvider>
     <div>
       {/* 页面切换 */}
       <Navbar />
@@ -37,6 +39,7 @@ function App() {
         } />
       </Routes>
     </div>
+    </AuthProvider>
   )
 }
 export default App

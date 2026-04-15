@@ -1,14 +1,16 @@
-import { useContext, useState } from "react"
-import { AuthContext } from "../context/AuthContext"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import "./Login.css"
+import getUser from "../utils/auth"
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthContext"
 
 function Login() {
-  const { login } = useContext(AuthContext)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const { login } = useContext(AuthContext)
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -25,14 +27,18 @@ function Login() {
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.message || "Login failed")
+        alert(data.error || "Login failed")
+        return
       }
+      console.log("LOGIN RESPONSE:", data)
+      console.log("STATUS:", res.status)
 
-      login(data.token) // ⭐ 核心
-
+      localStorage.setItem("token", data.token)
+      login(getUser())
       navigate("/")
     } catch (err) {
-      alert("登录失败：" + err.message)
+      console.error(err)
+      alert("登录失败")
     }
   }
 

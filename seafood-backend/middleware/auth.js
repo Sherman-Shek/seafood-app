@@ -10,11 +10,9 @@ function auth(req, res, next) {
   try {
     const decoded = jwt.verify(token, SECRET)
     req.user = decoded
-    
+    next()
     console.log("TOKEN:", token)
     console.log("USER:", req.user)
-    
-    next()
   } catch {
     res.status(401).json({ message: "Invalid token" })
   }

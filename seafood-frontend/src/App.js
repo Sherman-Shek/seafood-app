@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./components/AdminRoute"
 import AdminDashboard from "./pages/AdminDashboard"
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 function App() {
   const [cart] = useState([])
@@ -49,6 +50,7 @@ function App() {
             }
           />
         </Routes>
+        <SpeedInsights />
       </div>
     </AuthProvider>
   )

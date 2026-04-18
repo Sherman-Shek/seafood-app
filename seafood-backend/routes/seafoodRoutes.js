@@ -46,7 +46,7 @@ router.put("/:id", auth, isAdmin, async (req, res) => {
   try {
     const updated = await Seafood.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { name, price, category },
       { new: true } // 返回更新后的新对象
     );
     if (!updated) return res.status(404).json({ message: "未找到该商品" });

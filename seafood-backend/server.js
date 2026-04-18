@@ -10,11 +10,9 @@ const path = require("path")
 
 const authRoutes = require("./routes/auth")
 app.use("/api/auth", authRoutes)
-const ordersRoute = require("./routes/orders")
-app.use("/api/orders", ordersRoute)
+const orderRoutes = require("./routes/orders")
+app.use("/api/orders", orderRoutes)
 
-//app.use(express.static(path.join(__dirname, "public")))
-//app.use("/images", express.static("public/images"))
 app.use("/api/seafood", require("./routes/seafoodRoutes"))
 
 mongoose.connect("mongodb://localhost:27017/seafoodDB")

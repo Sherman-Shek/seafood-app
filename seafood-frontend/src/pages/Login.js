@@ -38,7 +38,7 @@ function Login() {
       navigate("/")
     } catch (err) {
       console.error(err)
-      alert("登录失败")
+      alert("Login Fail!")
     }
   }
 

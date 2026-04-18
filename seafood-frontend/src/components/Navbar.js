@@ -36,7 +36,7 @@ function Navbar() {
                     {/* ✅ 登录 / 登出 */}
                     {user ? (
                         <>
-                            <span>歡迎👤 {user.role}</span>
+                            <span>Wellcome 👤 {user.role}</span>
                             <button onClick={logout}>Logout</button>
                         </>
                     ) : (

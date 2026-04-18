@@ -8,37 +8,48 @@ import Navbar from "./components/Navbar"
 import Login from "./pages/Login"
 import EditSeafood from "./components/EditSeafood"
 import Register from "./pages/Register"
-import ProtectedRoute from "./ProtectedRoute"
 import { AuthProvider } from "./context/AuthContext"
+import ProtectedRoute from "./components/ProtectedRoute"
+import AdminRoute from "./components/AdminRoute"
+import AdminDashboard from "./pages/AdminDashboard"
 
 function App() {
   const [cart] = useState([])
 
   return (
     <AuthProvider>
-    <div>
-      {/* 页面切换 */}
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/edit/:id" element={<EditSeafood />} />
-        <Route path="/seafood/:id" element={<SeafoodDetail />} />
+      <div>
+        {/* 页面切换 */}
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/edit/:id" element={<EditSeafood />} />
+          <Route path="/seafood/:id" element={<SeafoodDetail />} />
 
-        <Route path="/cart" element={
-          <ProtectedRoute>
-            <Cart cart={cart} />
-          </ProtectedRoute>
-        } />
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart cart={cart} />
+            </ProtectedRoute>
+          } />
 
-        <Route path="/add" element={
-          <ProtectedRoute>
-            <AddSeafood />
-          </ProtectedRoute>
-        } />
-      </Routes>
-    </div>
+          <Route path="/add" element={
+            <ProtectedRoute>
+              <AddSeafood />
+            </ProtectedRoute>
+          } />
+
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+        </Routes>
+      </div>
     </AuthProvider>
   )
 }

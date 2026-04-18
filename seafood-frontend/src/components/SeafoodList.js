@@ -56,7 +56,7 @@ function SeafoodList() {
     const token = localStorage.getItem("token")
 
     if (!token) {
-      alert("请先登录")
+      alert("Please login first!")
       return
     }
     fetch(`http://localhost:5001/api/seafood/${id}`, {
@@ -76,11 +76,11 @@ function SeafoodList() {
       .then(() => {
         //  更新 UI（关键）
         setSeafood(prev => prev.filter(item => item._id !== id))
-        alert("刪除成功")
+        alert("Deleted Successfully!")
       })
       .catch(err => {
         console.error("DELETE ERROR:", err)
-        alert(`删除失败：${err.message}`)
+        alert(`Deleted Fail!：${err.message}`)
       }
       )
   }
@@ -154,7 +154,7 @@ function SeafoodList() {
                   addToCart(item)
                   alert("Added to your cart!")
                 }}>
-                  加入购物车
+                  Add To Cart
                 </button>
               </Link>
               {user?.role === "admin" && (

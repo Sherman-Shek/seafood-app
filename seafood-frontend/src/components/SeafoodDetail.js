@@ -42,6 +42,7 @@ function SeafoodDetail() {
 
       <img
         src={item.image}
+        alt={""}
         style={{
           width: "300px",
           cursor: "pointer",
@@ -56,7 +57,7 @@ function SeafoodDetail() {
       <div>
         <h3>{item.name}</h3>
         <button onClick={() => addToCart(item)}>
-          加入购物车
+          Add To Cart
         </button>
       </div>
 

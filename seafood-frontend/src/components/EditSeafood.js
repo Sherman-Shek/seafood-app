@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // 假设你用了路由
-import { useDropzone } from "react-dropzone";
+import React, { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom" // 假设你用了路由
+import { useDropzone } from "react-dropzone"
 
 function EditSeafood() {
     const { id } = useParams(); // 获取 URL 里的 ID
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const [form, setForm] = useState({ name: "", price: "", category: "" });
-    const [imageUrl, setImageUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState("")
 
     // 1. 页面加载时，获取旧数据回显
     useEffect(() => {
@@ -21,36 +21,11 @@ function EditSeafood() {
                 });
                 setImageUrl(data.image); // 回显旧图片
             });
-    }, [id]);
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-
-        const payload = {
-            ...form,
-            price: Number(form.price),
-            image: imageUrl
-        };
-
-        // 2. 发送 PUT 请求更新
-        fetch(`http://localhost:5001/api/seafood/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        })
-            .then(res => res.json())
-            .then(() => {
-                alert("更新成功！");
-                navigate("/"); // 跳回列表页
-            })
-            .catch(err => console.error("Fail!:", err));
-    };
+    }, [id])
 
     // ... onDrop 图片上传函数可以直接复用之前的 ...
     const onDrop = (acceptedFiles) => {
-
         const file = acceptedFiles[0]
-
         const formData = new FormData()
         formData.append("image", file)
 
@@ -71,24 +46,28 @@ function EditSeafood() {
             })
             .catch(err => {
                 console.error("FETCH ERROR:", err.message);
-            });
+            })
     }
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        const token = localStorage.getItem("token")
         e.preventDefault();
         const payload = { ...form, price: Number(form.price), image: imageUrl };
 
-        fetch(`http://localhost:5001/api/seafood/${id}`, {
+        const res = await fetch(`http://localhost:5001/api/seafood/${id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
             body: JSON.stringify(payload)
         })
-            .then(() => {
-                alert("Updated Successfully!");
-                navigate("/");
-            });
-    };
+        if (res.ok) {
+            alert("Updated Successfully!");
+            navigate("/");
+        }
+    }
 
     return (
         // ... JSX 部分基本与 AddSeafood 一致 ...
@@ -98,14 +77,20 @@ function EditSeafood() {
 
             <div {...getRootProps()} style={{ border: "2px dashed black", padding: "20px" }}>
                 <input {...getInputProps()} />
-                <p>拖图片到这里 👇</p>
+                <p>Drag and Drop here 👇</p>
             </div>
 
             {imageUrl && (
-                <img
-                    src={`http://localhost:5001${imageUrl}`}
-                    width="200"
-                />
+                <div style={{ marginBottom: "20px" }}>
+                    <p>Preview: </p>
+                    <img
+                        // 如果 imageUrl 包含 http 說明是雲端地址，否則加上後端地址
+                        src={imageUrl.startsWith("http") ? imageUrl : `http://localhost:5001${imageUrl}`}
+                        alt={"Preview"}
+                        width="200"
+                        style={{ borderRadius: "8px" }}
+                    />
+                </div>
             )}
 
             <form onSubmit={handleSubmit}>
@@ -120,6 +105,7 @@ function EditSeafood() {
 
                 <input
                     name="price"
+                    type="number"
                     placeholder="Price"
                     value={form.price}
                     onChange={(e) =>
@@ -139,6 +125,6 @@ function EditSeafood() {
                 <button type="submit">Update</button>
             </form>
         </div>
-    );
+    )
 }
-export default EditSeafood;
+export default EditSeafood

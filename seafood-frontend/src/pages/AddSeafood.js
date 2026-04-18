@@ -18,7 +18,7 @@ function AddSeafood({ onAdd }) {
         e.preventDefault();
 
         if (!imageUrl) {
-            alert("请先上传图片！");
+            alert("Please upload picture！");
             return;
         }
 

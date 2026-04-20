@@ -1,9 +1,20 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
+import { useTranslation } from "react-i18next"
 
 function Navbar() {
     const { user, logout } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const { t, i18n } = useTranslation()
+
+   
+    const changeLang = (lang) => {
+        const segments = location.pathname.split("/")
+        segments[1] = lang // 替换语言
+        navigate(segments.join("/") || `/${lang}`)
+    }
 
     return (
         <div style={{
@@ -24,26 +35,34 @@ function Navbar() {
                     padding: "5px 10px",
                     borderRadius: "5px"
                 }}>
-                    <Link to="/">Home</Link> |
+                    <Link to={`/${i18n.language}`}>{t("home")}</Link>
 
                     {/* ✅ 登录后才显示 */}
                     {user?.role === "admin" && (
-                        <Link to="/add">Add Seafood</Link>
+                        <Link to={`/${i18n.language}/add`}>
+                            {t("add")}
+                        </Link>
                     )} |
 
-                    <Link to="/cart">Cart</Link> |
+                    <Link to={`/${i18n.language}/cart`}>
+                        {t("cart")}
+                    </Link> |
 
                     {/* ✅ 登录 / 登出 */}
                     {user ? (
                         <>
-                            <span>Wellcome 👤 {user.role}</span>
-                            <button onClick={logout}>Logout</button>
+                            <span>Welcome 👤 {user.role}</span>
+                            <button onClick={logout}>{t("logout")}</button>
                         </>
                     ) : (
-                        <Link to="/login" style={{ color: "red" }}>
-                            Login
+                        <Link to={`/${i18n.language}/login`}>
+                            {t("login")}
                         </Link>
                     )}
+                    <div>
+                        <button onClick={() => changeLang("en")}>EN</button>
+                        <button onClick={() => changeLang("zh")}>中文</button>
+                    </div>
                 </nav>
             </div >
         </div >

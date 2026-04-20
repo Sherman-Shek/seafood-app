@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react"
-import SeafoodForm from "./SeafoodForm"
+//import SeafoodForm from "./SeafoodForm"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom" //  1. 引入 hook
 import { getUser } from "../utils/auth"
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
+import { useTranslation } from "react-i18next"
 
 function SeafoodList() {
-  const navigate = useNavigate(); //  2. 初始化 navigate
+  const { i18n } = useTranslation()
+  const navigate = useNavigate() //  2. 初始化 navigate
   const [seafood, setSeafood] = useState([])
 
   const [category, setCategory] = useState("all")
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("low")
 
-  const filtered = seafood.filter(item =>
-    (category === "all" || item.category === category) &&
-    (item.name || "").toLowerCase().includes(search.toLowerCase())
-  )
+  const filtered = seafood.filter(item => {
+    // 取得當前語言對應的名稱，如果是舊數據字串則直接用
+    const currentName = typeof item.name === 'object'
+      ? (i18n.language === 'zh' ? item.name.zh : item.name.en)
+      : item.name;
+
+    const matchesCategory = (category === "all" ||
+      (typeof item.category === 'object' ? item.category.en === category : item.category === category));
+
+    const matchesSearch = (currentName || "").toLowerCase().includes(search.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  })
+
   const user = getUser()
   const { addToCart } = useContext(CartContext)
-
-  console.log("当前登入的用户资料:", user)
 
   if (sort === "low") {
     filtered.sort((a, b) => a.price - b.price)
@@ -48,9 +58,9 @@ function SeafoodList() {
   }, []); // 确保组件加载时执行一次
 
   //  新增后更新 UI
-  const handleAdd = (newItem) => {
-    setSeafood([...seafood, newItem])
-  }
+  // const handleAdd = (newItem) => {
+  //   setSeafood([...seafood, newItem])
+  // }
 
   const handleDelete = (id) => {
     const token = localStorage.getItem("token")
@@ -138,8 +148,11 @@ function SeafoodList() {
                   />
 
                   <div style={{ padding: "15px" }}>
-                    <h3>{item.name}</h3>
-
+                    <h3>
+                      {typeof item.name === 'object'
+                        ? (i18n.language === 'zh' ? item.name.zh : item.name.en)
+                        : item.name}
+                    </h3>
                     <p style={{
                       color: "green",
                       fontWeight: "bold"
@@ -147,6 +160,7 @@ function SeafoodList() {
                       ${item.price}
                     </p>
                   </div>
+
                 </div>
                 <button onClick={(e) => {
                   e.preventDefault()

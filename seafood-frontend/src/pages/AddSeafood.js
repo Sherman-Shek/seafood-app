@@ -7,19 +7,34 @@ function AddSeafood({ onAdd }) {
     const navigate = useNavigate(); // ✅ 3. 初始化跳转
 
     const [form, setForm] = useState({
-        name: "",
+        name: { en: "", zh: "" },
         price: "",
-        category: ""
+        category: { en: "", zh: "" }
     })
 
     const [imageUrl, setImageUrl] = useState("")
 
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        // 處理需要分語言的欄位 (例如 name_en, name_zh)
+        if (name.includes("_")) {
+            const [field, lang] = name.split("_"); // 分割出 name 和 en
+            setForm(prev => ({
+                ...prev,
+                [field]: { ...prev[field], [lang]: value }
+            }))
+        } else {
+            // 處理價格、圖片等不分語言的欄位
+            setForm(prev => ({ ...prev, [name]: value }))
+        }
+    }
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (!imageUrl) {
-            alert("Please upload picture！");
-            return;
+            alert("Please upload picture！")
+            return
         }
 
         const payload = {
@@ -109,11 +124,22 @@ function AddSeafood({ onAdd }) {
             )}
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <label>Product Name (English)</label>
                 <input
-                    name="name"
+                    type="text"
+                    name="name_en"
                     placeholder="Product Name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    value={form.name.en}
+                    onChange={handleChange}
+                    required
+                />
+                <label>產品名稱 (中文)</label>
+                <input
+                    type="text"
+                    name="name_zh"
+                    placeholder="產品名稱"
+                    value={form.name.zh}
+                    onChange={handleChange}
                     required
                 />
 
@@ -122,15 +148,24 @@ function AddSeafood({ onAdd }) {
                     type="number"
                     placeholder="Price"
                     value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
+                    onChange={handleChange}
                     required
                 />
-
+                <label>Category (English)</label>
                 <input
-                    name="category"
+                    type="text"
+                    name="category_en"
                     placeholder="Category"
-                    value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    value={form.category.en}
+                    onChange={handleChange}
+                />
+                <label>分類 (中文)</label>
+                <input
+                    type="text"
+                    name="category_zh"
+                    placeholder="分類"
+                    value={form.category.zh}
+                    onChange={handleChange}
                 />
 
                 <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>

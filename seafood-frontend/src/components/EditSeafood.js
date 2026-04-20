@@ -23,6 +23,25 @@ function EditSeafood() {
             });
     }, [id])
 
+        const handleSubmit = async (e) => {
+        const token = localStorage.getItem("token")
+        e.preventDefault();
+        const payload = { ...form, price: Number(form.price), image: imageUrl };
+
+        const res = await fetch(`http://localhost:5001/api/seafood/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        })
+        if (res.ok) {
+            alert("Updated Successfully!");
+            navigate("/");
+        }
+    }
+
     // ... onDrop 图片上传函数可以直接复用之前的 ...
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0]
@@ -49,25 +68,6 @@ function EditSeafood() {
             })
     }
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
-
-    const handleSubmit = async (e) => {
-        const token = localStorage.getItem("token")
-        e.preventDefault();
-        const payload = { ...form, price: Number(form.price), image: imageUrl };
-
-        const res = await fetch(`http://localhost:5001/api/seafood/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(payload)
-        })
-        if (res.ok) {
-            alert("Updated Successfully!");
-            navigate("/");
-        }
-    }
 
     return (
         // ... JSX 部分基本与 AddSeafood 一致 ...

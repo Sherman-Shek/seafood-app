@@ -52,7 +52,7 @@ function App() {
             </ProtectedRoute>
           } />
 
-          <Route path="add" element={
+          <Route path="addSeafood" element={
             <ProtectedRoute>
               <AddSeafood />
             </ProtectedRoute>

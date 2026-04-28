@@ -2,9 +2,11 @@
   "login": "Login",
   "cart": "Cart",
   "logout": "Logout",
-  "add": "Add To Cart",
+  "addSeafood": "Add New Products",
   "home": "Home",
   "title": "Wing Sang Fat Seafood",
   "orders": "Orders",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "adminOrders": "Admin Orders",
+  "addToCart": "Add To Cart"
 }

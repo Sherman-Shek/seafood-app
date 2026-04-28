@@ -36,12 +36,12 @@ function Navbar() {
         // 管理員選項
         ...(user?.role === "admin" ? [
             {
-                key: 'add',
-                label: <Link to={`/${curLang}/add`}>{t("add")}</Link>,
+                key: 'addSeafood',
+                label: <Link to={`/${curLang}/addSeafood`}>{t("addSeafood")}</Link>,
             },
             {
-                key: 'admin-orders',
-                label: <Link to={`/${curLang}/admin/orders`}>Admin Orders</Link>,
+                key: 'adminOrders',
+                label: <Link to={`/${curLang}/admin/orders`}>{t("adminOrders")}</Link>,
             }
         ] : [])
     ]
@@ -59,21 +59,24 @@ function Navbar() {
             <Link to={`/${i18n.language}`} style={{ color: 'inherit' }}>
                 🦐 Seafood Shop
             </Link>
+            
             {/* 导航栏 */}
             <div style={{
-                marginBottom: "20px", cursor: "pointer",
-                display: "flex", gap: "20px", background: "white",
-                color: "#333",
+                flex: 1,
+                minWidth: "400px",
+                display: "flex",
+                gap: "20px",
+                background: "white",
                 padding: "5px 10px",
                 borderRadius: "5px"
             }}>
                 <Menu
                     mode="horizontal"
-                    //theme="dark"
+                    theme="light"
                     items={menuItems}
-                    style={{ borderBottom: "none" }}
+                    style={{ borderBottom: "none", width: "100%" }}
+                    overflowedIndicator={null}
                 />
-
             </div>
 
             {/* ✅ 登录 / 登出 */}

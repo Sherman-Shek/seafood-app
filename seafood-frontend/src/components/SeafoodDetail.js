@@ -54,7 +54,14 @@ function SeafoodDetail() {
       <div style={{ marginTop: "20px" }}>
         <Row gutter={40}>
           <Col span={10}>
-            <img src={item.image} alt={""} style={{ width: '100%', borderRadius: '8px' }} />
+            <img
+              crossOrigin="anonymous"
+              src={item.image}
+              alt={displayLang(item.name)}
+              style={{ width: "100%", height: "100%", objectFit: "cover", transition: 'transform 0.4s' }}
+              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            />
           </Col>
           <Col span={14}>
             <h1>{displayLang(item.name)}</h1>

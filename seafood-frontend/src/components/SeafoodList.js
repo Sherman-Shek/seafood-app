@@ -5,16 +5,20 @@ import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
 import { useTranslation } from "react-i18next"
 import { Card, Button, message, Row, Col, Spin } from "antd"
+import { Input, Select, Space } from 'antd'
+import { ShoppingCartOutlined } from "@ant-design/icons"
+
+const { Meta } = Card
+const { Search } = Input
 
 function SeafoodList() {
-  const { i18n } = useTranslation()
   const navigate = useNavigate() //  2. 初始化 navigate
   const [seafood, setSeafood] = useState([])
   const [loading, setLoading] = useState(true) // ✅ 修正：定義 loading 狀態
   const [category, setCategory] = useState("all")
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState("low")
-  const { Meta } = Card
+  const { t, i18n } = useTranslation()
 
   const user = getUser()
   const { addToCart } = useContext(CartContext)
@@ -115,40 +119,66 @@ function SeafoodList() {
     <div style={{ padding: "20px" }}>
       <h2 style={{ marginBottom: "20px" }}>Fresh Seafood 🐟</h2>
 
-      <div style={{ marginBottom: "20px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
-        <input
-          placeholder="Search seafood..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ padding: "5px" }}
-        />
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
 
-        <select onChange={(e) => setCategory(e.target.value)}>
-          <option value="all">All</option>
-          <option value="fish">Fish</option>
-          <option value="crab">Crab</option>
-          <option value="lobster">Lobster</option>
-        </select>
+        <Space size="large" wrap>
+          <Search
+            placeholder={t("Search...") || "Search seafood..."}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ width: 350 }}
+            size="large"
+            allowClear
+          />
+          <Select
+            defaultValue="all"
+            size="large"
+            style={{ width: 140 }}
+            onChange={(val) => setCategory(val)}
+            options={[
+              { value: 'all', label: 'All' },
+              { value: 'fish', label: 'Fish' },
+              { value: 'crab', label: 'Crab' },
+              { value: 'lobster', label: 'Lobster' },
+              { value: 'shrimp', label: 'Shrimp' },
+              { value: 'clam', label: 'Clam' },
 
-        <select onChange={(e) => setSort(e.target.value)}>
-          <option value="">Sort</option>
-          <option value="low">Price: Low → High</option>
-          <option value="high">Price: High → Low</option>
-        </select>
+            ]}
+          />
+          <Select
+            defaultValue="low"
+            size="large"
+            style={{ width: 180 }}
+            onChange={(val) => setSort(val)}
+            options={[
+              { value: 'low', label: 'Price: Low-High' },
+              { value: 'high', label: 'Price: High-Low' },
+            ]}
+          />
+        </Space>
       </div>
 
-      <Row gutter={[16, 16]}>
+      <Row gutter={[24, 24]}>
         {filtered.map(item => (
           <Col xs={24} sm={12} md={8} lg={6} key={item._id}>
             <Card
               hoverable
+              style={{
+                borderRadius: '16px',
+                overflow: 'hidden',
+                border: 'none',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)' // 輕微的陰影
+              }}
               cover={
-                <img
-                  crossOrigin="anonymous"
-                  src={item.image}
-                  alt={displayLang(item.name)}
-                  style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                />
+                <div style={{ overflow: 'hidden', height: '240px', position: 'relative' }}>
+                  <img
+                    crossOrigin="anonymous"
+                    src={item.image}
+                    alt={displayLang(item.name)}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", transition: 'transform 0.4s' }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                </div>
               }
               actions={[
                 <Button type="link"
@@ -168,54 +198,56 @@ function SeafoodList() {
             >
 
               <Meta
-                title={displayLang(item.name)}
-                style={{
-                  color: "green",
-                  fontWeight: "bold"
-                }}
+                title={<span style={{ fontSize: '19px', fontWeight: '600' }}>{displayLang(item.name)}</span>}
                 description={
-                  <span style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "16px" }}>
-                    ${item.price}
-                  </span>
+                  <div style={{ marginTop: '5px' }}>
+                    <span style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "22px" }}>
+                      ${item.price}
+                    </span>
+                  </div>
                 }
               />
 
-              <div style={{ marginTop: "10px" }}>
-                <Button type="primary"
+              <Button
+                type="primary"
+                block
+                icon={<ShoppingCartOutlined />} // 需引入圖示
+                style={{ marginTop: '20px', borderRadius: '8px', height: '45px', fontSize: '16px', fontWeight: '500' }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  addToCart(item)
+                  message.success("Added to cart!")
+                }}
+              >
+                {t("addToCart")}
+              </Button>
+
+              {user?.role === "admin" && (
+                <Button
+                  danger
                   block
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                    addToCart(item)
-                    message.success("Added to your cart!")
+                    handleDelete(item._id)
+                  }}
+                  style={{
+                    marginTop: '10px',
+                    background: "#f0ad4e",
+                    color: "red",
+                    border: "none",
+                    padding: "8px",
+                    borderRadius: "8px"
                   }}>
-                  Add To Cart
+                  Delete
                 </Button>
-
-                {user?.role === "admin" && (
-                  <Button
-                    danger
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      handleDelete(item._id)
-                    }}
-                    style={{
-                      background: "#f0ad4e",
-                      color: "red",
-                      border: "none",
-                      padding: "8px",
-                      borderRadius: "4px"
-                    }}>
-                    Delete
-                  </Button>
-                )}
-              </div>
+              )}
             </Card>
           </Col>
         ))}
       </Row>
-    </div>
+    </div >
   )
 }
 

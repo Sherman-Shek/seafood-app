@@ -4,10 +4,15 @@
   },
   "dependencies": {
     "@vercel/speed-insights": "^2.0.0",
+    "antd": "^6.3.6",
     "concurrently": "^9.2.1",
     "express": "^5.2.1",
     "jwt-decode": "^4.0.0",
     "mongoose": "^9.4.1"
+  },
+  "overrides": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "name": "seafood_website",
   "version": "1.0.0",

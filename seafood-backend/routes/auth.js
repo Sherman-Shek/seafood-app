@@ -5,8 +5,6 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/User")
 const SECRET = "mysecretkey" // 👉 以后可以换 env
 
-
-
 // 注册
 router.post("/register", async (req, res) => {
   try {

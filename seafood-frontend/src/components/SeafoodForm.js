@@ -1,7 +1,6 @@
 import { useState } from "react"
 
 function SeafoodForm({ onAdd }) {
-
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
@@ -66,5 +65,6 @@ function SeafoodForm({ onAdd }) {
     </>
   )
 }
+
 export default SeafoodForm
 

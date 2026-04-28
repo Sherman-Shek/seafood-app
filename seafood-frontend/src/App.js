@@ -1,63 +1,95 @@
+import React from 'react'; // 確保明確引入 React
+
 import { Routes, Route, Navigate } from "react-router-dom"
 import LanguageWrapper from "./components/LanguageWrapper"
 import Cart from "./pages/Cart"
 import SeafoodDetail from "./components/SeafoodDetail"
-import { useState } from "react"
+//import { useState } from "react"
 import AddSeafood from "./pages/AddSeafood"
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import EditSeafood from "./components/EditSeafood"
 import Register from "./pages/Register"
-import { AuthProvider } from "./context/AuthContext"
+
 import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./components/AdminRoute"
 import AdminDashboard from "./pages/AdminDashboard"
-import { useTranslation } from "react-i18next"
+//import { useTranslation } from "react-i18next"
+import Orders from "./pages/Orders"
+import AdminOrders from "./pages/AdminOrders"
+import { useContext } from "react"
+import { CartContext } from "./context/CartContext"
+import { AuthContext } from "./context/AuthContext"
 
 function App() {
-  const [cart] = useState([])
-  const { i18n } = useTranslation()
+
+  const { cart } = useContext(CartContext)
+  //const { i18n } = useTranslation()
+  const auth = useContext(AuthContext)
+  const cartContext = useContext(CartContext)
+  // 如果 context 還沒準備好（預防萬一），先回傳空
+  if (!auth || !cartContext) {
+    return <div>Loading System...</div>;
+  }
 
   return (
-    <AuthProvider>
-      <div>
-        {/* 页面切换 */}
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Navigate to="/en" replace />} />
-          <Route path="/:lang" element={<LanguageWrapper />} >
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="edit/:id" element={<EditSeafood />} />
-            <Route path="seafood/:id" element={<SeafoodDetail />} />
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate to="/en" replace />} />
 
-            <Route path="cart" element={
-              <ProtectedRoute>
-                <Cart cart={cart} />
-              </ProtectedRoute>
+        <Route path="/:lang" element={<LanguageWrapper />} >
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="edit/:id" element={<EditSeafood />} />
+          <Route path="seafood/:id" element={<SeafoodDetail />} />
+
+          <Route path="cart" element={
+            <ProtectedRoute>
+              <Cart cart={cart} />
+            </ProtectedRoute>
+          } />
+
+          <Route path="add" element={
+            <ProtectedRoute>
+              <AddSeafood />
+            </ProtectedRoute>
+          } />
+
+          <Route
+            path="admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
             } />
 
-            <Route path="add" element={
+
+          <Route
+            path="admin/orders"
+            element={
+              <AdminRoute>
+                <AdminOrders />
+              </AdminRoute>
+            }
+          />
+
+          <Route
+            path="orders"
+            element={
               <ProtectedRoute>
-                <AddSeafood />
+                <Orders />
               </ProtectedRoute>
-            } />
+            }
+          />
+        </Route>
 
-            <Route
-              path="admin"
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              } />
-          </Route>
+        <Route path="*" element={<Navigate to="/en" replace />} />
 
-          <Route path="*" element={<Navigate to="/en" replace />} />
-        </Routes>
-      </div>
-    </AuthProvider>
+      </Routes>
+    </div>
   )
 }
 export default App

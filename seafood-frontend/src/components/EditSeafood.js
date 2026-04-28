@@ -9,6 +9,17 @@ function EditSeafood() {
     const [form, setForm] = useState({ name: "", price: "", category: "" });
     const [imageUrl, setImageUrl] = useState("")
 
+    // 輔助函數：幫你判斷要顯示什麼文字
+    const displayLang = (field) => {
+        if (!field) return "";
+        if (typeof field === 'object') {
+            // 如果是新數據(物件)，根據當前語言顯示，如果沒有該語言就默認顯示英文
+            return field[i18n.language] || field.en;
+        }
+        // 如果是舊數據(字串)，直接顯示
+        return field;
+    }
+
     // 1. 页面加载时，获取旧数据回显
     useEffect(() => {
         fetch(`http://localhost:5001/api/seafood/${id}`)
@@ -23,7 +34,7 @@ function EditSeafood() {
             });
     }, [id])
 
-        const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         const token = localStorage.getItem("token")
         e.preventDefault();
         const payload = { ...form, price: Number(form.price), image: imageUrl };

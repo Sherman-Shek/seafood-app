@@ -1,10 +1,23 @@
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
+import { useTranslation } from "react-i18next";
 
 function Cart() {
-  const { cart, removeFromCart, updateQty } = useContext(CartContext);
+  const { i18n, t } = useTranslation()
+  const { cart, removeFromCart, updateQty, clearCart } = useContext(CartContext);
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+
+  // 輔助函數：幫你判斷要顯示什麼文字
+  const displayLang = (field) => {
+    if (!field) return "";
+    if (typeof field === 'object') {
+      // 如果是新數據(物件)，根據當前語言顯示，如果沒有該語言就默認顯示英文
+      return field[i18n.language] || field.en;
+    }
+    // 如果是舊數據(字串)，直接顯示
+    return field;
+  }
 
   const handlePlaceOrder = async () => {
     // 1. 獲取登入的 token
@@ -17,10 +30,14 @@ function Cart() {
     // 2. 📦 關鍵修復：在這裡定義並組裝 orderData！
     // (注意：請根據你實際的購物車變數名稱修改，例如是 cart 還是 cartItems)
     const orderData = {
-      items: cart, // 你的購物車商品陣列
-      total: totalPrice,
-      createdAt: new Date()
-    };
+      items: cart.map(item => ({
+        productId: item._id, // 後端 Schema 叫 productId
+        name: item.name,     // 這現在是 {en, zh} 物件
+        price: item.price,
+        qty: item.qty
+      })),
+      total: totalPrice
+    }
 
     try {
       const res = await fetch("http://localhost:5001/api/orders", {
@@ -48,30 +65,50 @@ function Cart() {
 
     } catch (err) {
       console.error("下單出錯:", err);
-      alert("Ordered fail,Please try later! Reason：" + err.message);
+      alert("Ordered fail,Please try again later! Reason：" + err.message);
     }
   }
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
+
       <h2>Cart</h2>
+
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+        gap: "20px"
+      }}>
+      </div>
+
       {cart.length === 0 ? (
         <p>Cart is empty!</p>
       ) : (
         <div className="cart-list">
           {cart.map((item) => (
-            <div key={item.id} className="card">
-              <img src={item.img} alt={item.name}/>
-              <h3>{item.name}</h3>
-              <p>¥{item.price} × {item.qty}</p>
+            <div key={item._id} className="card">
+              <img src={item.image || item.img} alt={displayLang(item.name)} style={{ width: "100px" }} />
+              <h3>{displayLang(item.name)}</h3>
+
+              {/* ✅ 顯示產品單價 */}
+              <p style={{ color: "green", fontWeight: "bold" }}>
+                {t("price")}: ${item.price}
+              </p>
 
               {/* 修改数量 */}
               <button onClick={() => updateQty(item._id, item.qty + 1)}>
                 +
               </button>
-              <button onClick={() => updateQty(item._id, item.qty - 1)}>
+              {/* ✅ 顯示目前數量 */}
+              <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                {item.qty}
+              </span>
+              <button onClick={() => updateQty(item._id, item.qty - 1)} disabled={item.qty <= 1}>
                 -
               </button>
+
+              {/* ✅ 顯示該品項小計 (單價 x 數量) */}
+              <p>Subtotal: ${item.price * item.qty}</p>
 
               {/* 删除按钮 */}
               <button
@@ -79,7 +116,7 @@ function Cart() {
                   removeFromCart(item._id);
                 }}
               >
-                Delete
+                {t("delete")}
               </button>
               <p></p>
             </div>
@@ -87,7 +124,7 @@ function Cart() {
         </div>
       )}
       <h3>Total Price: $ {totalPrice}</h3>
-      <button onClick={handlePlaceOrder}>下单</button>
+      <button onClick={handlePlaceOrder}>Order Now</button>
     </div>
   )
 }

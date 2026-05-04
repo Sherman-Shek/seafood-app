@@ -1,10 +1,13 @@
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"
+import { Button } from "antd"
+import { useNavigate } from "react-router-dom"
 
 function Cart() {
   const { i18n, t } = useTranslation()
-  const { cart, removeFromCart, updateQty, clearCart } = useContext(CartContext);
+  const { cart, removeFromCart, updateQty } = useContext(CartContext)
+  const navigate = useNavigate() // ✅ 加上這行來初始化跳轉功能
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
 
@@ -16,7 +19,7 @@ function Cart() {
       return field[i18n.language] || field.en;
     }
     // 如果是舊數據(字串)，直接顯示
-    return field;
+    return field
   }
 
   const handlePlaceOrder = async () => {
@@ -124,7 +127,18 @@ function Cart() {
         </div>
       )}
       <h3>Total Price: $ {totalPrice}</h3>
+
       <button onClick={handlePlaceOrder}>Order Now</button>
+    <br />
+      <Button
+        type="primary"
+        size="large"
+        block
+        style={{ marginTop: '20px', height: '50px', width: '200px' }}
+        onClick={() => navigate(`/${i18n.language}/checkout`)}
+      >
+        Proceed to Checkout
+      </Button>
     </div>
   )
 }

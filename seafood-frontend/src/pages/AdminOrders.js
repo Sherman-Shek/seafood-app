@@ -46,7 +46,7 @@ function AdminOrders() {
       if (!res.ok) throw new Error(updated.message || "更新失敗")
 
       setOrders(prev => prev.map(o => (o._id === id ? updated : o)))
-      message.success("狀態更新成功！")
+      message.success("Status Updated Successfully！")
     } catch (err) {
       message.error(err.message)
     }
@@ -54,7 +54,7 @@ function AdminOrders() {
 
   // 删除
   const handleDelete = async (id) => {
-    if (!window.confirm("確定要刪除這筆訂單嗎？")) return
+    if (!window.confirm("Confirm to delete this order?")) return
 
     try {
       const res = await fetch(`http://localhost:5001/api/orders/${id}`, {
@@ -66,7 +66,7 @@ function AdminOrders() {
 
       if (!res.ok) throw new Error("刪除失敗")
       setOrders(prev => prev.filter(o => o._id !== id))
-      message.success("訂單已刪除")
+      message.success("The order is deleted")
     } catch (err) {
       message.error(err.message)
     }

@@ -15,7 +15,7 @@ const orderSchema = new mongoose.Schema({
     }
   ],
   total: Number,
-  status: { type: String, default: "pending" },
+  status: { type: String, default: "pending_payment" },
   orderNumber: String,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // 儲存用戶關聯
   createdAt: { type: Date, default: Date.now }

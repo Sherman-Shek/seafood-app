@@ -8,5 +8,11 @@
   "orders": "Orders",
   "welcome": "Welcome",
   "adminOrders": "Admin Orders",
-  "addToCart": "Add To Cart"
+  "addToCart": "Add To Cart",
+  "origin": "Origin",
+  "unit": "Unit",
+  "cookingSuggestion": "Cooking Suggestion",
+  "buyingInformation": "Buying Information",
+  "productDescriptions": "Product Descriptions",
+  "loading": "Loading..."
 }

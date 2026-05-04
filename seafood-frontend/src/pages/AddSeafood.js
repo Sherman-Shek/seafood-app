@@ -1,6 +1,7 @@
 import { useDropzone } from "react-dropzone"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom" // ✅ 1. 引入跳转钩子
+import { useNavigate } from "react-router-dom" 
+import { Button, Row, Col, Form, Input } from "antd"
 
 // ✅ 2. 确保接收 onAdd 参数
 function AddSeafood({ onAdd }) {
@@ -122,8 +123,9 @@ function AddSeafood({ onAdd }) {
                     />
                 </div>
             )}
-
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <Form layout="vertical"
+                onSubmit={handleSubmit}
+                style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <label>Product Name (English)</label>
                 <input
                     type="text"
@@ -167,12 +169,43 @@ function AddSeafood({ onAdd }) {
                     value={form.category.zh}
                     onChange={handleChange}
                 />
+                <Row gutter={16}>
+                    <Col span={12}>
+                        <Form.Item label="產地 (Origin - ZH)" name={['origin', 'zh']} rules={[{ required: true }]}>
+                            <Input placeholder="例如：日本空運" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Origin (EN)" name={['origin', 'en']} rules={[{ required: true }]}>
+                            <Input placeholder="e.g., Japan Air Freight" />
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-                <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
-                    Add Seafood
-                </button>
-            </form>
-        </div>
+                <Row gutter={16}>
+                    <Col span={12}>
+                        <Form.Item label="單位 (Unit - ZH)" name={['unit', 'zh']} rules={[{ required: true }]}>
+                            <Input placeholder="例如：每斤 / 每隻" />
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item label="Unit (EN)" name={['unit', 'en']} rules={[{ required: true }]}>
+                            <Input placeholder="e.g., per kg / per pc" />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Form.Item label="處理建議 (Cooking - ZH/EN)" name={['cookingMethod', 'zh']}>
+                    <Input.TextArea placeholder="例如：清蒸、椒鹽" />
+                </Form.Item>
+
+                <Button type="primary"
+                    htmlType="submit"
+                    block
+                    style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}
+                >Add Seafood</Button>
+            </Form>
+        </div >
     )
 }
 

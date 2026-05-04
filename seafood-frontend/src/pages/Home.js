@@ -1,5 +1,7 @@
 import SeafoodList from "../components/SeafoodList"
 import { useTranslation } from "react-i18next"
+import { Button } from "antd"
+import { WhatsAppOutlined } from '@ant-design/icons'
 
 function Home() {
   const { t } = useTranslation()
@@ -28,6 +30,14 @@ function Home() {
         The Freshest Catch, Straight to Your Door.
       </p>
     </div>
+    <a
+      href="https://wa.me/85260863900"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 1000 }}
+    >
+      <Button type="primary" shape="circle" icon={<WhatsAppOutlined />} size="large" style={{ backgroundColor: '#25D366', borderColor: '#25D366', height: '60px', width: '60px' }} />
+    </a>
     <SeafoodList />
   </>
 }

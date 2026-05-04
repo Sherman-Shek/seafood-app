@@ -52,9 +52,10 @@ function Navbar() {
             justifyContent: "space-between",
             alignItems: "center", // 確保垂直居中
             padding: "10px",
-            background: "#111",
+            background: 'rgba(0,0,0,0.8)',
             color: "white",
-            gap: "15px"
+            gap: "15px",
+            backdropFilter: 'blur(10px)'
         }}>
             <Link to={`/${i18n.language}`} style={{ color: 'inherit' }}>
                 🦐 Seafood Shop

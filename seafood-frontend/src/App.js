@@ -21,6 +21,7 @@ import AdminOrders from "./pages/AdminOrders"
 import { useContext } from "react"
 import { CartContext } from "./context/CartContext"
 import { AuthContext } from "./context/AuthContext"
+import Checkout from "./pages/Checkout"
 
 function App() {
 
@@ -46,9 +47,15 @@ function App() {
           <Route path="edit/:id" element={<EditSeafood />} />
           <Route path="seafood/:id" element={<SeafoodDetail />} />
 
+          <Route path="checkout" element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          } />
+
           <Route path="cart" element={
             <ProtectedRoute>
-              <Cart cart={cart} />
+              <Cart />
             </ProtectedRoute>
           } />
 
@@ -65,7 +72,6 @@ function App() {
                 <AdminDashboard />
               </AdminRoute>
             } />
-
 
           <Route
             path="admin/orders"
@@ -89,6 +95,10 @@ function App() {
         <Route path="*" element={<Navigate to="/en" replace />} />
 
       </Routes>
+      <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
+        <p>© 2026 Wing Sang Fat Seafood. All Rights Reserved.</p>
+        <p>Location: Kowloon, Hong Kong | WhatsApp: +852 6086 3900</p>
+      </footer>
     </div>
   )
 }

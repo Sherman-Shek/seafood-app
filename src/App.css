@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.ant-card-cover img {
+  height: 200px;
+  object-fit: cover; /* 自動裁切，確保圖片不變形且高度統一 */
+}
+
+.ant-card-cover img {
+  height: 200px;
+  object-fit: cover; /* 自動裁切，確保圖片不變形且高度統一 */
+  border-bottom: 1px solid #f0f0f0;
+}

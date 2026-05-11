@@ -1,7 +1,6 @@
 import { useState } from "react"
 
 function SeafoodForm({ onAdd }) {
-
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
@@ -28,7 +27,7 @@ function SeafoodForm({ onAdd }) {
       formData.append("image", file)
 
       // 👉 上传图片
-      const uploadRes = await fetch("http://localhost:5001/api/seafood/upload", {
+      const uploadRes = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/upload`, {
         method: "POST",
         body: formData
       })
@@ -43,10 +42,11 @@ function SeafoodForm({ onAdd }) {
         image: uploadData.imageUrl
       }
 
-      const res = await fetch("http://localhost:5001/api/seafood", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(newItem)
       })
@@ -65,5 +65,6 @@ function SeafoodForm({ onAdd }) {
     </>
   )
 }
+
 export default SeafoodForm
 

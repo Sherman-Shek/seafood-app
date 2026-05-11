@@ -13,6 +13,8 @@
     "i18next": "^26.0.6",
     "i18next-browser-languagedetector": "^8.2.1",
     "multer": "^2.1.1",
+    "antd": "^5.x.x",
+    "@ant-design/icons": "^5.x.x",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-dropzone": "^15.0.0",

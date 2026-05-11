@@ -15,10 +15,13 @@ app.use("/api/orders", orderRoutes)
 
 app.use("/api/seafood", require("./routes/seafoodRoutes"))
 
-mongoose.connect("mongodb://localhost:27017/seafoodDB")
+const DB_URI = process.env.MONGO_URI || "mongodb://localhost:27017/seafoodDB"
+mongoose.connect(DB_URI)
 .then(()=> console.log("MongoDB Connected"))
 .catch(err=>console.log(err))
 
-app.listen(5001, ()=>{
-    console.log("Server running on port 5001")
+const PORT = process.env.PORT || 5001
+
+app.listen(PORT, ()=>{
+    console.log(`Server running on port ${PORT}`)
 })

@@ -19,7 +19,7 @@ function Orders() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/orders", {
+    fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

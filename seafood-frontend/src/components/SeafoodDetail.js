@@ -30,7 +30,7 @@ function SeafoodDetail() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:5001/api/seafood/${id}`)
+    fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`)
       .then(res => res.json())
       .then((data) => {
         setItem(data);

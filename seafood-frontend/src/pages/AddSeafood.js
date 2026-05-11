@@ -44,7 +44,7 @@ function AddSeafood({ onAdd }) {
             image: imageUrl
         };
 
-        fetch("http://localhost:5001/api/seafood", {
+        fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

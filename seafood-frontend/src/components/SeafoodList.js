@@ -61,7 +61,7 @@ function SeafoodList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/seafood");
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`);
         const data = await res.json()
 
         // ✅ 关键点：取消注释并使用正确的 setter 函数
@@ -88,7 +88,7 @@ function SeafoodList() {
       alert("Please login first!")
       return
     }
-    fetch(`http://localhost:5001/api/seafood/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`

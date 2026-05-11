@@ -22,7 +22,7 @@ function EditSeafood() {
 
     // 1. 页面加载时，获取旧数据回显
     useEffect(() => {
-        fetch(`http://localhost:5001/api/seafood/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/api/seafood/{id}`)
             .then(res => res.json())
             .then(data => {
                 setForm({
@@ -39,7 +39,7 @@ function EditSeafood() {
         e.preventDefault();
         const payload = { ...form, price: Number(form.price), image: imageUrl };
 
-        const res = await fetch(`http://localhost:5001/api/seafood/${id}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -59,7 +59,7 @@ function EditSeafood() {
         const formData = new FormData()
         formData.append("image", file)
 
-        fetch("http://localhost:5001/api/seafood/upload", {
+        fetch(`${process.env.REACT_APP_API_URL}/api/seafood/upload`, {
             method: "POST",
             body: formData
         })

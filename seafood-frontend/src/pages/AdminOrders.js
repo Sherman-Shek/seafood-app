@@ -7,7 +7,7 @@ function AdminOrders() {
 
   // 1. 取得所有訂單
   useEffect(() => {
-    fetch("http://localhost:5001/api/orders/all", {
+    fetch(`${process.env.REACT_APP_API_URL}/api/orders/all`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
@@ -31,7 +31,7 @@ function AdminOrders() {
   const updateStatus = async (id, status) => {
     try {
       const res = await fetch(
-        `http://localhost:5001/api/orders/${id}/status`,
+        `${process.env.REACT_APP_API_URL}/api/orders/${id}/status`,
         {
           method: "PUT",
           headers: {
@@ -57,7 +57,7 @@ function AdminOrders() {
     if (!window.confirm("Confirm to delete this order?")) return
 
     try {
-      const res = await fetch(`http://localhost:5001/api/orders/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/orders/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`

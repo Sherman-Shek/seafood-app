@@ -7,7 +7,7 @@ function AdminDashboard() {
 
     // 获取商品
     useEffect(() => {
-        fetch("http://localhost:5001/api/seafood")
+        fetch(`${process.env.REACT_APP_API_URL}/api/seafood`)
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [])
@@ -15,7 +15,7 @@ function AdminDashboard() {
     // 删除
     const handleDelete = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5001/api/seafood/${id}`, {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -33,7 +33,7 @@ function AdminDashboard() {
 
     const handleAdd = async () => {
         try {
-            const res = await fetch("http://localhost:5001/api/seafood", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -59,7 +59,7 @@ function AdminDashboard() {
 
         if (!newName || !newPrice) return
 
-        const res = await fetch(`http://localhost:5001/api/seafood/${item._id}`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${item._id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

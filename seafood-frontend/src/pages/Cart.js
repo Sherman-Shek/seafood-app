@@ -43,7 +43,7 @@ function Cart() {
     }
 
     try {
-      const res = await fetch("http://localhost:5001/api/orders", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

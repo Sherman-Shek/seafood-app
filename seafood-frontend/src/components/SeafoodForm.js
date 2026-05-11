@@ -27,7 +27,7 @@ function SeafoodForm({ onAdd }) {
       formData.append("image", file)
 
       // 👉 上传图片
-      const uploadRes = await fetch("http://localhost:5001/api/seafood/upload", {
+      const uploadRes = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/upload`, {
         method: "POST",
         body: formData
       })
@@ -42,7 +42,7 @@ function SeafoodForm({ onAdd }) {
         image: uploadData.imageUrl
       }
 
-      const res = await fetch("http://localhost:5001/api/seafood", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

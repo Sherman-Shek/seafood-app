@@ -21,7 +21,8 @@
   "scripts": {
     "server": "node seafood-backend/server.js",
     "client": "npm start --prefix seafood-frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node seafood-backend/server.js"
   },
   "keywords": [],
   "author": "",

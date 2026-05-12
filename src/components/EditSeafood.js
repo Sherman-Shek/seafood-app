@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom" // 假设你用了路由
 import { useDropzone } from "react-dropzone"
+import { useTranslation } from "react-i18next"
 
 function EditSeafood() {
       const { i18n } = useTranslation()

@@ -3,10 +3,11 @@ import { useParams, useNavigate } from "react-router-dom" // 假设你用了路�
 import { useDropzone } from "react-dropzone"
 
 function EditSeafood() {
+      const { i18n } = useTranslation()
     const { id } = useParams(); // 获取 URL 里的 ID
     const navigate = useNavigate()
 
-    const [form, setForm] = useState({ name: "", price: "", category: "" });
+    const [form, setForm] = useState({ name: "", price: "", category: "" })
     const [imageUrl, setImageUrl] = useState("")
 
     // 輔助函數：幫你判斷要顯示什麼文字

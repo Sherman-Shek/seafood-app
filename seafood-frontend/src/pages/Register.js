@@ -1,3 +1,4 @@
+import { message } from "antd"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -20,20 +21,23 @@ function Register() {
         body: JSON.stringify({ email, password })
       })
 
+      
       const data = await res.json()
 
       if (!res.ok) {
         throw new Error(data.error || "Registered failed!")
       }
 
-      alert("Registered Successfully！ Please Login")
+      message.success("Registered Successfully！ Please Login")
 
+      await axios.post(API_URL, data)
       // 👉 跳转登录页
       navigate("/login")
 
     } catch (err) {
       console.error(err)
       setError(err.message)
+      message.error("Registered failed!")
     }
   }
 

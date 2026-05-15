@@ -8,6 +8,9 @@ const allowedOrigins = [
     /\.vercel\.app$/ // 允許所有以 .vercel.app 結尾的網址
 ]
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
 app.use(cors({
   origin: function (origin, callback) {
     // 允許沒有 origin 的請求 (例如手機 App 或 postman)

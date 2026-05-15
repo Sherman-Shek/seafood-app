@@ -5,6 +5,7 @@ import "./Login.css"
 import getUser from "../utils/auth"
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
+import axios from "axios"
 
 function Login() {
   const [email, setEmail] = useState("")
@@ -16,17 +17,14 @@ function Login() {
     e.preventDefault()
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        email,
+        password
       })
 
-      const data = await res.json()
+      const data = await res.data
 
-      if (!res.ok) {
+      if (res.status !== 200) {
         alert(data.error || "Login failed")
         return
       }

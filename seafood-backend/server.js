@@ -8,24 +8,12 @@ const allowedOrigins = [
 ]
 
 app.use(express.json())
-app.use(cors({
-    origin: function (origin, callback) {
-        // 允許沒有 origin 的請求 (如行動裝置或 curl)
-        if (!origin) return callback(null, true);
-        const isAllowed = allowedOrigins.some(allowed => {
-            if (allowed instanceof RegExp) return allowed.test(origin);
-            return allowed === origin;
-        });
 
-        if (isAllowed) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+// 允許你的 Vercel 網址訪問後端
+app.use(cors({
+  origin: 'https://seafood-4pzvx1d7f-sherman-sheks-projects.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }))
 
 const path = require("path")

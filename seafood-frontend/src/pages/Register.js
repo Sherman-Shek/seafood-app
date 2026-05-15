@@ -1,42 +1,42 @@
-import { message } from "antd";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"; // 🔴 修正 1：必須引入 axios
+import { message } from "antd"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios" // 🔴 修正 1：必須引入 axios
 
 function Register() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // 🔴 修正 2：加入 username 狀態
-  const [username, setUsername] = useState(""); 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
   const handleRegister = async (e) => {
     // 阻止表單預設提交行為
-    if (e) e.preventDefault();
+    if (e) e.preventDefault()
 
     try {
-      console.log("Attempting to register user...");
+      console.log("Attempting to register user...")
       
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
         username, // 確保有送出 username
         email,
         password
-      });
+      })
 
       // 🔴 修正 3：移除 res.json() 和 res.ok，改用 axios 的正確寫法
       if (res.status === 200 || res.status === 201) {
         message.success("Registered Successfully！ Please Login");
         // 跳轉登入頁
-        navigate("/login");
+        navigate("/login")
       }
     } catch (err) {
-      console.error(err);
+      console.error(err)
       // Axios 的錯誤訊息通常包在 err.response.data 裡面
       const errorMessage = err.response?.data?.message || err.message;
       setError(errorMessage);
-      message.error("Registered failed: " + errorMessage);
+      message.error("Registered failed: " + errorMessage)
     }
   }
 

@@ -32,6 +32,7 @@ function Register() {
         navigate("/login")
       }
     } catch (err) {
+      console.log(err.response.data)
       console.error(err)
       // Axios 的錯誤訊息通常包在 err.response.data 裡面
       const errorMessage = err.response?.data?.message || err.message;

@@ -62,7 +62,7 @@ function SeafoodList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/seafood`)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/seafood`)
         const data = await res.data
 
         // ✅ 关键点：取消注释并使用正确的 setter 函数

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import { Card, Button, message, Row, Col, Spin } from "antd"
 import { Input, Select, Space } from 'antd'
 import { ShoppingCartOutlined } from "@ant-design/icons"
+import axios from "axios"
 
 const { Meta } = Card
 const { Search } = Input
@@ -61,8 +62,8 @@ function SeafoodList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`)
-        const data = await res.json()
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/seafood`)
+        const data = await res.data
 
         // ✅ 关键点：取消注释并使用正确的 setter 函数
         setSeafood(data);
@@ -88,8 +89,7 @@ function SeafoodList() {
       alert("Please login first!")
       return
     }
-    fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
-      method: "DELETE",
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

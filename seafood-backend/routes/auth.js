@@ -8,9 +8,9 @@ const SECRET = "mysecretkey" // 👉 以后可以换 env
 // 注册
 router.post("/register", async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { username, email, password } = req.body
 
-    if (!email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ error: "Missing fields" })
     }
     const existingUser = await User.findOne({ email })
@@ -21,6 +21,7 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const user = new User({
+      username,
       email,
       password: hashedPassword,
       role: "user"

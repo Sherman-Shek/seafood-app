@@ -14,20 +14,20 @@ function Register() {
 
   const handleRegister = async (e) => {
     // 阻止表單預設提交行為
-    if (e) e.preventDefault()
+    e.preventDefault()
 
     try {
       console.log("Attempting to register user...")
       
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
-        username, // 確保有送出 username
+        username, 
         email,
         password
       })
 
       // 🔴 修正 3：移除 res.json() 和 res.ok，改用 axios 的正確寫法
       if (res.status === 200 || res.status === 201) {
-        message.success("Registered Successfully！ Please Login");
+        message.success("Registered Successfully！ Please Login")
         // 跳轉登入頁
         navigate("/login")
       }

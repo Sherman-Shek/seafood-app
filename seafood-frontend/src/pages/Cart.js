@@ -23,6 +23,10 @@ function Cart() {
   }
 
   const handlePlaceOrder = async () => {
+    if (cart.length === 0) {
+      message.warning(t("Your cart is empty"))
+      return
+    }
     // 1. 獲取登入的 token
     const token = localStorage.getItem("token");
     if (!token) {
@@ -129,7 +133,7 @@ function Cart() {
       <h3>Total Price: $ {totalPrice}</h3>
 
       <button onClick={handlePlaceOrder}>Order Now</button>
-    <br />
+      <br />
       <Button
         type="primary"
         size="large"

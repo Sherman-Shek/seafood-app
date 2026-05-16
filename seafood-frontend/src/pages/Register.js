@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios" // 🔴 修正 1：必須引入 axios
 import { useTranslation } from "react-i18next"
-import "./Register.css"
 
 function Register() {
   const navigate = useNavigate()

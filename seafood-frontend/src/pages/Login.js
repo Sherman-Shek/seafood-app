@@ -50,7 +50,7 @@ function Login() {
         <button className="login-button">Login</button>
         <p>
           New here? <br />
-          <Link to="/register">Create account</Link>
+          <Link to="/register">{t("register")}</Link>
         </p>
       </form>
     </div>

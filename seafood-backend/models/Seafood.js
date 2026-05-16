@@ -12,8 +12,8 @@ const seafoodSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     image: { type: String, required: true },
     unit: { 
-        en: { type: String, required: true },
-        zh: { type: String, required: true }
+        en: { type: String },
+        zh: { type: String }
     },
     cookingMethod: { 
         en: { type: String },

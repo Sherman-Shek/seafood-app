@@ -29,10 +29,10 @@ function SeafoodList() {
     if (!field) return "";
     if (typeof field === 'object') {
       // 如果是新數據(物件)，根據當前語言顯示，如果沒有該語言就默認顯示英文
-      return field[i18n.language] || field.en;
+      return field[i18n.language] || field.en
     }
     // 如果是舊數據(字串)，直接顯示
-    return field;
+    return field
   }
 
   const filtered = seafood.filter(item => {
@@ -217,7 +217,7 @@ function SeafoodList() {
                   e.preventDefault()
                   e.stopPropagation()
                   addToCart(item)
-                  message.success(`${displayLang(item.name)} ${t("added to cart")}`)
+                  message.success(`${displayLang(item.name)} ${t("addToCart")}`)
                 }}
               >
                 {t("addToCart")}

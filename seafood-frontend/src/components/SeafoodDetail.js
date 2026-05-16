@@ -106,9 +106,6 @@ function SeafoodDetail() {
               <Title level={2}>{displayLang(item.name)}</Title>
 
               <div style={{ marginBottom: '16px' }}>
-                <Text type="secondary">{t("Origin")}: </Text>
-                <Tag color="blue">{displayLang(item.origin) || t("Local")}</Tag>
-
                 <Text type="secondary" style={{ marginLeft: '10px' }}>{t("Unit")}: </Text>
                 <Tag color="green">{displayLang(item.unit) || t("pc")}</Tag>
               </div>
@@ -142,7 +139,7 @@ function SeafoodDetail() {
                   e.preventDefault()
                   e.stopPropagation()
                   addToCart(item)
-                  message.success(t("Added to your cart!"))
+                  message.success(t("addToCart"))
                 }}
                 style={{
                   marginTop: '30px',

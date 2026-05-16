@@ -57,8 +57,8 @@ const handleSubmit = async (e) => {
         body: JSON.stringify(payload)
     })
     if (res.ok) {
-        alert("Updated Successfully!");
-        navigate("/");
+        alert("Updated Successfully!")
+        navigate("/")
     }
 }
 

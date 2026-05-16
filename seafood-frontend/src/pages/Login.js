@@ -6,12 +6,15 @@ import getUser from "../utils/auth"
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 import axios from "axios"
+import { useTranslation } from "react-i18next"
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const { login } = useContext(AuthContext)
+  const { t, i18n } = useTranslation()
+
 
   const handleLogin = async (e) => {
     e.preventDefault()

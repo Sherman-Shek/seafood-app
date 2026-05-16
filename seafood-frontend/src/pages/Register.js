@@ -2,6 +2,8 @@ import { message } from "antd"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios" // 🔴 修正 1：必須引入 axios
+import { useTranslation } from "react-i18next"
+import "./Register.css"
 
 function Register() {
   const navigate = useNavigate()
@@ -11,6 +13,8 @@ function Register() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+    const { t, i18n } = useTranslation()
+  
 
   const handleRegister = async (e) => {
     // 阻止表單預設提交行為
@@ -18,9 +22,9 @@ function Register() {
 
     try {
       console.log("Attempting to register user...")
-      
+
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
-        username, 
+        username,
         email,
         password
       })
@@ -28,8 +32,9 @@ function Register() {
       // 🔴 修正 3：移除 res.json() 和 res.ok，改用 axios 的正確寫法
       if (res.status === 200 || res.status === 201) {
         message.success("Registered Successfully！ Please Login")
-        // 跳轉登入頁
-        navigate("/login")
+        // 跳轉登入頁面，並帶上當前語言
+        navigate(`/login${i18n.language}`)
+
       }
     } catch (err) {
       console.log(err.response.data)

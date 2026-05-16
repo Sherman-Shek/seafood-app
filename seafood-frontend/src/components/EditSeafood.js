@@ -36,115 +36,142 @@ function EditSeafood() {
                     unit: data.unit || { en: "", zh: "" } // 确保 unit 字段存在，避免 undefined 错误
                 })
                 setImageUrl(data.image)
-             } catch (err) {
+            } catch (err) {
                 console.error("Error fetching product:", err)
             }
         }
         fetchProduct()
     }, [id])
 
-const handleSubmit = async (e) => {
-    const token = localStorage.getItem("token")
-    e.preventDefault();
-    const payload = { ...form, price: Number(form.price), image: imageUrl };
+    const handleChange = (e) => {
+        const { name, value } = e.target
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-    })
-    if (res.ok) {
-        alert("Updated Successfully!")
-        navigate("/")
+        // 處理需要分語言的欄位 (例如 name_en, name_zh)
+        if (name.includes("_")) {
+            const [field, lang] = name.split("_"); // 分割出 name 和 en
+            setForm(prev => ({
+                ...prev,
+                [field]: { ...prev[field], [lang]: value }
+            }))
+        } else {
+            // 處理價格、圖片等不分語言的欄位
+            setForm(prev => ({ ...prev, [name]: value }))
+        }
     }
-}
 
-// ... onDrop 图片上传函数可以直接复用之前的 ...
-const onDrop = (acceptedFiles) => {
-    const file = acceptedFiles[0]
-    const formData = new FormData()
-    formData.append("image", file)
+    const handleSubmit = async (e) => {
+        const token = localStorage.getItem("token")
+        e.preventDefault();
+        const payload = { ...form, price: Number(form.price), image: imageUrl };
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/seafood/upload`, {
-        method: "POST",
-        body: formData
-    })
-        .then(async res => {
-            if (!res.ok) {
-                // ✨ 如果报错，尝试读取后端返回的错误文字
-                const errorText = await res.text();
-                throw new Error(`服务器错误: ${res.status} - ${errorText}`);
-            }
-            return res.json();
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
         })
-        .then(json => {
-            setImageUrl(json.imageUrl);
+        if (res.ok) {
+            alert("Updated Successfully!")
+            navigate("/")
+        }
+    }
+
+    // ... onDrop 图片上传函数可以直接复用之前的 ...
+    const onDrop = (acceptedFiles) => {
+        const file = acceptedFiles[0]
+        const formData = new FormData()
+        formData.append("image", file)
+
+        fetch(`${process.env.REACT_APP_API_URL}/api/seafood/upload`, {
+            method: "POST",
+            body: formData
         })
-        .catch(err => {
-            console.error("FETCH ERROR:", err.message);
-        })
-}
-const { getRootProps, getInputProps } = useDropzone({ onDrop });
+            .then(async res => {
+                if (!res.ok) {
+                    // ✨ 如果报错，尝试读取后端返回的错误文字
+                    const errorText = await res.text();
+                    throw new Error(`服务器错误: ${res.status} - ${errorText}`);
+                }
+                return res.json();
+            })
+            .then(json => {
+                setImageUrl(json.imageUrl);
+            })
+            .catch(err => {
+                console.error("FETCH ERROR:", err.message);
+            })
+    }
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-return (
-    // ... JSX 部分基本与 AddSeafood 一致 ...
-    // 只需要把按钮文字改成 "Update Seafood"
-    <div>
-        <h2>Edit Seafood</h2>
+    return (
+        // ... JSX 部分基本与 AddSeafood 一致 ...
+        // 只需要把按钮文字改成 "Update Seafood"
+        <div>
+            <h2>Edit Seafood</h2>
 
-        <div {...getRootProps()} style={{ border: "2px dashed black", padding: "20px" }}>
-            <input {...getInputProps()} />
-            <p>Drag and Drop here 👇</p>
-        </div>
-
-        {imageUrl && (
-            <div style={{ marginBottom: "20px" }}>
-                <p>Preview: </p>
-                <img
-                    // 如果 imageUrl 包含 http 說明是雲端地址，否則加上後端地址
-                    src={imageUrl.startsWith("http") ? imageUrl : `http://localhost:5001${imageUrl}`}
-                    alt={"Preview"}
-                    width="200"
-                    style={{ borderRadius: "8px" }}
-                />
+            <div {...getRootProps()} style={{ border: "2px dashed black", padding: "20px" }}>
+                <input {...getInputProps()} />
+                <p>Drag and Drop here 👇</p>
             </div>
-        )}
 
-        <form onSubmit={handleSubmit}>
-            <input
-                name="name"
-                placeholder="Name"
-                value={form.name}
-                onChange={(e) =>
-                    setForm({ ...form, name: e.target.value })
-                }
-            />
+            {imageUrl && (
+                <div style={{ marginBottom: "20px" }}>
+                    <p>Preview: </p>
+                    <img
+                        // 如果 imageUrl 包含 http 說明是雲端地址，否則加上後端地址
+                        src={imageUrl.startsWith("http") ? imageUrl : `http://localhost:5001${imageUrl}`}
+                        alt={"Preview"}
+                        width="200"
+                        style={{ borderRadius: "8px" }}
+                    />
+                </div>
+            )}
 
-            <input
-                name="price"
-                type="number"
-                placeholder="Price"
-                value={form.price}
-                onChange={(e) =>
-                    setForm({ ...form, price: e.target.value })
-                }
-            />
+            <form onSubmit={handleSubmit}>
+                <label>產品名稱：（中文）</label>
+                <input
+                    name="name_zh"
+                    placeholder="Name"
+                    value={form.name?.zh || ""}
+                    onChange={handleChange}
+                />
+                <label>Product Name: (English)</label>
+                <input
+                    name="name_en"
+                    placeholder="Name"
+                    value={form.name?.en || ""}
+                    onChange={handleChange}
+                />
 
-            <input
-                name="category"
-                placeholder="Category"
-                value={form.category}
-                onChange={(e) =>
-                    setForm({ ...form, category: e.target.value })
-                }
-            />
+                <input
+                    name="price"
+                    type="number"
+                    placeholder="Price"
+                    value={form.price}
+                    onChange={handleChange}
+                />
 
-            <button type="submit">Update</button>
-        </form>
-    </div>
-)
+                <label>分類：（中文）</label>
+                <input
+                    name="category_zh"
+                    placeholder="Category"
+                    value={form.category?.zh || ""}
+                    onChange={handleChange}
+                />
+
+                <label>Category: (English)</label>
+                <input
+                    name="category_en"
+                    placeholder="Category"
+                    value={form.category?.en || ""}
+                    onChange={handleChange}
+                />
+
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    )
 }
 export default EditSeafood

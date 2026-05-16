@@ -20,28 +20,28 @@ function Navbar() {
     }
     const menuItems = [
         {
-            key: 'home',
+            key: '/home',
             label: <Link to={`/${curLang}`}>{t("home")}</Link>,
         },
         {
-            key: 'cart',
+            key: '/cart',
             label: <Link to={user ? `/${curLang}/cart` : `/${curLang}/login`}>
                 {t("cart")}
             </Link>,
         },
         {
-            key: 'orders',
+            key: '/orders',
             label: <Link to={`/${i18n.language}/orders`}>{t("orders")}</Link>,
         },
 
         // 管理員選項
         ...(user?.role === "admin" ? [
             {
-                key: 'addSeafood',
+                key: '/addSeafood',
                 label: <Link to={`/${curLang}/addSeafood`}>{t("addSeafood")}</Link>,
             },
             {
-                key: 'adminOrders',
+                key: '/admin/orders',
                 label: <Link to={`/${curLang}/admin/orders`}>{t("adminOrders")}</Link>,
             }
         ] : [])

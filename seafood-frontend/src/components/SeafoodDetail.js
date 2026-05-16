@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
 import { useTranslation } from 'react-i18next'
 import { CartContext } from "../context/CartContext"
-import { Button, message, Row, Col, Spin, success } from "antd"
+import { Button, message, Row, Col, Spin } from "antd"
 import { Tag, Divider, Descriptions, Card, Typography } from 'antd'
 
 const { Title, Text } = Typography

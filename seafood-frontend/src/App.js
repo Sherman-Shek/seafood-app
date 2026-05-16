@@ -1,4 +1,4 @@
-import React from 'react'; // 確保明確引入 React
+import React from 'react' // 確保明確引入 React
 
 import { Routes, Route, Navigate } from "react-router-dom"
 import LanguageWrapper from "./components/LanguageWrapper"
@@ -47,13 +47,13 @@ function App() {
           <Route path="edit/:id" element={<EditSeafood />} />
           <Route path="seafood/:id" element={<SeafoodDetail />} />
 
-          <Route path="checkout" element={
+          <Route path="/checkout" element={
             <ProtectedRoute>
               <Checkout />
             </ProtectedRoute>
           } />
 
-          <Route path="cart" element={
+          <Route path="/cart" element={
             <ProtectedRoute>
               <Cart />
             </ProtectedRoute>
@@ -95,6 +95,7 @@ function App() {
         <Route path="*" element={<Navigate to="/en" replace />} />
 
       </Routes>
+
       <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
         <p>© 2026 Wing Sang Fat Seafood. All Rights Reserved.</p>
         <p>Location: Kowloon, Hong Kong | WhatsApp: +852 6086 3900</p>

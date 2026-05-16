@@ -33,6 +33,11 @@ function Navbar() {
             key: 'orders',
             label: <Link to={`/${i18n.language}/orders`}>{t("orders")}</Link>,
         },
+        {
+            key: 'register',
+            label: <Link to={`/${i18n.language}/register`}>{t("register")}</Link>,
+        },
+
         // 管理員選項
         ...(user?.role === "admin" ? [
             {
@@ -60,7 +65,7 @@ function Navbar() {
             <Link to={`/${i18n.language}`} style={{ color: 'inherit' }}>
                 🦐 Seafood Shop
             </Link>
-            
+
             {/* 导航栏 */}
             <div style={{
                 flex: 1,

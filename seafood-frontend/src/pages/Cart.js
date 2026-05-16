@@ -24,7 +24,7 @@ function Cart() {
 
   const handlePlaceOrder = async () => {
     if (cart.length === 0) {
-      message.warning("Your cart is empty！ Please add some seafood before placing an order.")
+      message.success("Your cart is empty！ Please add some seafood before placing an order.")
       setTimeout(() => {
         navigate(`/${i18n.language}/`) // ✅ 這裡使用 navigate 跳轉到海鮮列表頁
       }, 1500)

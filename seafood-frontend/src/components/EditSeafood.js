@@ -144,7 +144,8 @@ function EditSeafood() {
                     value={form.name?.en || ""}
                     onChange={handleChange}
                 />
-
+                <p />
+                <label>價格：</label>
                 <input
                     name="price"
                     type="number"
@@ -152,7 +153,7 @@ function EditSeafood() {
                     value={form.price}
                     onChange={handleChange}
                 />
-
+                <p />
                 <label>分類：（中文）</label>
                 <input
                     name="category_zh"
@@ -168,7 +169,7 @@ function EditSeafood() {
                     value={form.category?.en || ""}
                     onChange={handleChange}
                 />
-
+                <p />
                 <button type="submit">Update</button>
             </form>
         </div>

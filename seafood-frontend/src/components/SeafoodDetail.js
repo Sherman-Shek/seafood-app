@@ -129,15 +129,6 @@ function SeafoodDetail() {
                 size="middle"
                 style={{ marginTop: '20px', background: 'white' }}
               >
-                <Descriptions.Item label={t("Origin")}>
-                  {displayLang(item.origin) || t("Local / Seasonal")}
-                </Descriptions.Item>
-                <Descriptions.Item label={t("Cooking Suggestion")}>
-                  {/* 這裡顯示處理建議，例如：清蒸、椒鹽 */}
-                  <Text strong style={{ color: '#1890ff' }}>
-                    {displayLang(item.cookingMethod) || t("Steam / Pan-fry")}
-                  </Text>
-                </Descriptions.Item>
                 <Descriptions.Item label={t("Storage")}>
                   {i18n.language === 'zh' ? '冷藏 0-4°C' : 'Refrigerated 0-4°C'}
                 </Descriptions.Item>

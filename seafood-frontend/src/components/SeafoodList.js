@@ -217,7 +217,7 @@ function SeafoodList() {
                   e.preventDefault()
                   e.stopPropagation()
                   addToCart(item)
-                  message.success("Added to cart!")
+                  message.success(`${displayLang(item.name)} ${t("added to cart")}`)
                 }}
               >
                 {t("addToCart")}

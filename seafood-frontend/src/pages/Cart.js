@@ -24,11 +24,17 @@ function Cart() {
 
   const handlePlaceOrder = async () => {
     if (cart.length === 0) {
-      message.warning(t("Your cart is empty"))
+      message.warning("Your cart is empty！ Please add some seafood before placing an order.")
+      setTimeout(() => {
+        navigate(`/${i18n.language}/`) // ✅ 這裡使用 navigate 跳轉到海鮮列表頁
+      }, 1500)
       return
     }
+    navigate(`/${i18n.language}/checkout`) // ✅ 直接跳轉到結帳頁面
+  }
+
     // 1. 獲取登入的 token
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
     if (!token) {
       alert("Please login！");
       return;
@@ -138,10 +144,11 @@ function Cart() {
         type="primary"
         size="large"
         block
+        disabled={totalPrice <= 0}
         style={{ marginTop: '20px', height: '50px', width: '200px' }}
         onClick={() => navigate(`/${i18n.language}/checkout`)}
       >
-        Proceed to Checkout
+        {t("Proceed to Checkout")} (${totalPrice})
       </Button>
     </div>
   )

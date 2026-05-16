@@ -36,7 +36,7 @@ function Login() {
 
       localStorage.setItem("token", data.token)
       login(getUser())
-      navigate("/")
+      navigate(`/${i18n.language}`)
     } catch (err) {
       console.error(err)
       alert("Login Fail!")
@@ -53,8 +53,7 @@ function Login() {
         <button className="login-button">Login</button>
         <p>
           New here? <br />
-          <Link to="/register">{t("register")}</Link>
-        </p>
+          <Link to={`/${i18n.language}/register`}>{t("register")}</Link>        </p>
       </form>
     </div>
   )

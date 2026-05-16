@@ -33,10 +33,6 @@ function Navbar() {
             key: 'orders',
             label: <Link to={`/${i18n.language}/orders`}>{t("orders")}</Link>,
         },
-        {
-            key: 'register',
-            label: <Link to={`/${i18n.language}/register`}>{t("register")}</Link>,
-        },
 
         // 管理員選項
         ...(user?.role === "admin" ? [

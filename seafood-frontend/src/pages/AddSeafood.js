@@ -1,6 +1,6 @@
 import { useDropzone } from "react-dropzone"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom" 
+import { useNavigate } from "react-router-dom"
 import { Button, Row, Col, Form, Input } from "antd"
 
 // ✅ 2. 确保接收 onAdd 参数
@@ -126,7 +126,7 @@ function AddSeafood({ onAdd }) {
             <Form layout="vertical"
                 onSubmit={handleSubmit}
                 style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label>Product Name (English)</label>
+                <label>Product Name: (English)</label>
                 <input
                     type="text"
                     name="name_en"
@@ -135,7 +135,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>產品名稱 (中文)</label>
+                <label>產品名稱： (中文)</label>
                 <input
                     type="text"
                     name="name_zh"
@@ -144,7 +144,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-
+                <label>Price:</label>
                 <input
                     name="price"
                     type="number"
@@ -153,7 +153,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>Category (English)</label>
+                <label>Category: (English)</label>
                 <input
                     type="text"
                     name="category_en"
@@ -161,7 +161,7 @@ function AddSeafood({ onAdd }) {
                     value={form.category.en}
                     onChange={handleChange}
                 />
-                <label>分類 (中文)</label>
+                <label>分類： (中文)</label>
                 <input
                     type="text"
                     name="category_zh"
@@ -169,7 +169,7 @@ function AddSeafood({ onAdd }) {
                     value={form.category.zh}
                     onChange={handleChange}
                 />
-                
+
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item label="單位 (Unit - ZH)" name={['unit', 'zh']} rules={[{ required: true }]}>

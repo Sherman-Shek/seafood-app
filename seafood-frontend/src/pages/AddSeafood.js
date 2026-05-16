@@ -169,35 +169,19 @@ function AddSeafood({ onAdd }) {
                     value={form.category.zh}
                     onChange={handleChange}
                 />
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Form.Item label="產地 (Origin - ZH)" name={['origin', 'zh']} rules={[{ required: true }]}>
-                            <Input placeholder="例如：日本空運" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label="Origin (EN)" name={['origin', 'en']} rules={[{ required: true }]}>
-                            <Input placeholder="e.g., Japan Air Freight" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
+                
                 <Row gutter={16}>
                     <Col span={12}>
                         <Form.Item label="單位 (Unit - ZH)" name={['unit', 'zh']} rules={[{ required: true }]}>
-                            <Input placeholder="例如：每斤 / 每隻" />
+                            <Input placeholder="例如：每斤 / 每隻 / 每條" />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item label="Unit (EN)" name={['unit', 'en']} rules={[{ required: true }]}>
-                            <Input placeholder="e.g., per kg / per pc" />
+                            <Input placeholder="e.g., per jin / per pc / per tail" />
                         </Form.Item>
                     </Col>
                 </Row>
-
-                <Form.Item label="處理建議 (Cooking - ZH/EN)" name={['cookingMethod', 'zh']}>
-                    <Input.TextArea placeholder="例如：清蒸、椒鹽" />
-                </Form.Item>
 
                 <Button type="primary"
                     htmlType="submit"

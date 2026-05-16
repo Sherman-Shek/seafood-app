@@ -14,14 +14,6 @@ const seafoodSchema = new mongoose.Schema({
     unit: { 
         en: { type: String },
         zh: { type: String }
-    },
-    cookingMethod: { 
-        en: { type: String },
-        zh: { type: String }
-    },
-    origin: { 
-        en: { type: String },
-        zh: { type: String }
     }
 })
 

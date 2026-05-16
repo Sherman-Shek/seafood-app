@@ -47,13 +47,13 @@ function App() {
           <Route path="edit/:id" element={<EditSeafood />} />
           <Route path="seafood/:id" element={<SeafoodDetail />} />
 
-          <Route path="/checkout" element={
+          <Route path="checkout" element={
             <ProtectedRoute>
               <Checkout />
             </ProtectedRoute>
           } />
 
-          <Route path="/cart" element={
+          <Route path="cart" element={
             <ProtectedRoute>
               <Cart />
             </ProtectedRoute>

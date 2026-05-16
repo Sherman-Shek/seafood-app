@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useContext } from "react"
 import { useTranslation } from 'react-i18next'
 import { CartContext } from "../context/CartContext"
-import { Button, message, Row, Col, Spin } from "antd"
+import { Button, message, Row, Col, Spin, success } from "antd"
 import { Tag, Divider, Descriptions, Card, Typography } from 'antd'
 
 const { Title, Text } = Typography
@@ -104,21 +104,12 @@ function SeafoodDetail() {
           <Col xs={24} md={14}>
             <Card bordered={false} style={{ background: '#fafafa', borderRadius: '12px', overflow: 'hidden' }}>
               <Title level={2}>{displayLang(item.name)}</Title>
-
-              <div style={{ marginBottom: '16px' }}>
-                <Text type="secondary" style={{ marginLeft: '10px' }}>{t("Unit")}: </Text>
-                <Tag color="green">{displayLang(item.unit) || t("pc")}</Tag>
-              </div>
-
               <Title level={3} style={{ color: '#ff4d4f' }}>
                 ${item.price}
                 <small style={{ fontSize: '14px', color: '#888' }}>
                   / {displayLang(item.unit) || t("pc")}
                 </small>
               </Title>
-              <p />
-              <Divider orientation="center">{t("Product Descriptions:")}</Divider>
-              <p>{displayLang(item.description) || t("No description available.")}</p>
               <p />
               <Descriptions title={t("Buying Information:")}
                 bordered

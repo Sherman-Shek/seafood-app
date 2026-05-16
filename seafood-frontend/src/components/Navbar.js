@@ -13,6 +13,20 @@ function Navbar() {
 
     const curLang = i18n.language || "en"
 
+    // 處理點擊跳轉 (確保加上語言前綴)
+    const handleMenuClick = (e) => {
+        if (e.key === "home") navigate(`/${currentLang}/`);
+        if (e.key === "cart") navigate(`/${currentLang}/cart`);
+        if (e.key === "orders") navigate(`/${currentLang}/orders`);
+        if (e.key === "addSeafood") navigate(`/${currentLang}/addSeafood`);
+        if (e.key === "adminOrders") navigate(`/${currentLang}/admin/orders`);
+    };
+
+    // 🔴 計算當前應該高亮的 Menu Key
+    // 例如路徑是 /en/cart，我們把它切開變成 ['', 'en', 'cart']，取第 2 個元素
+    const pathParts = location.pathname.split("/");
+    const activeKey = pathParts[2] || "home"; // 如果沒有第 2 個元素，代表在首頁
+
     const changeLang = (lang) => {
         const segments = location.pathname.split("/")
         segments[1] = lang // 替换语言
@@ -20,28 +34,28 @@ function Navbar() {
     }
     const menuItems = [
         {
-            key: '/home',
+            key: 'home',
             label: <Link to={`/${curLang}`}>{t("home")}</Link>,
         },
         {
-            key: '/cart',
+            key: 'cart',
             label: <Link to={user ? `/${curLang}/cart` : `/${curLang}/login`}>
                 {t("cart")}
             </Link>,
         },
         {
-            key: '/orders',
+            key: 'orders',
             label: <Link to={`/${i18n.language}/orders`}>{t("orders")}</Link>,
         },
 
         // 管理員選項
         ...(user?.role === "admin" ? [
             {
-                key: '/addSeafood',
+                key: 'addSeafood',
                 label: <Link to={`/${curLang}/addSeafood`}>{t("addSeafood")}</Link>,
             },
             {
-                key: '/admin/orders',
+                key: 'adminOrders',
                 label: <Link to={`/${curLang}/admin/orders`}>{t("adminOrders")}</Link>,
             }
         ] : [])
@@ -74,6 +88,8 @@ function Navbar() {
             }}>
                 <Menu
                     mode="horizontal"
+                    selectedKeys={[activeKey]}
+                    onClick={handleMenuClick}
                     theme="light"
                     items={menuItems}
                     style={{ borderBottom: "none", width: "100%" }}
@@ -85,7 +101,8 @@ function Navbar() {
             <Space size="middle">
                 {user ? (
                     <Space>
-                        <span>{t("welcome")} 👤 {user.role}</span>                        <Button onClick={logout}>{t("logout")}</Button>
+                        <span>{t("welcome")} 👤 {user.role}</span>
+                        <Button onClick={logout}>{t("logout")}</Button>
                     </Space>
                 ) : (
                     <Link to={`/${i18n.language}/login`}>

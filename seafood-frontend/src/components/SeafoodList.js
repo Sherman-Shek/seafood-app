@@ -140,8 +140,13 @@ function SeafoodList() {
               { value: 'crab', label: 'Crab' },
               { value: 'lobster', label: 'Lobster' },
               { value: 'shrimp', label: 'Shrimp' },
+              { value: 'abalone', label: 'Abalone' },
+              { value: 'mussel', label: 'Mussel' },
               { value: 'clam', label: 'Clam' },
-
+              { value: 'razor clam', label: 'Razor Clam' },
+              { value: 'scallop', label: 'Scallop' },
+              { value: 'oyster', label: 'Oyster' },
+              { value: 'whelk', label: 'Whelk' },
             ]}
           />
           <Select

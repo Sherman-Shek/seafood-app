@@ -180,14 +180,16 @@ function AddSeafood({ onAdd }) {
                     placeholder="單位"
                     value={form.unit.zh}
                     onChange={handleChange}
+                    required
                 />
-                <label>Unit： (English)</label>
+                <label>Unit: (English)</label>
                 <input
                     type="text"
                     name="unit_en"
                     placeholder="Unit"
                     value={form.unit.en}
                     onChange={handleChange}
+                    required
                 />
 
                 <Button type="primary"

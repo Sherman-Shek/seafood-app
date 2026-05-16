@@ -137,6 +137,7 @@ function EditSeafood() {
                     value={form.name?.zh || ""}
                     onChange={handleChange}
                 />
+                <p />
                 <label>Product Name: (English)</label>
                 <input
                     name="name_en"
@@ -161,7 +162,7 @@ function EditSeafood() {
                     value={form.category?.zh || ""}
                     onChange={handleChange}
                 />
-
+                <p />
                 <label>Category: (English)</label>
                 <input
                     name="category_en"

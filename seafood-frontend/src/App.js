@@ -1,5 +1,4 @@
 import React from 'react' // 確保明確引入 React
-
 import { Routes, Route, Navigate } from "react-router-dom"
 import LanguageWrapper from "./components/LanguageWrapper"
 import Cart from "./pages/Cart"

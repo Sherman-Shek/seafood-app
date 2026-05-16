@@ -15,17 +15,17 @@ function Navbar() {
 
     // 處理點擊跳轉 (確保加上語言前綴)
     const handleMenuClick = (e) => {
-        if (e.key === "home") navigate(`/${currentLang}/`);
-        if (e.key === "cart") navigate(`/${currentLang}/cart`);
-        if (e.key === "orders") navigate(`/${currentLang}/orders`);
-        if (e.key === "addSeafood") navigate(`/${currentLang}/addSeafood`);
-        if (e.key === "adminOrders") navigate(`/${currentLang}/admin/orders`);
-    };
+        if (e.key === "home") navigate(`/${curLang}/`)
+        if (e.key === "cart") navigate(`/${curLang}/cart`)
+        if (e.key === "orders") navigate(`/${curLang}/orders`)
+        if (e.key === "addSeafood") navigate(`/${curLang}/addSeafood`)
+        if (e.key === "adminOrders") navigate(`/${curLang}/admin/orders`)
+    }
 
     // 🔴 計算當前應該高亮的 Menu Key
     // 例如路徑是 /en/cart，我們把它切開變成 ['', 'en', 'cart']，取第 2 個元素
-    const pathParts = location.pathname.split("/");
-    const activeKey = pathParts[2] || "home"; // 如果沒有第 2 個元素，代表在首頁
+    const pathParts = location.pathname.split("/")
+    const activeKey = pathParts[2] || "home" // 如果沒有第 2 個元素，代表在首頁
 
     const changeLang = (lang) => {
         const segments = location.pathname.split("/")

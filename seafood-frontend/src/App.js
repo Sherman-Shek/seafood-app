@@ -21,6 +21,7 @@ import { useContext } from "react"
 import { CartContext } from "./context/CartContext"
 import { AuthContext } from "./context/AuthContext"
 import Checkout from "./pages/Checkout"
+import { HelmetProvider } from 'react-helmet-async'
 
 function App() {
 
@@ -34,72 +35,74 @@ function App() {
   }
 
   return (
-    <div>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/en" replace />} />
+    <HelmetProvider>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Navigate to="/en" replace />} />
 
-        <Route path="/:lang" element={<LanguageWrapper />} >
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="edit/:id" element={<EditSeafood />} />
-          <Route path="seafood/:id" element={<SeafoodDetail />} />
+          <Route path="/:lang" element={<LanguageWrapper />} >
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="edit/:id" element={<EditSeafood />} />
+            <Route path="seafood/:id" element={<SeafoodDetail />} />
 
-          <Route path="checkout" element={
-            <ProtectedRoute>
-              <Checkout />
-            </ProtectedRoute>
-          } />
-
-          <Route path="cart" element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          } />
-
-          <Route path="addSeafood" element={
-            <ProtectedRoute>
-              <AddSeafood />
-            </ProtectedRoute>
-          } />
-
-          <Route
-            path="admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
+            <Route path="checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
             } />
 
-          <Route
-            path="admin/orders"
-            element={
-              <AdminRoute>
-                <AdminOrders />
-              </AdminRoute>
-            }
-          />
-
-          <Route
-            path="orders"
-            element={
+            <Route path="cart" element={
               <ProtectedRoute>
-                <Orders />
+                <Cart />
               </ProtectedRoute>
-            }
-          />
-        </Route>
+            } />
 
-        <Route path="*" element={<Navigate to="/en" replace />} />
+            <Route path="addSeafood" element={
+              <ProtectedRoute>
+                <AddSeafood />
+              </ProtectedRoute>
+            } />
 
-      </Routes>
+            <Route
+              path="admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              } />
 
-      <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
-        <p>© 2026 Wing Sang Fat Seafood. All Rights Reserved.</p>
-        <p>Location: Kowloon, Hong Kong | WhatsApp: +852 6086 3900</p>
-      </footer>
-    </div>
+            <Route
+              path="admin/orders"
+              element={
+                <AdminRoute>
+                  <AdminOrders />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/en" replace />} />
+
+        </Routes>
+
+        <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
+          <p>© 2026 Wing Sang Fat Seafood. All Rights Reserved.</p>
+          <p>Location: Kowloon, Hong Kong | WhatsApp: +852 6086 3900</p>
+        </footer>
+      </div>
+    </HelmetProvider>
   )
 }
 export default App

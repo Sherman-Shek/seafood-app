@@ -30,7 +30,6 @@ function Cart() {
       }, 1500)
       return
     }
-    //navigate(`/${i18n.language}/checkout`) // ✅ 直接跳轉到結帳頁面
 
     // 1. 獲取登入的 token
     const token = localStorage.getItem("token")

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { CartContext } from "../context/CartContext"
 import { Button, message, Row, Col, Spin } from "antd"
 import { Tag, Divider, Descriptions, Card, Typography } from 'antd'
+import { Helmet } from 'react-helmet-async'
 
 const { Title, Text } = Typography
 
@@ -63,6 +64,13 @@ function SeafoodDetail() {
 
   return (
     <div style={{ padding: "40px", maxWidth: "1200px", margin: "0 auto" }}>
+      <Helmet>
+        <title>{item.name.zh} | 永生發海鮮</title>
+        <meta name="description" content={`新鮮${item.name.zh}，產地直送，每斤價格為 ${item.price} 元。`} />
+        <meta property="og:title" content={item.name.zh} />
+        <meta property="og:image" content={item.image} />
+      </Helmet>
+
       <Button
         onClick={() => navigate(-1)}
         style={{

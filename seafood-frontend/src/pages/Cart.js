@@ -30,13 +30,13 @@ function Cart() {
       }, 1500)
       return
     }
-    navigate(`/${i18n.language}/checkout`) // ✅ 直接跳轉到結帳頁面
+    //navigate(`/${i18n.language}/checkout`) // ✅ 直接跳轉到結帳頁面
 
     // 1. 獲取登入的 token
     const token = localStorage.getItem("token")
     if (!token) {
-      alert("Please login！");
-      return;
+      alert("Please login！")
+      return
     }
 
     // 2. 📦 關鍵修復：在這裡定義並組裝 orderData！
@@ -138,13 +138,14 @@ function Cart() {
       <h3>Total Price: $ {totalPrice}</h3>
 
       <button onClick={handlePlaceOrder}>Order Now</button>
+
       <br />
       <Button
         type="primary"
         size="large"
         block
         disabled={totalPrice <= 0}
-        style={{ marginTop: '20px', height: '50px', width: '200px' }}
+        style={{ marginTop: '20px', height: '50px', width: '300px' }}
         onClick={() => navigate(`/${i18n.language}/checkout`)}
       >
         {t("Proceed to Checkout")} (${totalPrice})

@@ -5,28 +5,29 @@ import "./Login.css"
 import getUser from "../utils/auth"
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
+import axios from "axios"
+import { useTranslation } from "react-i18next"
 
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
   const { login } = useContext(AuthContext)
+  const { t, i18n } = useTranslation()
+
 
   const handleLogin = async (e) => {
     e.preventDefault()
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+        email,
+        password
       })
 
-      const data = await res.json()
+      const data = await res.data
 
-      if (!res.ok) {
+      if (res.status !== 200) {
         alert(data.error || "Login failed")
         return
       }
@@ -35,7 +36,7 @@ function Login() {
 
       localStorage.setItem("token", data.token)
       login(getUser())
-      navigate("/")
+      navigate(`/${i18n.language}`)
     } catch (err) {
       console.error(err)
       alert("Login Fail!")
@@ -52,8 +53,7 @@ function Login() {
         <button className="login-button">Login</button>
         <p>
           New here? <br />
-          <Link to="/register">Create account</Link>
-        </p>
+          <Link to={`/${i18n.language}/register`}>{t("register")}</Link>        </p>
       </form>
     </div>
   )

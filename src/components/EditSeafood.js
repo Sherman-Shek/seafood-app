@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom" // 假设你用了路由
 import { useDropzone } from "react-dropzone"
 import { useTranslation } from "react-i18next"
+import axios from "axios"
 
 function EditSeafood() {
-      const { i18n } = useTranslation()
+    const { i18n } = useTranslation()
     const { id } = useParams(); // 获取 URL 里的 ID
     const navigate = useNavigate()
 
@@ -24,17 +25,39 @@ function EditSeafood() {
 
     // 1. 页面加载时，获取旧数据回显
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/api/seafood/{id}`)
-            .then(res => res.json())
-            .then(data => {
+        const fetchProduct = async () => {
+            try {
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`)
+                const data = res.data
                 setForm({
                     name: data.name,
                     price: data.price,
-                    category: data.category
-                });
-                setImageUrl(data.image); // 回显旧图片
-            });
+                    category: data.category,
+                    unit: data.unit || { en: "", zh: "" } // 确保 unit 字段存在，避免 undefined 错误
+                })
+                setImageUrl(data.image)
+            } catch (err) {
+                console.error("Error fetching product:", err)
+            }
+        }
+        fetchProduct()
     }, [id])
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        // 處理需要分語言的欄位 (例如 name_en, name_zh)
+        if (name.includes("_")) {
+            const [field, lang] = name.split("_"); // 分割出 name 和 en
+            setForm(prev => ({
+                ...prev,
+                [field]: { ...prev[field], [lang]: value }
+            }))
+        } else {
+            // 處理價格、圖片等不分語言的欄位
+            setForm(prev => ({ ...prev, [name]: value }))
+        }
+    }
 
     const handleSubmit = async (e) => {
         const token = localStorage.getItem("token")
@@ -50,8 +73,8 @@ function EditSeafood() {
             body: JSON.stringify(payload)
         })
         if (res.ok) {
-            alert("Updated Successfully!");
-            navigate("/");
+            alert("Updated Successfully!")
+            navigate("/")
         }
     }
 
@@ -107,34 +130,47 @@ function EditSeafood() {
             )}
 
             <form onSubmit={handleSubmit}>
+                <label>產品名稱：（中文）</label>
                 <input
-                    name="name"
+                    name="name_zh"
                     placeholder="Name"
-                    value={form.name}
-                    onChange={(e) =>
-                        setForm({ ...form, name: e.target.value })
-                    }
+                    value={form.name?.zh || ""}
+                    onChange={handleChange}
                 />
-
+                <p />
+                <label>Product Name: (English)</label>
+                <input
+                    name="name_en"
+                    placeholder="Name"
+                    value={form.name?.en || ""}
+                    onChange={handleChange}
+                />
+                <p />
+                <label>價格：</label>
                 <input
                     name="price"
                     type="number"
                     placeholder="Price"
                     value={form.price}
-                    onChange={(e) =>
-                        setForm({ ...form, price: e.target.value })
-                    }
+                    onChange={handleChange}
                 />
-
+                <p />
+                <label>分類：（中文）</label>
                 <input
-                    name="category"
+                    name="category_zh"
                     placeholder="Category"
-                    value={form.category}
-                    onChange={(e) =>
-                        setForm({ ...form, category: e.target.value })
-                    }
+                    value={form.category?.zh || ""}
+                    onChange={handleChange}
                 />
-
+                <p />
+                <label>Category: (English)</label>
+                <input
+                    name="category_en"
+                    placeholder="Category"
+                    value={form.category?.en || ""}
+                    onChange={handleChange}
+                />
+                <p />
                 <button type="submit">Update</button>
             </form>
         </div>

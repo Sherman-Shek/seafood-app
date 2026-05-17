@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import { Card, Button, message, Row, Col, Spin } from "antd"
 import { Input, Select, Space } from 'antd'
 import { ShoppingCartOutlined } from "@ant-design/icons"
+import axios from "axios"
 
 const { Meta } = Card
 const { Search } = Input
@@ -28,10 +29,10 @@ function SeafoodList() {
     if (!field) return "";
     if (typeof field === 'object') {
       // 如果是新數據(物件)，根據當前語言顯示，如果沒有該語言就默認顯示英文
-      return field[i18n.language] || field.en;
+      return field[i18n.language] || field.en
     }
     // 如果是舊數據(字串)，直接顯示
-    return field;
+    return field
   }
 
   const filtered = seafood.filter(item => {
@@ -61,8 +62,8 @@ function SeafoodList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/seafood`);
-        const data = await res.json()
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/seafood`)
+        const data = await res.data
 
         // ✅ 关键点：取消注释并使用正确的 setter 函数
         setSeafood(data);
@@ -88,8 +89,7 @@ function SeafoodList() {
       alert("Please login first!")
       return
     }
-    fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
-      method: "DELETE",
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -140,8 +140,13 @@ function SeafoodList() {
               { value: 'crab', label: 'Crab' },
               { value: 'lobster', label: 'Lobster' },
               { value: 'shrimp', label: 'Shrimp' },
+              { value: 'abalone', label: 'Abalone' },
+              { value: 'mussel', label: 'Mussel' },
               { value: 'clam', label: 'Clam' },
-
+              { value: 'razor clam', label: 'Razor Clam' },
+              { value: 'scallop', label: 'Scallop' },
+              { value: 'oyster', label: 'Oyster' },
+              { value: 'whelk', label: 'Whelk' },
             ]}
           />
           <Select
@@ -217,7 +222,7 @@ function SeafoodList() {
                   e.preventDefault()
                   e.stopPropagation()
                   addToCart(item)
-                  message.success("Added to cart!")
+                  message.success(`${displayLang(item.name)} ${t("addToCart")}`)
                 }}
               >
                 {t("addToCart")}

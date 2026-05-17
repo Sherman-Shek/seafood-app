@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { CartContext } from "../context/CartContext"
 import { useTranslation } from "react-i18next"
-import { Button } from "antd"
+import { Button, message } from "antd"
 import { useNavigate } from "react-router-dom"
 
 function Cart() {
@@ -23,11 +23,19 @@ function Cart() {
   }
 
   const handlePlaceOrder = async () => {
+    if (cart.length === 0) {
+      message.success("Your cart is empty！ Please add some seafood before placing an order.")
+      setTimeout(() => {
+        navigate(`/${i18n.language}/`) // ✅ 這裡使用 navigate 跳轉到海鮮列表頁
+      }, 1500)
+      return
+    }
+
     // 1. 獲取登入的 token
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
     if (!token) {
-      alert("Please login！");
-      return;
+      alert("Please login！")
+      return
     }
 
     // 2. 📦 關鍵修復：在這裡定義並組裝 orderData！
@@ -129,15 +137,17 @@ function Cart() {
       <h3>Total Price: $ {totalPrice}</h3>
 
       <button onClick={handlePlaceOrder}>Order Now</button>
-    <br />
+
+      <br />
       <Button
         type="primary"
         size="large"
         block
-        style={{ marginTop: '20px', height: '50px', width: '200px' }}
+        disabled={totalPrice <= 0}
+        style={{ marginTop: '20px', height: '50px', width: '300px' }}
         onClick={() => navigate(`/${i18n.language}/checkout`)}
       >
-        Proceed to Checkout
+        {t("Proceed to Checkout")} (${totalPrice})
       </Button>
     </div>
   )

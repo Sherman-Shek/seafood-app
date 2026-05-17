@@ -1,16 +1,19 @@
 import { useDropzone } from "react-dropzone"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom" 
+import { useNavigate } from "react-router-dom"
 import { Button, Row, Col, Form, Input } from "antd"
+import { useTranslation } from "react-i18next"
 
 // ✅ 2. 确保接收 onAdd 参数
 function AddSeafood({ onAdd }) {
-    const navigate = useNavigate(); // ✅ 3. 初始化跳转
+    const { t, i18n } = useTranslation()
+    const navigate = useNavigate() // ✅ 3. 初始化跳转
 
     const [form, setForm] = useState({
         name: { en: "", zh: "" },
         price: "",
-        category: { en: "", zh: "" }
+        category: { en: "", zh: "" },
+        unit: { en: "", zh: "" }
     })
 
     const [imageUrl, setImageUrl] = useState("")
@@ -42,7 +45,7 @@ function AddSeafood({ onAdd }) {
             ...form,
             price: Number(form.price) || 0,
             image: imageUrl
-        };
+        }
 
         fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
             method: "POST",
@@ -61,18 +64,19 @@ function AddSeafood({ onAdd }) {
                 return res.json()
             })
             .then(result => {
-                console.log("Success:", result);
+                console.log("Success:", result)
 
                 // ✅ 4. 关键：通知父组件列表增加了新成员
                 // 如果后端返回的是新创建的对象，直接传给 onAdd
-                if (onAdd) onAdd(result);
+                if (onAdd) onAdd(result)
 
-                alert("Added successfully!");
+                alert("Added successfully!")
 
                 // ✅ 5. 跳转到产品列表页面
-                navigate("/");
+                navigate(`/${i18n.language}`)
+
             })
-            .catch(err => console.error("Added fail:", err));
+            .catch(err => console.error("Added fail:", err))
     }
 
     const onDrop = async (acceptedFiles) => {
@@ -123,10 +127,10 @@ function AddSeafood({ onAdd }) {
                     />
                 </div>
             )}
-            <Form layout="vertical"
+            <form layout="vertical"
                 onSubmit={handleSubmit}
                 style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label>Product Name (English)</label>
+                <label>Product Name: (English)</label>
                 <input
                     type="text"
                     name="name_en"
@@ -135,7 +139,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>產品名稱 (中文)</label>
+                <label>產品名稱： (中文)</label>
                 <input
                     type="text"
                     name="name_zh"
@@ -144,7 +148,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-
+                <label>Price:</label>
                 <input
                     name="price"
                     type="number"
@@ -153,7 +157,7 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>Category (English)</label>
+                <label>Category: (English)</label>
                 <input
                     type="text"
                     name="category_en"
@@ -161,7 +165,7 @@ function AddSeafood({ onAdd }) {
                     value={form.category.en}
                     onChange={handleChange}
                 />
-                <label>分類 (中文)</label>
+                <label>分類： (中文)</label>
                 <input
                     type="text"
                     name="category_zh"
@@ -169,42 +173,31 @@ function AddSeafood({ onAdd }) {
                     value={form.category.zh}
                     onChange={handleChange}
                 />
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Form.Item label="產地 (Origin - ZH)" name={['origin', 'zh']} rules={[{ required: true }]}>
-                            <Input placeholder="例如：日本空運" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label="Origin (EN)" name={['origin', 'en']} rules={[{ required: true }]}>
-                            <Input placeholder="e.g., Japan Air Freight" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Form.Item label="單位 (Unit - ZH)" name={['unit', 'zh']} rules={[{ required: true }]}>
-                            <Input placeholder="例如：每斤 / 每隻" />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label="Unit (EN)" name={['unit', 'en']} rules={[{ required: true }]}>
-                            <Input placeholder="e.g., per kg / per pc" />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Form.Item label="處理建議 (Cooking - ZH/EN)" name={['cookingMethod', 'zh']}>
-                    <Input.TextArea placeholder="例如：清蒸、椒鹽" />
-                </Form.Item>
+                <label>單位： (中文)</label>
+                <input
+                    type="text"
+                    name="unit_zh"
+                    placeholder="單位"
+                    value={form.unit.zh}
+                    onChange={handleChange}
+                    required
+                />
+                <label>Unit: (English)</label>
+                <input
+                    type="text"
+                    name="unit_en"
+                    placeholder="Unit"
+                    value={form.unit.en}
+                    onChange={handleChange}
+                    required
+                />
 
                 <Button type="primary"
                     htmlType="submit"
                     block
                     style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}
                 >Add Seafood</Button>
-            </Form>
+            </form>
         </div >
     )
 }

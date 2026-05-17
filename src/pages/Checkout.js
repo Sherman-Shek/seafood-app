@@ -23,6 +23,10 @@ function Checkout() {
 
     // 最終提交訂單的邏輯
     const handleFinalSubmit = async () => {
+        if (cart.length === 0) {
+            message.warning(t("Your cart is empty"))
+            return
+        }
         setLoading(true)
         // 傳送到後端的 fetch 代碼
         const token = localStorage.getItem("token")
@@ -85,6 +89,10 @@ function Checkout() {
     const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
 
     const onFinish = (values) => {
+        if (cart.length === 0) {
+            message.warning(t("Your cart is empty"))
+            return
+        }
         setPaymentType(values.paymentMethod)
         console.log("收到的表單資訊:", values)
         if (values.paymentMethod === 'credit_card') {
@@ -96,10 +104,6 @@ function Checkout() {
         }
         //setLoading(true)
         // 這裡模擬發送訂單到後端
-    }
-
-    if (cart.length === 0) {
-        return <div style={{ padding: '50px', textAlign: 'center' }}>{t("Your cart is empty")}</div>
     }
 
     return (

@@ -34,19 +34,15 @@ function SeafoodDetail() {
     fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`)
       .then(res => res.json())
       .then((data) => {
-        //console.log("資料抓取成功:", data)
+        console.log("資料抓取成功:", data)
         setItem(data)
         setLoading(false)
-        
-        const newTitle = `${displayLang(data.name)} | 永生發海鮮`
-        //console.log("更新頁面標題:", newTitle)
-        document.title = newTitle
       })
       .catch((err) => {
-        //console.error("抓取失敗：", err)
+        console.error("抓取失敗：", err)
         setLoading(false) // 發生錯誤也要關閉，避免卡死
       })
-  }, [id])
+  }, [id, i18n.language]) // 當 id 或語言改變時重新抓取
 
   // 2. 如果正在載入，顯示 Spin 動畫
   if (loading) {

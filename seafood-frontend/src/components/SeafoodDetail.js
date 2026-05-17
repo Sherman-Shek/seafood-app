@@ -38,9 +38,9 @@ function SeafoodDetail() {
         setItem(data)
         setLoading(false)
         
-        const newTitle = `${displayLang(data.name)} | 永生發海鮮`
-        console.log("更新頁面標題:", newTitle)
-        document.title = newTitle
+        // const newTitle = `${displayLang(data.name)} | 永生發海鮮`
+        // console.log("更新頁面標題:", newTitle)
+        // document.title = newTitle
       })
       .catch((err) => {
         console.error("抓取失敗：", err)

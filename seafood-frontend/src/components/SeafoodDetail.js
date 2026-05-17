@@ -24,24 +24,28 @@ function SeafoodDetail() {
     if (!field) return ""
     if (typeof field === 'object') {
       // 如果是新數據(物件)，根據當前語言顯示，如果沒有該語言就默認顯示英文
-      return field[i18n.language] || field.en;
+      return field[i18n.language] || field.en
     }
     // 如果是舊數據(字串)，直接顯示
-    return field;
+    return field
   }
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`)
       .then(res => res.json())
       .then((data) => {
-        setItem(data);
-        setLoading(false); // ✅ 抓取成功後關閉
+        setItem(data)
+        setLoading(false) // ✅ 抓取成功後關閉
       })
       .catch((err) => {
-        console.error(err);
-        setLoading(false); // 發生錯誤也要關閉，避免卡死
-      });
-  }, [id]);
+        console.error(err)
+        setLoading(false) // 發生錯誤也要關閉，避免卡死
+      })
+    if (item) {
+      // 暴力測試：直接用原生 JS 修改
+      document.title = `${displayLang(item.name)} | 測試中`
+    }
+  }, [id], [item, i18n.language])
 
   // 2. 如果正在載入，顯示 Spin 動畫
   if (loading) {

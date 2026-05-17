@@ -65,9 +65,10 @@ function SeafoodDetail() {
   return (
     <div style={{ padding: "40px", maxWidth: "1200px", margin: "0 auto" }}>
       <Helmet>
-        <title>{item.name.zh} | 永生發海鮮</title>
-        <meta name="description" content={`新鮮${item.name.zh}，產地直送，每斤價格為 ${item.price} 元。`} />
-        <meta property="og:title" content={item.name.zh} />
+        {/* 🔴 使用 displayLang 來防止沒有 .zh 屬性時發生當機 */}
+        <title>{displayLang(item.name)} | 永生發海鮮</title>
+        <meta name="description" content={`新鮮${displayLang(item.name)}，產地直送，價格為 ${item.price} 元。`} />
+        <meta property="og:title" content={displayLang(item.name)} />
         <meta property="og:image" content={item.image} />
       </Helmet>
 

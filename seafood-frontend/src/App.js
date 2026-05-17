@@ -22,6 +22,7 @@ import { CartContext } from "./context/CartContext"
 import { AuthContext } from "./context/AuthContext"
 import Checkout from "./pages/Checkout"
 import { HelmetProvider } from 'react-helmet-async'
+import { Helmet } from "react-helmet-async"
 
 function App() {
 

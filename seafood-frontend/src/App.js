@@ -37,6 +37,13 @@ function App() {
   return (
     <HelmetProvider>
       <div>
+
+        <Helmet>
+        {/* 這行是關鍵！如果子頁面沒有標題，就顯示這個 */}
+        <title>永生發海鮮 | Wing Sang Fat</title>
+        <meta name="description" content="新鮮海鮮批發與零售" />
+      </Helmet>
+
         <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/en" replace />} />

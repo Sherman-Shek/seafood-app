@@ -27,7 +27,7 @@ function SeafoodDetail() {
 
   useEffect(() => {
     // 每次 id 或語言改變時，重新設為載入狀態
-    setLoading(true);
+    setLoading(true)
 
     fetch(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`)
       .then(res => res.json())
@@ -148,7 +148,7 @@ function SeafoodDetail() {
                       boxShadow: '0 4px 10px rgba(24, 144, 255, 0.3)'
                     }}
                   >
-                    🛒 {t("Add To Cart")}
+                    🛒 {t("addToCart")}
                   </Button>
                 </Card>
               </Col>

@@ -122,7 +122,8 @@ function SeafoodList() {
             allowClear
           />
           <Select
-            defaultValue={t("all")}
+            placeholder={t("all")}
+            //defaultValue={t("all")}
             size="large"
             style={{ width: 140 }}
             onChange={(val) => setCategory(val)}

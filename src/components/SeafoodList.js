@@ -122,7 +122,7 @@ function SeafoodList() {
             allowClear
           />
           <Select
-            defaultValue="all"
+            defaultValue={t("all")}
             size="large"
             style={{ width: 140 }}
             onChange={(val) => setCategory(val)}
@@ -143,7 +143,7 @@ function SeafoodList() {
             ]}
           />
           <Select
-            defaultValue="low"
+            defaultValue={t("low")}
             size="large"
             style={{ width: 180 }}
             onChange={(val) => setSort(val)}

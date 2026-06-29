@@ -109,11 +109,11 @@ function EditSeafood() {
         // ... JSX 部分基本与 AddSeafood 一致 ...
         // 只需要把按钮文字改成 "Update Seafood"
         <div>
-            <h2>Edit Seafood</h2>
+            <h2>{t("editSeafoodTitle")}</h2>
 
             <div {...getRootProps()} style={{ border: "2px dashed black", padding: "20px" }}>
                 <input {...getInputProps()} />
-                <p>Drag and Drop here 👇</p>
+                <p>{t("dragAndDrop")} 👇</p>
             </div>
 
             {imageUrl && (
@@ -171,7 +171,7 @@ function EditSeafood() {
                     onChange={handleChange}
                 />
                 <p />
-                <button type="submit">Update</button>
+                <button type="submit">{t("update")}</button>
             </form>
         </div>
     )

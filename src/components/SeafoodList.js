@@ -218,13 +218,13 @@ function SeafoodList() {
                   e.stopPropagation()
 
                   try {
-                  addToCart(item)
-                  message.success(`${displayLang(item.name)} ${t("addToCart")}`)
-                } catch (error) {
-                  console.error("加入購物車失敗:", error)
-                  message.error("Failed to add to cart! Please try again.")
-                }
-              }}
+                    addToCart(item)
+                    alert(`${displayLang(item.name)} ${t("addToCart")}`)
+                  } catch (error) {
+                    console.error("加入購物車失敗:", error)
+                    message.error("Failed to add to cart! Please try again.")
+                  }
+                }}
               >
                 {t("addToCart")}
               </Button>

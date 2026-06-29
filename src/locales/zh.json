@@ -70,5 +70,6 @@
   "loadingOrders": "正在載入訂單...",
   "pending": "待處理",
   "shipped": "已發貨",
-  "completed": "已完成"
+  "completed": "已完成",
+  "editSeafoodTitle": "編輯產品"
 }

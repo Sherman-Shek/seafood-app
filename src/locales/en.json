@@ -70,5 +70,6 @@
   "loadingOrders": "Loading orders...",
   "pending": "Pending",
   "shipped": "Shipped",
-  "completed": "Completed"
+  "completed": "Completed",
+  "editSeafoodTitle": "Edit Product"
 }

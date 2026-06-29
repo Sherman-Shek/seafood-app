@@ -39,7 +39,7 @@ function Orders() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>📦 My Orders</h2>
+      <h2>📦 {t("myOrders")}</h2>
 
       {orders.length === 0 ? (
         <p>No orders yet</p>
@@ -52,12 +52,12 @@ function Orders() {
             borderRadius: "8px",
             backgroundColor: "#f9f9f9" // 加點底色讓卡片更明顯
           }}>
-            <p><b>Order ID:</b> {order._id}</p>
-            <p><b>Status:</b> <span style={{ color: "orange" }}>{order.status}</span></p>
-            <p><b>Total:</b> <span style={{ color: "green", fontWeight: "bold" }}>${order.total}</span></p>
+            <p><b>{t("orderID")}:</b> {order._id}</p>
+            <p><b>{t("orderStatus")}:</b> <span style={{ color: "orange" }}>{order.status}</span></p>
+            <p><b>{t("orderTotal")}:</b> <span style={{ color: "green", fontWeight: "bold" }}>${order.total}</span></p>
 
             <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1px dashed #ccc" }}>
-              <b>Items:</b>
+              <b>{t("orderItems")}:</b>
               <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
                 {order.items.map((item, index) => (
                   <li key={index} style={{ marginBottom: "5px" }}>

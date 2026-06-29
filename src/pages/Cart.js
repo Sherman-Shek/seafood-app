@@ -83,7 +83,7 @@ function Cart() {
   return (
     <div style={{ padding: "20px" }}>
 
-      <h2>Cart</h2>
+      <h2>{t("cartTitle")}</h2>
 
       <div style={{
         display: "grid",
@@ -93,7 +93,7 @@ function Cart() {
       </div>
 
       {cart.length === 0 ? (
-        <p>Cart is empty!</p>
+        <p>{t("cartEmpty")}</p>
       ) : (
         <div className="cart-list">
           {cart.map((item) => (
@@ -134,9 +134,9 @@ function Cart() {
           ))}
         </div>
       )}
-      <h3>Total Price: $ {totalPrice}</h3>
+      <h3>{t("cartTotal")} ${totalPrice}</h3>
 
-      <button onClick={handlePlaceOrder}>Order Now</button>
+      <button onClick={handlePlaceOrder}>{t("orderNow")}</button>
 
       <br />
       <Button

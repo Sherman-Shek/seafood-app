@@ -87,13 +87,13 @@ function AdminOrders() {
       key: "email",
     },
     {
-      title: "Total Amount",
+      title: t("adminOrdersTotal"),
       dataIndex: "total",
       key: "total",
       render: (total) => <b style={{ color: '#d4380d' }}>${total}</b>
     },
     {
-      title: "Status",
+      title: t("adminOrdersStatus"),
       dataIndex: "status",
       key: "status",
       render: (status, record) => (
@@ -109,7 +109,7 @@ function AdminOrders() {
       )
     },
     {
-      title: "Actions",
+      title: t("adminOrdersAction"),
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -119,7 +119,7 @@ function AdminOrders() {
             size="small"
             onClick={() => handleDelete(record._id)}
           >
-            Delete
+            {t("adminOrdersDelete")}
           </Button>
         </Space>
       )
@@ -128,7 +128,7 @@ function AdminOrders() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>👑 Admin Orders Management</h1>
+      <h1>👑 {t("adminOrdersTitle")}</h1>
       <Table
         dataSource={orders}
         columns={columns}

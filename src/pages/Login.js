@@ -43,23 +43,23 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h1 className="login-title">Login</h1>
+      <h1 className="login-title">{t("loginTitle")}</h1>
 
       <form onSubmit={handleLogin}>
         <input 
           className="login-email" 
           onChange={e => setEmail(e.target.value)} 
-          placeholder="Email" 
+          placeholder={t("email")} 
         />
         <input 
           className="login-password" 
           type="password" 
           onChange={e => setPassword(e.target.value)} 
-          placeholder="Password" 
+          placeholder={t("password")} 
         />
-        <button className="login-button">Login</button>
+        <button className="login-button">{t("login")}</button>
         <p>
-          New here? <br />
+          {t("newUser")} <br />
           <Link to={`/${i18n.language}/register`}>{t("register")}</Link>
         </p>
       </form>

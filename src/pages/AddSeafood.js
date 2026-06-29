@@ -101,7 +101,7 @@ function AddSeafood({ onAdd }) {
 
         return (
             <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
-                <h2>Add New Seafood</h2>
+                <h2>{t("addSeafoodTitle")}</h2>
 
                 {/* 图片上传区域 */}
                 <div {...getRootProps()} style={{
@@ -165,7 +165,7 @@ function AddSeafood({ onAdd }) {
                     />
 
                     <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
-                        Add Seafood
+                        {t("addSeafoodButton")}
                     </button>
                 </form>
             </div>

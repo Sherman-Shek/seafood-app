@@ -111,8 +111,8 @@ function App() {
         </Routes>
 
         <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
-          <p>${t("copyright")}</p>
-          <p>${t("contactContent")}</p>
+          <p>{t("copyright")}</p>
+          <p>{t("contactContent")}</p>
         </footer>
       </div>
     </HelmetProvider>

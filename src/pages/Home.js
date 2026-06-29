@@ -26,8 +26,7 @@ function Home() {
         {t("title")} 🦞
       </h1>
       <p style={{ fontSize: '20px', letterSpacing: '1px' }}>
-        Premium Quality • Daily Fresh • Wild Caught <br />
-        The Freshest Catch, Straight to Your Door.
+        {t("siteKeywords")}
       </p>
     </div>
     <a

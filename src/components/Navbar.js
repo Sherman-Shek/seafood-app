@@ -73,7 +73,7 @@ function Navbar() {
             backdropFilter: 'blur(10px)'
         }}>
             <Link to={`/${i18n.language}`} style={{ color: 'inherit' }}>
-                🦐 Seafood Shop
+                🦐 {t("navbarTitle")}
             </Link>
 
             {/* 导航栏 */}

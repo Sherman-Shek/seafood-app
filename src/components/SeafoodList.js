@@ -82,37 +82,29 @@ function SeafoodList() {
   //   setSeafood([...seafood, newItem])
   // }
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const token = localStorage.getItem("token")
 
     if (!token) {
       alert("Please login first!")
       return
     }
-    axios.delete(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(async res => {
-        const data = await res.json()
 
-        if (!res.ok) {
-          throw new Error(res.message || "Delete failed")
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/seafood/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-        return data
       })
-      .then(() => {
-        //  更新 UI（关键）
-        setSeafood(prev => prev.filter(item => item._id !== id))
-        message.success("Deleted Successfully!")
-      })
-      .catch(err => {
-        console.error("DELETE ERROR:", err)
-        message.error(`Deleted Fail!：${err.message}`)
-      }
-      )
+      //  更新 UI（关键）
+      setSeafood(prev => prev.filter(item => item._id !== id))
+      message.success("Deleted Successfully!")
+    } catch (err) {
+      console.error("DELETE ERROR:", err)
+      message.error(`Deleted Fail!：${err.message}`)
+    }
   }
+
   if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}><Spin size="large" /></div>
 
   return (
@@ -123,7 +115,7 @@ function SeafoodList() {
 
         <Space size="large" wrap>
           <Search
-            placeholder={t("Search...") || "Search seafood..."}
+            placeholder={t("searchPlaceholder")}
             onChange={(e) => setSearch(e.target.value)}
             style={{ width: 350 }}
             size="large"
@@ -135,18 +127,19 @@ function SeafoodList() {
             style={{ width: 140 }}
             onChange={(val) => setCategory(val)}
             options={[
-              { value: 'all', label: 'All' },
-              { value: 'fish', label: 'Fish' },
-              { value: 'crab', label: 'Crab' },
-              { value: 'lobster', label: 'Lobster' },
-              { value: 'shrimp', label: 'Shrimp' },
-              { value: 'abalone', label: 'Abalone' },
-              { value: 'mussel', label: 'Mussel' },
-              { value: 'clam', label: 'Clam' },
-              { value: 'razor clam', label: 'Razor Clam' },
-              { value: 'scallop', label: 'Scallop' },
-              { value: 'oyster', label: 'Oyster' },
-              { value: 'whelk', label: 'Whelk' },
+              { value: 'all', label: t("all") },
+              { value: 'fish', label: t("fish") },
+              { value: 'crab', label: t("crab") },
+              { value: 'lobster', label: t("lobster") },
+              { value: 'shrimp', label: t("shrimp") },
+              { value: 'abalone', label: t("abalone") },
+              { value: 'mussel', label: t("mussel") },
+              { value: 'clam', label: t("clam") },
+              { value: 'razor clam', label: t("razorClam") },
+              { value: 'scallop', label: t("scallop") },
+              { value: 'oyster', label: t("oyster") },
+              { value: 'whelk', label: t("whelk") },
+              { value: 'other', label: t("other") },
             ]}
           />
           <Select
@@ -155,8 +148,8 @@ function SeafoodList() {
             style={{ width: 180 }}
             onChange={(val) => setSort(val)}
             options={[
-              { value: 'low', label: 'Price: Low-High' },
-              { value: 'high', label: 'Price: High-Low' },
+              { value: 'low', label: t("low") },
+              { value: 'high', label: t("high") },
             ]}
           />
         </Space>

@@ -109,8 +109,8 @@ function App() {
         </Routes>
 
         <footer style={{ textAlign: 'center', padding: '40px', background: '#001529', color: 'white', marginTop: '50px' }}>
-          <p>© 2026 Wing Sang Fat Seafood. All Rights Reserved.</p>
-          <p>Location: Kowloon, Hong Kong | WhatsApp: +852 6086 3900</p>
+          <p>${t("copyright")}</p>
+          <p>${t("contactContent")}</p>
         </footer>
       </div>
     </HelmetProvider>

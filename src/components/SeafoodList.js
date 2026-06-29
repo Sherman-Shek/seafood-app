@@ -117,7 +117,7 @@ function SeafoodList() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ marginBottom: "20px" }}>Fresh Seafood 🐟</h2>
+      <h2 style={{ marginBottom: "20px" }}>${t("homeContentTitle")} 🐟</h2>
 
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
 
@@ -189,14 +189,14 @@ function SeafoodList() {
                 <Button type="link"
                   onClick={() => navigate(`/${i18n.language}/seafood/${item._id}`)}
                 >
-                  Detail
+                  {t("detail")}
                 </Button>,
 
                 user?.role === "admin" &&
                 (<Button type="link"
                   onClick={() => navigate(`/${i18n.language}/edit/${item._id}`)}
                 >
-                  Edit
+                  {t("edit")}
                 </Button>
                 )
               ].filter(Boolean)}
@@ -245,7 +245,7 @@ function SeafoodList() {
                     padding: "8px",
                     borderRadius: "8px"
                   }}>
-                  Delete
+                  {t("delete")}   
                 </Button>
               )}
             </Card>

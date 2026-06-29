@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import axios from "axios"
 
 function EditSeafood() {
-    const { i18n } = useTranslation()
+    const { t, i18n } = useTranslation()
     const { id } = useParams(); // 获取 URL 里的 ID
     const navigate = useNavigate()
 

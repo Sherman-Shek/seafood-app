@@ -122,7 +122,7 @@ function SeafoodList() {
             allowClear
           />
           <Select
-
+            placeholder={t("all")}
             //defaultValue={t("all")}
             size="large"
             style={{ width: 140 }}

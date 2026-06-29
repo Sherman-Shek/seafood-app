@@ -14,7 +14,7 @@ import Register from "./pages/Register"
 import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./components/AdminRoute"
 import AdminDashboard from "./pages/AdminDashboard"
-//import { useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
 import Orders from "./pages/Orders"
 import AdminOrders from "./pages/AdminOrders"
 import { useContext } from "react"
@@ -27,9 +27,11 @@ import { Helmet } from "react-helmet-async"
 function App() {
 
   const { cart } = useContext(CartContext)
-  //const { i18n } = useTranslation()
   const auth = useContext(AuthContext)
   const cartContext = useContext(CartContext)
+  const [sort, setSort] = useState("low")
+  const { t, i18n } = useTranslation()
+
   // 如果 context 還沒準備好（預防萬一），先回傳空
   if (!auth || !cartContext) {
     return <div>Loading System...</div>;

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import { Table, Select, Tag, message, Button, Space } from "antd"
+import { useTranslation } from "react-i18next"
 
 function AdminOrders() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t, i18n } = useTranslation()
 
   // 1. 取得所有訂單
   useEffect(() => {

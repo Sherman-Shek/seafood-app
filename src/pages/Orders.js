@@ -7,7 +7,7 @@ function Orders() {
   const [loading, setLoading] = useState(true)
   
   // ✅ 2. 啟用翻譯設定
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   // ✅ 3. 加入我們熟悉的翻譯小幫手
   const displayLang = (field) => {

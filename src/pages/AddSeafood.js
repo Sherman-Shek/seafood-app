@@ -18,14 +18,6 @@ function AddSeafood({ onAdd }) {
 
     const [imageUrl, setImageUrl] = useState("")
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!imageUrl) {
-            alert("Please upload picture！");
-            return;
-        }
-
         const handleChange = (e) => {
             const { name, value } = e.target
 
@@ -179,6 +171,5 @@ function AddSeafood({ onAdd }) {
             </div>
         )
     }
-}
 
 export default AddSeafood

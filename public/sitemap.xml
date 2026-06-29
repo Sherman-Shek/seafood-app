@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://seafood-app-seven.vercel.app/</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a082617143e15f18ecdc455</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a0899c9143e15f18ecdc532</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a089da0143e15f18ecdc54b</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a089e8b143e15f18ecdc54e</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a089f02143e15f18ecdc557</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a08c3bd143e15f18ecdc5b7</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/seafood/6a092eaa143e15f18ecdc5ce</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a082617143e15f18ecdc455</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a0899c9143e15f18ecdc532</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a089da0143e15f18ecdc54b</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a089e8b143e15f18ecdc54e</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a089f02143e15f18ecdc557</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a08c3bd143e15f18ecdc5b7</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/zh/seafood/6a092eaa143e15f18ecdc5ce</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/cart</loc> </url>
+<url> <loc>https://seafood-app-seven.vercel.app/en/orders</loc> </url>
+</urlset>

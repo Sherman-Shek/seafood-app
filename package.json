@@ -4,10 +4,15 @@
   "private": true,
   "proxy": "http://localhost:5001",
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@ant-design/icons": "^5.x.x",
+>>>>>>> d5204add12035393f69d20dd7d8b1fa38f64ee60
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
     "@vercel/speed-insights": "^2.0.0",
     "axios": "^1.13.6",
     "code": "^5.2.4",
@@ -16,11 +21,30 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-dropzone": "^15.0.0",
+=======
+    "antd": "^5.x.x",
+    "axios": "^1.13.6",
+    "code": "^5.2.4",
+    "i18next": "^26.0.6",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "jwt-decode": "^4.0.0",
+    "multer": "^2.1.1",
+    "node-fetch": "^2.7.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-dropzone": "^15.0.0",
+    "react-helmet-async": "^3.0.0",
+    "react-i18next": "^17.0.4",
+>>>>>>> d5204add12035393f69d20dd7d8b1fa38f64ee60
     "react-router-dom": "^7.13.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+<<<<<<< HEAD
+=======
+    "sitemap": "node sitemap-generator.js",
+>>>>>>> d5204add12035393f69d20dd7d8b1fa38f64ee60
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -43,5 +67,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+<<<<<<< HEAD
+=======
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.29.5",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/register": "^7.29.3",
+    "react-router-sitemap": "^1.2.0"
+>>>>>>> d5204add12035393f69d20dd7d8b1fa38f64ee60
   }
 }

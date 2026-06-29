@@ -1,39 +1,47 @@
+import { message } from "antd"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios" // 🔴 修正 1：必須引入 axios
+import { useTranslation } from "react-i18next"
 
 function Register() {
   const navigate = useNavigate()
 
+  // 🔴 修正 2：加入 username 狀態
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+    const { t, i18n } = useTranslation()
+  
 
   const handleRegister = async (e) => {
+    // 阻止表單預設提交行為
     e.preventDefault()
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
+      console.log("Attempting to register user...")
+
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
+        username,
+        email,
+        password
       })
 
-      const data = await res.json()
+      // 🔴 修正 3：移除 res.json() 和 res.ok，改用 axios 的正確寫法
+      if (res.status === 200 || res.status === 201) {
+        message.success("Registered Successfully！ Please Login")
+        // 跳轉登入頁面，並帶上當前語言
+        navigate(`/login${i18n.language}`)
 
-      if (!res.ok) {
-        throw new Error(data.error || "Registered failed!")
       }
-
-      alert("Registered Successfully！ Please Login")
-
-      // 👉 跳转登录页
-      navigate("/login")
-
     } catch (err) {
+      console.log(err.response.data)
       console.error(err)
-      setError(err.message)
+      // Axios 的錯誤訊息通常包在 err.response.data 裡面
+      const errorMessage = err.response?.data?.message || err.message;
+      setError(errorMessage);
+      message.error("Registered failed: " + errorMessage)
     }
   }
 
@@ -48,6 +56,15 @@ function Register() {
       <h2 style={{ textAlign: "center" }}>Register</h2>
 
       <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+
+        {/* 🔴 修正 2：新增 username 欄位 */}
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
         <input
           type="email"
@@ -72,7 +89,8 @@ function Register() {
             color: "white",
             padding: "10px",
             border: "none",
-            borderRadius: "5px"
+            borderRadius: "5px",
+            cursor: "pointer"
           }}
         >
           Register
@@ -83,7 +101,7 @@ function Register() {
         )}
       </form>
     </div>
-  )
+  );
 }
 
 export default Register

@@ -122,7 +122,7 @@ function SeafoodList() {
             allowClear
           />
           <Select
-            placeholder={t("all")}
+
             //defaultValue={t("all")}
             size="large"
             style={{ width: 140 }}
@@ -144,7 +144,8 @@ function SeafoodList() {
             ]}
           />
           <Select
-            defaultValue={t("low")}
+            placeholder={t("low")}
+            //defaultValue={t("low")}
             size="large"
             style={{ width: 180 }}
             onChange={(val) => setSort(val)}

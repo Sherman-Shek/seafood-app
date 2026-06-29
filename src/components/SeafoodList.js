@@ -117,7 +117,7 @@ function SeafoodList() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ marginBottom: "20px" }}>${t("homeContentTitle")} 🐟</h2>
+      <h2 style={{ marginBottom: "20px" }}> {t("homeContentTitle")} 🐟</h2>
 
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
 
@@ -245,7 +245,7 @@ function SeafoodList() {
                     padding: "8px",
                     borderRadius: "8px"
                   }}>
-                  {t("delete")}   
+                  {t("delete")}
                 </Button>
               )}
             </Card>

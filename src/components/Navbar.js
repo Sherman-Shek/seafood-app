@@ -75,7 +75,7 @@ function Navbar() {
             <Link to={`/${i18n.language}`} style={{ color: 'inherit' }}>
                 🦐 {t("navbarTitle")}
             </Link>
-
+        
             {/* 导航栏 */}
             <div style={{
                 flex: 1,

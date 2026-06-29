@@ -35,14 +35,14 @@ function Orders() {
       })
   }, [])
 
-  if (loading) return <p>Loading orders...</p>
+  if (loading) return <p>{t("loadingOrders")}</p>
 
   return (
     <div style={{ padding: "20px" }}>
       <h2>📦 {t("myOrders")}</h2>
 
       {orders.length === 0 ? (
-        <p>No orders yet</p>
+        <p>{t("noOrders")}</p>
       ) : (
         orders.map(order => (
           <div key={order._id} style={{

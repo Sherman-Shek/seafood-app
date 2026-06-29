@@ -49,7 +49,7 @@
   "cartTitle": "購物車",
   "cartEmpty": "您的購物車是空的,請添加一些產品到您的購物車。",
   "cartTotal": "總計:",
-  "orderNow": "訂單已成功下單！感謝您的購買。",
+  "orderNow": "立即下單",
   "myOrders": "我的訂單",
   "orderID": "訂單編號",
   "orderStatus": "訂單狀態",
@@ -58,8 +58,17 @@
   "addSeafoodTitle": "新增產品",
   "addSeafoodButton": "新增產品",
   "adminOrdersTitle": "管理訂單",
+  "userEmail": "用戶郵箱",
   "adminOrdersStatus": "訂單狀態",
   "adminOrdersTotal": "訂單總額",
   "adminOrdersAction": "操作",
-  "adminOrdersDelete": "刪除訂單"
+  "adminOrdersDelete": "刪除訂單",
+  "admin": "管理員",
+  "user": "用戶",
+  "dragAndDrop": "將圖片拖放到這裡或點擊選擇文件",
+  "noOrders": "尚無訂單",
+  "loadingOrders": "正在載入訂單...",
+  "pending": "待處理",
+  "shipped": "已發貨",
+  "completed": "已完成"
 }

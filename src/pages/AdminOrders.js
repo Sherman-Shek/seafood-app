@@ -77,14 +77,14 @@ function AdminOrders() {
   // 4. 定義表格欄位
   const columns = [
     {
-      title: "Order ID",
+      title: t("orderID"),
       dataIndex: "_id",
       key: "_id",
       width: 100,
       render: (id) => <code>...{id.slice(-6)}</code> // 只顯示後六碼
     },
     {
-      title: "User Email",
+      title: t("userEmail"),
       dataIndex: ["user", "email"], // 支援深層物件
       key: "email",
     },
@@ -104,9 +104,9 @@ function AdminOrders() {
           onChange={(value) => updateStatus(record._id, value)}
           style={{ width: 130 }}
         >
-          <Select.Option value="pending"><Tag color="gold">Pending</Tag></Select.Option>
-          <Select.Option value="shipped"><Tag color="blue">Shipped</Tag></Select.Option>
-          <Select.Option value="completed"><Tag color="green">Completed</Tag></Select.Option>
+          <Select.Option value="pending"><Tag color="gold">{t("pending")}</Tag></Select.Option>
+          <Select.Option value="shipped"><Tag color="blue">{t("shipped")}</Tag></Select.Option>
+          <Select.Option value="completed"><Tag color="green">{t("completed")}</Tag></Select.Option>
         </Select>
       )
     },

@@ -49,7 +49,7 @@
   "cartTitle": "Shopping Cart",
   "cartEmpty": "Your cart is empty. Please add some products to your cart.",
   "cartTotal": "Total Price:",
-  "orderNow": "Order placed successfully! Thank you for your purchase.",
+  "orderNow": "Order Now",
   "myOrders": "My Orders",
   "orderID": "Order ID",
   "orderStatus": "Order Status",
@@ -58,8 +58,17 @@
   "addSeafoodTitle": "Add New Products",
   "addSeafoodButton": "Add New Products",
   "adminOrdersTitle": " Admin Orders Management",
+  "userEmail": "User Email",
   "adminOrdersStatus": "Status",
   "adminOrdersTotal": "Total Amount",
   "adminOrdersAction": "Action",
-  "adminOrdersDelete": "Delete Order"
+  "adminOrdersDelete": "Delete Order",
+  "admin": "Admin",
+  "user": "User",
+  "dragAndDrop": "Drag and Drop your image here or click to select a file",
+  "noOrders": "No orders yet",
+  "loadingOrders": "Loading orders...",
+  "pending": "Pending",
+  "shipped": "Shipped",
+  "completed": "Completed"
 }

@@ -112,7 +112,7 @@ function AddSeafood({ onAdd }) {
                     cursor: 'pointer'
                 }}>
                     <input {...getInputProps()} />
-                    <p>Drag and Drop</p>
+                    <p>{t("dragAndDrop")}</p>
                 </div>
 
                 {/* 图片预览 */}

@@ -50,7 +50,7 @@ function SeafoodDetail() {
       {/* 🔴 Helmet 永遠會被執行！即使在載入中，也能先顯示預設標題 */}
       <Helmet>
         <title>
-          {item ? `${displayLang(item.name)} | 永生發海鮮` : "載入中... | 永生發海鮮"}
+          {item ? `${displayLang(item.name)} | ${t("navbarTitle")}` : "載入中... | 永生發海鮮"}
         </title>
         {item && (
           <>

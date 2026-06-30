@@ -14,6 +14,7 @@ const { Search } = Input
 
 function SeafoodList() {
   const navigate = useNavigate() //  2. 初始化 navigate
+  const [messageApi, contextHolder] = message.useMessage()
   const [seafood, setSeafood] = useState([])
   const [loading, setLoading] = useState(true) // ✅ 修正：定義 loading 狀態
   const [category, setCategory] = useState("all")
@@ -109,6 +110,8 @@ function SeafoodList() {
 
   return (
     <div style={{ padding: "20px" }}>
+      {contextHolder}
+
       <h2 style={{ marginBottom: "20px" }}> {t("homeContentTitle")} 🐟</h2>
 
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
@@ -217,12 +220,20 @@ function SeafoodList() {
                   e.preventDefault()
                   e.stopPropagation()
 
+                  alert("1. 按鈕確定有被點擊到了！")
+
                   try {
                     addToCart(item)
-                    alert(`${displayLang(item.name)} ${t("addToCart")}`)
+
+                    alert("2. addToCart 函數執行完畢，準備跳出 AntD 提示！")
+                    messageApi.success(`${displayLang(item.name)} ${t("addToCart")} 🛒 `)
+
                   } catch (error) {
-                    console.error("加入購物車失敗:", error)
-                    message.error("Failed to add to cart! Please try again.")
+
+                    alert("3. 程式出錯了，錯誤原因：" + error.message)
+
+                    //console.error("加入購物車失敗:", error)
+                    //message.error("Failed to add to cart! Please try again.")
                   }
                 }}
               >

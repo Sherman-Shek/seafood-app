@@ -44,6 +44,7 @@
   "other": "其它",
   "navbarTitle": "永生發海鮮",
   "loginTitle": "登入",
+  "username": "用戶名",
   "email": "電子郵件",
   "password": "密碼",
   "newUser": "新用戶？",
@@ -89,7 +90,7 @@
   "namePaymentRemark": "請在付款備註中包含您的姓名。",
   "QRcodePay": "請掃描下方的 QR Code 進行付款：",
   "back": "返回",
-  "buyingInformation:": "購買資訊：",
+  "buyingInformation:": "購買資訊:",
   "storage": "儲存方式：",
   "update": "更新"
 }

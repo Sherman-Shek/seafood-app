@@ -52,7 +52,7 @@ function Orders() {
             backgroundColor: "#f9f9f9" 
           }}>
             <p><b>{t("orderID")}:</b> {order._id}</p>
-            <p><b>{t("orderStatus")}:</b> <span style={{ color: "orange" }}>{t(orderStatus)}</span></p>
+            <p><b>{t("orderStatus")}:</b> <span style={{ color: "orange" }}>{t(order.status)}</span></p>
             <p><b>{t("orderTotal")}:</b> <span style={{ color: "green", fontWeight: "bold" }}>${order.total}</span></p>
 
             <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1px dashed #ccc" }}>

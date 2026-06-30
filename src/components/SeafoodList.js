@@ -220,20 +220,12 @@ function SeafoodList() {
                   e.preventDefault()
                   e.stopPropagation()
 
-                  alert("1. 按鈕確定有被點擊到了！")
-
                   try {
                     addToCart(item)
-
-                    alert("2. addToCart 函數執行完畢，準備跳出 AntD 提示！")
-                    messageApi.success(`${displayLang(item.name)} ${t("addToCart")} 🛒 `)
-
+                    messageApi.success(`${displayLang(item.name)} ${t("addedToCart")} 🛒 `)
                   } catch (error) {
-
-                    alert("3. 程式出錯了，錯誤原因：" + error.message)
-
-                    //console.error("加入購物車失敗:", error)
-                    //message.error("Failed to add to cart! Please try again.")
+                    console.error("加入購物車失敗:", error)
+                    messageApi.error("Failed to add to cart! Please try again.")
                   }
                 }}
               >

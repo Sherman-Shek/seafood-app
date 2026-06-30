@@ -1,4 +1,4 @@
-import React from 'react' // 確保明確引入 React
+import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom"
 import LanguageWrapper from "./components/LanguageWrapper"
 import Cart from "./pages/Cart"
@@ -34,7 +34,7 @@ function App() {
 
   // 如果 context 還沒準備好（預防萬一），先回傳空
   if (!auth || !cartContext) {
-    return <div>Loading System...</div>;
+    return <div> {t("loading")} </div>;
   }
 
   return (
@@ -46,7 +46,6 @@ function App() {
           <title>永生發海鮮 | Wing Sang Fat Seafood</title>
           {/* <meta name="google-site-verification"
             content="foFaTCspkdBj-43meogkB9ZQ3EXLKLoDMM7IncWsTEk" /> */}
-
           <meta name="description" content="新鮮海鮮批發與零售" />
         </Helmet>
 

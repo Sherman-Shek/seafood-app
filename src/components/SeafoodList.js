@@ -87,7 +87,7 @@ function SeafoodList() {
     const token = localStorage.getItem("token")
 
     if (!token) {
-      alert("Please login first!")
+      messageApi.error("Please login first!")
       return
     }
 
@@ -99,10 +99,10 @@ function SeafoodList() {
       })
       //  更新 UI（关键）
       setSeafood(prev => prev.filter(item => item._id !== id))
-      message.success("Deleted Successfully!")
+      messageApi.success("Deleted Successfully!")
     } catch (err) {
       console.error("DELETE ERROR:", err)
-      message.error(`Deleted Fail!：${err.message}`)
+      messageApi.error(`Deleted Fail!：${err.message}`)
     }
   }
 

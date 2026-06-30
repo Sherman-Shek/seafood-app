@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom"
 function Cart() {
   const { i18n, t } = useTranslation()
   const { cart, removeFromCart, updateQty } = useContext(CartContext)
-  const navigate = useNavigate() // ✅ 加上這行來初始化跳轉功能
-
+  const navigate = useNavigate()
+  const [messageApi, contextHolder] = message.useMessage()
+  
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
 
   // 輔助函數：幫你判斷要顯示什麼文字
@@ -24,9 +25,9 @@ function Cart() {
 
   const handlePlaceOrder = async () => {
     if (cart.length === 0) {
-      message.success("Your cart is empty！ Please add some seafood before placing an order.")
+      messageApi.success("Your cart is empty！ Please add some seafood before placing an order.")
       setTimeout(() => {
-        navigate(`/${i18n.language}/`) // ✅ 這裡使用 navigate 跳轉到海鮮列表頁
+        navigate(`/${i18n.language}/`)
       }, 1500)
       return
     }
@@ -34,12 +35,11 @@ function Cart() {
     // 1. 獲取登入的 token
     const token = localStorage.getItem("token")
     if (!token) {
-      alert("Please login！")
+      messageApi.error("Please login！")
       return
     }
 
-    // 2. 📦 關鍵修復：在這裡定義並組裝 orderData！
-    // (注意：請根據你實際的購物車變數名稱修改，例如是 cart 還是 cartItems)
+    // 2. 定義並組裝 orderData
     const orderData = {
       items: cart.map(item => ({
         productId: item._id, // 後端 Schema 叫 productId
@@ -61,27 +61,28 @@ function Cart() {
       })
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || `伺服器報錯：${res.status}`);
+        throw new Error(errorData.message || `Server Error: ${res.status}`);
       }
 
       const data = await res.json();
-      console.log("后端返回的完整数据:", data);
+      console.log("Order data:", data);
 
-      // 注意：這裡 data.orderNumber 必須是你後端回傳的物件裡有的欄位
-      alert("Ordered Successfully,  ID: " + (data.orderNumber || data._id || "Done"));
-      console.log("訂單詳情:", data);
+      // data.orderNumber 必須是你後端回傳的物件裡有的欄位
+      messageApi.success("Ordered Successfully,  ID: " + (data.orderNumber || data._id || "Done"));
+      console.log("Order details:", data);
 
       // 下单成功后清空购物车
       cart.forEach(item => removeFromCart(item._id))
 
     } catch (err) {
-      console.error("下單出錯:", err);
-      alert("Ordered fail,Please try again later! Reason：" + err.message);
+      console.error("Order failed:", err);
+      messageApi.error("Ordered fail,Please try again later! Reason：" + err.message);
     }
   }
 
   return (
     <div style={{ padding: "20px" }}>
+      {contextHolder}
 
       <h2>{t("cartTitle")}</h2>
 

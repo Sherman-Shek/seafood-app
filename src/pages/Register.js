@@ -12,8 +12,8 @@ function Register() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-    const { t, i18n } = useTranslation()
-  
+  const { t, i18n } = useTranslation()
+  const [messageApi, contextHolder] = message.useMessage()
 
   const handleRegister = async (e) => {
     // 阻止表單預設提交行為
@@ -30,7 +30,7 @@ function Register() {
 
       // 🔴 修正 3：移除 res.json() 和 res.ok，改用 axios 的正確寫法
       if (res.status === 200 || res.status === 201) {
-        message.success("Registered Successfully！ Please Login")
+        messageApi.success(t("registerSuccess"))
         // 跳轉登入頁面，並帶上當前語言
         navigate(`/login${i18n.language}`)
 
@@ -41,7 +41,7 @@ function Register() {
       // Axios 的錯誤訊息通常包在 err.response.data 裡面
       const errorMessage = err.response?.data?.message || err.message;
       setError(errorMessage);
-      message.error("Registered failed: " + errorMessage)
+      messageApi.error("Registered failed: " + errorMessage)
     }
   }
 
@@ -53,14 +53,16 @@ function Register() {
       border: "1px solid #ddd",
       borderRadius: "10px"
     }}>
-      <h2 style={{ textAlign: "center" }}>Register</h2>
+      {contextHolder}
+      
+      <h2 style={{ textAlign: "center" }}>{t("register")}</h2>
 
       <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
 
         {/* 🔴 修正 2：新增 username 欄位 */}
         <input
           type="text"
-          placeholder="Username"
+          placeholder={t("username")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -68,7 +70,7 @@ function Register() {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -76,7 +78,7 @@ function Register() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder={t("password")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -93,7 +95,7 @@ function Register() {
             cursor: "pointer"
           }}
         >
-          Register
+          {t("register")}
         </button>
 
         {error && (
@@ -101,7 +103,7 @@ function Register() {
         )}
       </form>
     </div>
-  );
+  )
 }
 
 export default Register

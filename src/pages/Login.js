@@ -5,6 +5,7 @@ import getUser from "../utils/auth"
 import { AuthContext } from "../context/AuthContext"
 import axios from "axios"
 import { useTranslation } from "react-i18next"
+import { message } from "antd"
 
 function Login() {
   const [email, setEmail] = useState("")
@@ -12,6 +13,7 @@ function Login() {
   const navigate = useNavigate()
   const { login } = useContext(AuthContext)
   const { t, i18n } = useTranslation()
+  const [messageApi, contextHolder] = message.useMessage()
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -37,12 +39,14 @@ function Login() {
       console.error(err)
       // 捕捉後端回傳的錯誤訊息 (如密碼錯誤、帳號不存在)
       const errorMessage = err.response?.data?.error || "Login failed"
-      alert(errorMessage)
+      messageApi.error(errorMessage)
     }
   }
 
   return (
     <div className="login-container">
+      {contextHolder}
+      
       <h1 className="login-title">{t("loginTitle")}</h1>
 
       <form onSubmit={handleLogin}>

@@ -6,6 +6,7 @@ function AdminOrders() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const { t, i18n } = useTranslation()
+  const [messageApi, contextHolder] = message.useMessage()
 
   // 1. 取得所有訂單
   useEffect(() => {
@@ -24,7 +25,7 @@ function AdminOrders() {
       })
       .catch(err => {
         console.error(err)
-        message.error("載入訂單失敗")
+        messageApi.error("Failed to load orders")
         setLoading(false)
       })
   }, [])
@@ -48,9 +49,9 @@ function AdminOrders() {
       if (!res.ok) throw new Error(updated.message || "更新失敗")
 
       setOrders(prev => prev.map(o => (o._id === id ? updated : o)))
-      message.success("Status Updated Successfully！")
+      messageApi.success("Status Updated Successfully！")
     } catch (err) {
-      message.error(err.message)
+      messageApi.error(err.message)
     }
   }
 
@@ -66,11 +67,11 @@ function AdminOrders() {
         }
       })
 
-      if (!res.ok) throw new Error("刪除失敗")
+      if (!res.ok) throw new Error("Delete failed")
       setOrders(prev => prev.filter(o => o._id !== id))
-      message.success("The order is deleted")
+      messageApi.success("The order is deleted")
     } catch (err) {
-      message.error(err.message)
+      messageApi.error(err.message)
     }
   }
 
@@ -130,6 +131,8 @@ function AdminOrders() {
 
   return (
     <div style={{ padding: "20px" }}>
+      {contextHolder}
+        
       <h1>👑 {t("adminOrdersTitle")}</h1>
       <Table
         dataSource={orders}

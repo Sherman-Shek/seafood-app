@@ -3,11 +3,14 @@ import { useParams, useNavigate } from "react-router-dom" // 假设你用了路�
 import { useDropzone } from "react-dropzone"
 import { useTranslation } from "react-i18next"
 import axios from "axios"
+import { message } from "antd"
+
 
 function EditSeafood() {
     const { t, i18n } = useTranslation()
     const { id } = useParams(); // 获取 URL 里的 ID
     const navigate = useNavigate()
+    const [messageApi, contextHolder] = message.useMessage()
 
     const [form, setForm] = useState({ name: "", price: "", category: "" })
     const [imageUrl, setImageUrl] = useState("")
@@ -73,7 +76,7 @@ function EditSeafood() {
             body: JSON.stringify(payload)
         })
         if (res.ok) {
-            alert("Updated Successfully!")
+            messageApi.success("Updated Successfully!")
             navigate("/")
         }
     }
@@ -100,15 +103,15 @@ function EditSeafood() {
                 setImageUrl(json.imageUrl);
             })
             .catch(err => {
+                messageApi.error("Failed to upload image! Please try again.")
                 console.error("FETCH ERROR:", err.message);
             })
     }
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     return (
-        // ... JSX 部分基本与 AddSeafood 一致 ...
-        // 只需要把按钮文字改成 "Update Seafood"
         <div>
+            {contextHolder}
             <h2>{t("editSeafoodTitle")}</h2>
 
             <div {...getRootProps()} style={{ border: "2px dashed black", padding: "20px" }}>

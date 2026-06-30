@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
+import { message } from "antd"
 
 function AdminDashboard() {
+    const [messageApi, contextHolder] = message.useMessage()
     const [products, setProducts] = useState([])
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
@@ -25,9 +27,9 @@ function AdminDashboard() {
             if (!res.ok) throw new Error("Delete failed")
 
             setProducts(prev => prev.filter(item => item._id !== id))
-            alert("删除成功")
+            messageApi.success("Delete successful")
         } catch (err) {
-            alert(err.message)
+            messageApi.error(err.message)
         }
     }
 
@@ -47,9 +49,9 @@ function AdminDashboard() {
             if (!res.ok) throw new Error(data.error)
 
             setProducts(prev => [...prev, data])
-            alert("新增成功")
+            messageApi.success("added successfully")
         } catch (err) {
-            alert(err.message)
+            messageApi.error(err.message)
         }
     }
 
@@ -77,7 +79,8 @@ function AdminDashboard() {
 
     return (
         <div style={{ padding: "20px" }}>
-            <h1>👑 Admin Dashboard</h1>
+            {contextHolder} 
+            <h1>👑 {t("adminDashboardTitle")}</h1>
 
             {/* ✅ 新增商品（只放一次） */}
             <div style={{ marginBottom: "20px" }}>
@@ -91,7 +94,7 @@ function AdminDashboard() {
                     value={price}
                     onChange={e => setPrice(e.target.value)}
                 />
-                <button onClick={handleAdd}>Add Product</button>
+                <button onClick={handleAdd}>{t("addProduct")}</button>
             </div>
 
             {/* 商品列表 */}
@@ -103,14 +106,14 @@ function AdminDashboard() {
                         onClick={() => handleDelete(item._id)}
                         style={{ marginLeft: "10px", color: "red" }}
                     >
-                        Delete
+                        {t("delete")}
                     </button>
 
                     <button
                         onClick={() => handleEdit(item)}
                         style={{ marginLeft: "10px" }}
                     >
-                        Edit
+                        {t("edit")}
                     </button>
                 </div>
             ))}

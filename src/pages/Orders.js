@@ -5,11 +5,10 @@ import { useTranslation } from "react-i18next"
 function Orders() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
-  
   // ✅ 2. 啟用翻譯設定
   const { t, i18n } = useTranslation()
 
-  // ✅ 3. 加入我們熟悉的翻譯小幫手
+  // ✅ 3. 加入翻譯工具
   const displayLang = (field) => {
     if (!field) return "";
     if (typeof field === 'object') {
@@ -61,6 +60,7 @@ function Orders() {
               <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
                 {order.items.map((item, index) => (
                   <li key={index} style={{ marginBottom: "5px" }}>
+
                     {/* ✅ 4. 用 displayLang 包住 item.name */}
                     {displayLang(item.name)} × {item.qty} (${item.price})
                   </li>

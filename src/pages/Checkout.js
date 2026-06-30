@@ -14,8 +14,9 @@ function Checkout() {
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [paymentType, setPaymentType] = useState('');
+    const [messageApi, contextHolder] = message.useMessage()
 
-    // 模擬 QR Code 網址（你可以換成你真實的支付寶/PayMe 收款碼網址）
+    // 模擬 QR Code 網址
     const qrCodes = {
         alipay: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=YourOrderTotal",
         payme: "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=YourOrderTotal"
@@ -24,11 +25,11 @@ function Checkout() {
     // 最終提交訂單的邏輯
     const handleFinalSubmit = async () => {
         if (cart.length === 0) {
-            message.warning(t("Your cart is empty"))
+            messageApi.warning(t("Your cart is empty"))
             return
         }
         setLoading(true)
-        // 傳送到後端的 fetch 代碼
+        // 傳送到後端的 fetch
         const token = localStorage.getItem("token")
 
         // 準備訂單數據
@@ -62,22 +63,22 @@ function Checkout() {
             })
 
             if (res.ok) {
-                message.success(t("Order Placed Successfully!"));
+                messageApi.success(t("Order Placed Successfully!"));
                 setIsModalVisible(false);
                 clearCart();
                 navigate(`/${i18n.language}/orders`);
             } else {
                 const err = await res.json();
-                message.error("Order failed: " + err.message);
+                messageApi.error("Order failed: " + err.message);
             }
         } catch (error) {
             console.error("Order Error:", error);
-            message.error("Network error, please try again later.");
+            messageApi.error("Network error, please try again later.");
         } finally {
             setLoading(false);
         }
         setTimeout(() => {
-            message.success(t("Order Placed Successfully!"))
+            messageApi.success(t("Order Placed Successfully!"))
             setIsModalVisible(false)
             clearCart()
             navigate(`/${i18n.language}/orders`)
@@ -90,13 +91,14 @@ function Checkout() {
 
     const onFinish = (values) => {
         if (cart.length === 0) {
-            message.warning(t("Your cart is empty"))
+            messageApi.warning(t("Your cart is empty"))
             return
         }
         setPaymentType(values.paymentMethod)
-        console.log("收到的表單資訊:", values)
+        console.log("Received information from form", values)
         if (values.paymentMethod === 'credit_card') {
             // 如果是信用卡，可以直接走原本的成功邏輯
+            messageApi.success(t("Order Placed Successfully!"));
             handleFinalSubmit(values)
         } else {
             // 如果是支付寶或 PayMe，彈出 QR Code
@@ -108,12 +110,14 @@ function Checkout() {
 
     return (
         <div style={{ padding: "40px", maxWidth: "1000px", margin: "0 auto" }}>
+            {contextHolder}
             <Title level={2}>🚢 {t("Checkout")}</Title>
             <Row gutter={32}>
                 {/* 左側：填寫資訊 */}
                 <Col xs={24} md={14}>
                     <Card title={t("Shipping Information")} bordered={false} className="custom-card">
                         <Form layout="vertical" onFinish={onFinish}>
+
                             {/* 在 Shipping Information 下方加入 Payment Method */}
                             <Card title={t("Payment Method")} bordered={false} style={{ marginTop: '20px' }}>
                                 <Form.Item name="paymentMethod" label={t("Select Payment")} initialValue="alipay" rules={[{ required: true }]}>
@@ -131,6 +135,7 @@ function Checkout() {
                                             </Col>
                                             <Col span={8}>
                                                 <Radio.Button value="payme" style={{ width: '100%', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
                                                     {/* PayMe的Logo */}
                                                     <img
                                                         src="https://upload.wikimedia.org/wikipedia/commons/1/13/PayMe_Logo.png"
@@ -185,7 +190,7 @@ function Checkout() {
                         />
                         <Divider />
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Text strong>{t("Total")}:</Text>
+                            <Text strong>{t("total")}:</Text>
                             <Text strong style={{ color: '#ff4d4f', fontSize: '20px' }}>${totalPrice}</Text>
                         </div>
                     </Card>
@@ -201,7 +206,7 @@ function Checkout() {
                     cancelText="Cancel"
                 >
                     <div style={{ textAlign: 'center', padding: '20px' }}>
-                        <p>Please scan the QR code below to pay:</p>
+                        <p>{t("QRcodePay")}</p>
                         {paymentType && (
                             <img
                                 src={qrCodes[paymentType]}
@@ -210,9 +215,9 @@ function Checkout() {
                             />
                         )}
                         <p style={{ marginTop: '10px', color: '#ff4d4f' }}>
-                            Total: <span style={{ fontSize: '20px', fontWeight: 'bold' }}>${totalPrice}</span>
+                            {t("total")}: <span style={{ fontSize: '20px', fontWeight: 'bold' }}>${totalPrice}</span>
                         </p>
-                        <small>Please include your name in the payment remark.</small>
+                        <small>{t("namePaymentRemark")}</small>
                     </div>
                 </Modal>
             </Row>

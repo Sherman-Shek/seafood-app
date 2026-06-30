@@ -14,7 +14,7 @@ function AddSeafood({ onAdd }) {
         name: { en: "", zh: "" },
         price: "",
         category: "", 
-        unit: { en: "kg", zh: "公斤" } 
+        unit: { en: "g", zh: "斤" } 
     })
 
     const [imageUrl, setImageUrl] = useState("")
@@ -164,7 +164,7 @@ function AddSeafood({ onAdd }) {
                 <input
                     name="category"
                     placeholder={t("categoryPlaceholderZh")}
-                    value={form.category}
+                    value={form.category.zh}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     required
                 />
@@ -173,7 +173,7 @@ function AddSeafood({ onAdd }) {
                 <input
                     name="category"
                     placeholder={t("categoryPlaceholderEn")}
-                    value={form.category}
+                    value={form.category.en}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     required
                 />

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { message } from "antd"
+import { useTranslation } from "react-i18next"
 
 function AdminDashboard() {
     const [messageApi, contextHolder] = message.useMessage()
     const [products, setProducts] = useState([])
     const [name, setName] = useState("")
     const [price, setPrice] = useState("")
+    const { t, i18n } = useTranslation()
 
     // 获取商品
     useEffect(() => {
@@ -79,7 +81,7 @@ function AdminDashboard() {
 
     return (
         <div style={{ padding: "20px" }}>
-            {contextHolder} 
+            {contextHolder}
             <h1>👑 {t("adminDashboardTitle")}</h1>
 
             {/* ✅ 新增商品（只放一次） */}

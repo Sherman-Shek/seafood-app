@@ -134,7 +134,7 @@ function AddSeafood({ onAdd }) {
                 <input
                     type="text"
                     name="name_en"
-                    placeholder={t("productPlaceholder")}
+                    placeholder={t("productPlaceholderEn")}
                     value={form.name.en}
                     onChange={handleChange}
                     required
@@ -144,7 +144,7 @@ function AddSeafood({ onAdd }) {
                 <input
                     type="text"
                     name="name_zh"
-                    placeholder={t("productPlaceholder")}
+                    placeholder={t("productPlaceholderZh")}
                     value={form.name.zh}
                     onChange={handleChange}
                     required
@@ -163,7 +163,7 @@ function AddSeafood({ onAdd }) {
                 <label>{t("categoryZh") || "Category"}</label>
                 <input
                     name="category"
-                    placeholder={t("categoryPlaceholder")}
+                    placeholder={t("categoryPlaceholderZh")}
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     required
@@ -172,7 +172,7 @@ function AddSeafood({ onAdd }) {
                 <label>{t("categoryEn") || "Category"}</label>
                 <input
                     name="category"
-                    placeholder={t("categoryPlaceholder")}
+                    placeholder={t("categoryPlaceholderEn")}
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     required

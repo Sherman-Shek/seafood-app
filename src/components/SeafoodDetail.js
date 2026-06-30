@@ -10,6 +10,7 @@ const { Title, Text } = Typography
 function SeafoodDetail() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
+  const [messageApi, contextHolder] = message.useMessage()
   const { id } = useParams()
   const [item, setItem] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -46,6 +47,7 @@ function SeafoodDetail() {
 
   return (
     <div style={{ padding: "40px", maxWidth: "1200px", margin: "0 auto" }}>
+      {contextHolder}
 
       {/* 🔴 Helmet 永遠會被執行！即使在載入中，也能先顯示預設標題 */}
       <Helmet>
@@ -118,13 +120,13 @@ function SeafoodDetail() {
                     </small>
                   </Title>
                   <p />
-                  <Descriptions title={t("Buying Information:")}
+                  <Descriptions title={t("buyingInformation")}
                     bordered
                     column={1}
                     size="middle"
                     style={{ marginTop: '20px', background: 'white' }}
                   >
-                    <Descriptions.Item label={t("Storage")}>
+                    <Descriptions.Item label={t("storage")}>
                       {i18n.language === 'zh' ? '冷藏 0-4°C' : 'Refrigerated 0-4°C'}
                     </Descriptions.Item>
                   </Descriptions>
@@ -137,7 +139,7 @@ function SeafoodDetail() {
                       e.preventDefault()
                       e.stopPropagation()
                       addToCart(item)
-                      message.success(t("addToCart"))
+                      messageApi.success(t("addToCart"))
                     }}
                     style={{
                       marginTop: '30px',

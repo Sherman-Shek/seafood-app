@@ -172,6 +172,7 @@ function EditSeafood() {
                     placeholder={t("categoryPlaceholder")}
                     value={form.category?.en || ""}
                     onChange={handleChange}
+                    
                 />
                 <p />
                 <button type="submit">{t("update")}</button>

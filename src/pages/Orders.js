@@ -49,10 +49,10 @@ function Orders() {
             padding: "15px",
             marginBottom: "15px",
             borderRadius: "8px",
-            backgroundColor: "#f9f9f9" // 加點底色讓卡片更明顯
+            backgroundColor: "#f9f9f9" 
           }}>
             <p><b>{t("orderID")}:</b> {order._id}</p>
-            <p><b>{t("orderStatus")}:</b> <span style={{ color: "orange" }}>{order.status}</span></p>
+            <p><b>{t("orderStatus")}:</b> <span style={{ color: "orange" }}>{t(orderStatus)}</span></p>
             <p><b>{t("orderTotal")}:</b> <span style={{ color: "green", fontWeight: "bold" }}>${order.total}</span></p>
 
             <div style={{ marginTop: "10px", paddingTop: "10px", borderTop: "1px dashed #ccc" }}>

@@ -1,20 +1,20 @@
 import { useDropzone } from "react-dropzone"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom" // ✅ 1. 引入跳转钩子
+import { useNavigate } from "react-router-dom"
 import { Button, Row, Col, Form, Input, message } from "antd"
 import { useTranslation } from "react-i18next"
+import axios from "axios"
 
-// ✅ 2. 确保接收 onAdd 参数
 function AddSeafood({ onAdd }) {
     const { t, i18n } = useTranslation()
-    const navigate = useNavigate() // ✅ 3. 初始化跳转
+    const navigate = useNavigate()
     const [messageApi, contextHolder] = message.useMessage()
 
     const [form, setForm] = useState({
         name: { en: "", zh: "" },
         price: "",
-        category: { en: "", zh: "" },
-        unit: { en: "", zh: "" }
+        category: "", 
+        unit: { en: "kg", zh: "公斤" } 
     })
 
     const [imageUrl, setImageUrl] = useState("")
@@ -22,18 +22,17 @@ function AddSeafood({ onAdd }) {
     const handleChange = (e) => {
         const { name, value } = e.target
 
-        // 處理需要分語言的欄位 (例如 name_en, name_zh)
         if (name.includes("_")) {
-            const [field, lang] = name.split("_"); // 分割出 name 和 en
+            const [field, lang] = name.split("_")
             setForm(prev => ({
                 ...prev,
                 [field]: { ...prev[field], [lang]: value }
             }))
         } else {
-            // 處理價格、圖片等不分語言的欄位
             setForm(prev => ({ ...prev, [name]: value }))
         }
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -42,25 +41,35 @@ function AddSeafood({ onAdd }) {
             return
         }
 
+        const token = localStorage.getItem("token")
+        if (!token) {
+            messageApi.error("Please login first!")
+            return
+        }
+
         const payload = {
-            ...form,
-            name: { zh: nameZh, en: nameEn },
+            name: { zh: form.name.zh, en: form.name.en },
             price: Number(form.price) || 0,
-            category: category,
+            category: form.category,
             image: imageUrl,
             unit: {
-                zh: unitZh,
-                en: unitEn
+                zh: form.unit.zh,
+                en: form.unit.en
             }
         }
 
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/seafood`, productData, {
+        
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/seafood`, payload, {
                 headers: { Authorization: `Bearer ${token}` }
-            });
-            messageApi.success("Added Successfully!");
+            })
+            messageApi.success("Added Successfully!")
+            
+            setTimeout(() => navigate(`/${i18n.language}`), 1500)
+            
         } catch (err) {
-            console.error(err);
+            console.error(err)
+            messageApi.error(err.response?.data?.error || "Failed to add product")
         }
     }
 
@@ -71,16 +80,20 @@ function AddSeafood({ onAdd }) {
         formData.append("file", file)
         formData.append("upload_preset", "ml_default")
 
-        const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dwhhusuhf/image/upload",
-            {
-                method: "POST",
-                body: formData
-            }
-        )
-        const data = await res.json()
-        //  關鍵：Cloudinary返回的圖片URL
-        setImageUrl(data.secure_url)
+        try {
+            const res = await fetch(
+                "https://api.cloudinary.com/v1_1/dwhhusuhf/image/upload",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            )
+            const data = await res.json()
+            setImageUrl(data.secure_url)
+            messageApi.success("Image uploaded successfully!")
+        } catch (error) {
+            messageApi.error("Image upload failed!")
+        }
     }
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop })
@@ -88,7 +101,7 @@ function AddSeafood({ onAdd }) {
     return (
         <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
             {contextHolder}
-            <h2>{t("addProductTitle")}</h2>
+            <h2>{t("addProductTitle") || "Add Product"}</h2>
 
             {/* 圖片上傳區域 */}
             <div {...getRootProps()} style={{
@@ -99,13 +112,13 @@ function AddSeafood({ onAdd }) {
                 cursor: 'pointer'
             }}>
                 <input {...getInputProps()} />
-                <p>{t("dragAndDrop")}</p>
+                <p>{t("dragAndDrop") || "Drag & drop image here, or click to select"}</p>
             </div>
 
             {/* 圖片預覽 */}
             {imageUrl && (
                 <div style={{ marginBottom: '20px' }}>
-                    <p>{t("preview")}</p>
+                    <p>{t("preview") || "Preview:"}</p>
                     <img
                         src={imageUrl}
                         width="200"
@@ -113,10 +126,11 @@ function AddSeafood({ onAdd }) {
                     />
                 </div>
             )}
+            
             <form layout="vertical"
                 onSubmit={handleSubmit}
                 style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label>{t("product_name_en")}</label>
+                <label>{t("product_name_en") || "Name (EN)"}</label>
                 <input
                     type="text"
                     name="name_en"
@@ -125,7 +139,8 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>{t("product_name_zh")}</label>
+                
+                <label>{t("product_name_zh") || "Name (ZH)"}</label>
                 <input
                     type="text"
                     name="name_zh"
@@ -134,7 +149,8 @@ function AddSeafood({ onAdd }) {
                     onChange={handleChange}
                     required
                 />
-                <label>{t("price")}</label>
+                
+                <label>{t("price") || "Price"}</label>
                 <input
                     name="price"
                     type="number"
@@ -144,15 +160,17 @@ function AddSeafood({ onAdd }) {
                     required
                 />
 
+                <label>{t("category") || "Category"}</label>
                 <input
                     name="category"
                     placeholder={t("category_placeholder")}
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    required
                 />
 
-                <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
-                    {t("addProductButton")}
+                <button type="submit" style={{ padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer', marginTop: '10px' }}>
+                    {t("addProductButton") || "Submit"}
                 </button>
             </form>
         </div>

@@ -130,21 +130,21 @@ function AddSeafood({ onAdd }) {
             <form layout="vertical"
                 onSubmit={handleSubmit}
                 style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <label>{t("product_name_en") || "Name (EN)"}</label>
+                <label>{t("productNameEn") || "Name (EN)"}</label>
                 <input
                     type="text"
                     name="name_en"
-                    placeholder={t("product_name_en_placeholder")}
+                    placeholder={t("productPlaceholder")}
                     value={form.name.en}
                     onChange={handleChange}
                     required
                 />
                 
-                <label>{t("product_name_zh") || "Name (ZH)"}</label>
+                <label>{t("productNameZh") || "Name (ZH)"}</label>
                 <input
                     type="text"
                     name="name_zh"
-                    placeholder={t("product_name_zh_placeholder")}
+                    placeholder={t("productPlaceholder")}
                     value={form.name.zh}
                     onChange={handleChange}
                     required
@@ -154,7 +154,7 @@ function AddSeafood({ onAdd }) {
                 <input
                     name="price"
                     type="number"
-                    placeholder={t("price_placeholder")}
+                    placeholder={t("pricePlaceholder")}
                     value={form.price}
                     onChange={(e) => setForm({ ...form, price: e.target.value })}
                     required
@@ -163,7 +163,7 @@ function AddSeafood({ onAdd }) {
                 <label>{t("category") || "Category"}</label>
                 <input
                     name="category"
-                    placeholder={t("category_placeholder")}
+                    placeholder={t("categoryPlaceholder")}
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     required

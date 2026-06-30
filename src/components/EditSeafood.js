@@ -136,7 +136,7 @@ function EditSeafood() {
                 <label>{t("productNameZh")}</label>
                 <input
                     name="name_zh"
-                    placeholder={displayLang(item.name)}
+                    placeholder={displayLang(form.name)}
                     value={form.name?.zh || ""}
                     onChange={handleChange}
                 />
@@ -144,7 +144,7 @@ function EditSeafood() {
                 <label>{t("productNameEn")}</label>
                 <input
                     name="name_en"
-                    placeholder={displayLang(item.name)}
+                    placeholder={displayLang(form.name)}
                     value={form.name?.en || ""}
                     onChange={handleChange}
                 />
@@ -153,7 +153,7 @@ function EditSeafood() {
                 <input
                     name="price"
                     type="number"
-                    placeholder={item.price}
+                    placeholder={displayLang(form.price)}
                     value={form.price}
                     onChange={handleChange}
                 />
@@ -161,7 +161,7 @@ function EditSeafood() {
                 <label>{t("categoryZh")}</label>
                 <input
                     name="category_zh"
-                    placeholder={displayLang(item.name)}
+                    placeholder={displayLang(form.category)}
                     value={form.category?.zh || ""}
                     onChange={handleChange}
                 />
@@ -169,7 +169,7 @@ function EditSeafood() {
                 <label>{t("categoryEn")}</label>
                 <input
                     name="category_en"
-                    placeholder={displayLang(item.name)}
+                    placeholder={displayLang(form.category)}
                     value={form.category?.en || ""}
                     onChange={handleChange}
                     

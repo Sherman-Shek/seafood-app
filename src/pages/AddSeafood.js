@@ -160,7 +160,16 @@ function AddSeafood({ onAdd }) {
                     required
                 />
 
-                <label>{t("category") || "Category"}</label>
+                <label>{t("categoryZh") || "Category"}</label>
+                <input
+                    name="category"
+                    placeholder={t("categoryPlaceholder")}
+                    value={form.category}
+                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    required
+                />
+
+                <label>{t("categoryEn") || "Category"}</label>
                 <input
                     name="category"
                     placeholder={t("categoryPlaceholder")}

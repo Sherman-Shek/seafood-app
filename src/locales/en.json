@@ -81,6 +81,8 @@
   "productNameEn": "Product Name: (English)",
   "price": "Price:",
   "pricePlaceholder": "Price",
+  "categoryZh": "Category: (Chinese)",
+  "categoryEn": "Category: (English)",
   "categoryPlaceholder": "Category",
   "adminDashboardTitle": "Admin Dashboard",
   "total": "Total",

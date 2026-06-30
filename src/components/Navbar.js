@@ -52,7 +52,7 @@ function Navbar() {
         ...(user?.role === "admin" ? [
             {
                 key: 'addSeafood',
-                label: <Link to={`/${curLang}/addSeafood`}>{t("addSeafood")}</Link>,
+                label: <Link to={`/${curLang}/addSeafood`}>{t("addProduct")}</Link>,
             },
             {
                 key: 'adminOrders',

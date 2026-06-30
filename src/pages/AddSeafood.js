@@ -34,7 +34,7 @@ function AddSeafood({ onAdd }) {
             setForm(prev => ({ ...prev, [name]: value }))
         }
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (!imageUrl) {
@@ -44,39 +44,24 @@ function AddSeafood({ onAdd }) {
 
         const payload = {
             ...form,
+            name: { zh: nameZh, en: nameEn },
             price: Number(form.price) || 0,
-            image: imageUrl
+            category: category,
+            image: imageUrl,
+            unit: {
+                zh: unitZh,
+                en: unitEn
+            }
         }
 
-        fetch(`${process.env.REACT_APP_API_URL}/api/seafood`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}` 
-
-            },
-            body: JSON.stringify(payload)
-        })
-            .then(async res => {
-                if (!res.ok) {
-                    const text = await res.text()
-                    throw new Error(text)
-                }
-                return res.json()
-            })
-            .then(result => {
-                console.log("Success:", result);
-
-                // ✅ 4. 關鍵：通知父组件列表增加了新成员
-                // 如果后端返回的是新创建的对象，直接传给 onAdd
-                if (onAdd) onAdd(result);
-
-                messageApi.success("Added successfully!");
-
-                // ✅ 5. 跳轉回主頁
-                navigate("/");
-            })
-            .catch(err => console.error("Added fail:", err));
+        try {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/seafood`, productData, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            messageApi.success("Added Successfully!");
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     const onDrop = async (acceptedFiles) => {

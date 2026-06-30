@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom" // 假设你用了路由
+import { useParams, useNavigate } from "react-router-dom" 
 import { useDropzone } from "react-dropzone"
 import { useTranslation } from "react-i18next"
 import axios from "axios"
@@ -95,7 +95,7 @@ function EditSeafood() {
                 if (!res.ok) {
                     // ✨ 如果报错，尝试读取后端返回的错误文字
                     const errorText = await res.text();
-                    throw new Error(`服务器错误: ${res.status} - ${errorText}`);
+                    throw new Error(`server error ${res.status} - ${errorText}`);
                 }
                 return res.json();
             })
@@ -121,7 +121,7 @@ function EditSeafood() {
 
             {imageUrl && (
                 <div style={{ marginBottom: "20px" }}>
-                    <p>Preview: </p>
+                    <p>{t("imagePreview")}</p>
                     <img
                         // 如果 imageUrl 包含 http 說明是雲端地址，否則加上後端地址
                         src={imageUrl.startsWith("http") ? imageUrl : `http://localhost:5001${imageUrl}`}
@@ -133,43 +133,43 @@ function EditSeafood() {
             )}
 
             <form onSubmit={handleSubmit}>
-                <label>產品名稱：（中文）</label>
+                <label>{t("productNameZh")}</label>
                 <input
                     name="name_zh"
-                    placeholder="Name"
+                    placeholder={t("namePlaceholder")}
                     value={form.name?.zh || ""}
                     onChange={handleChange}
                 />
                 <p />
-                <label>Product Name: (English)</label>
+                <label>{t("productNameEn")}</label>
                 <input
                     name="name_en"
-                    placeholder="Name"
+                    placeholder={t("namePlaceholder")}
                     value={form.name?.en || ""}
                     onChange={handleChange}
                 />
                 <p />
-                <label>價格：</label>
+                <label>{t("price")}</label>
                 <input
                     name="price"
                     type="number"
-                    placeholder="Price"
+                    placeholder={t("pricePlaceholder")}
                     value={form.price}
                     onChange={handleChange}
                 />
                 <p />
-                <label>分類：（中文）</label>
+                <label>{t("categoryZh")}</label>
                 <input
                     name="category_zh"
-                    placeholder="Category"
+                    placeholder={t("categoryPlaceholder")}
                     value={form.category?.zh || ""}
                     onChange={handleChange}
                 />
                 <p />
-                <label>Category: (English)</label>
+                <label>{t("categoryEn")}</label>
                 <input
                     name="category_en"
-                    placeholder="Category"
+                    placeholder={t("categoryPlaceholder")}
                     value={form.category?.en || ""}
                     onChange={handleChange}
                 />

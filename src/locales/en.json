@@ -84,5 +84,6 @@
   "adminDashboardTitle": "Admin Dashboard",
   "total": "Total",
   "namePaymentRemark": "Please include your name in the payment remark.",
-  "QRcodePay": "Please scan the QR code below to pay:"  
+  "QRcodePay": "Please scan the QR code below to pay:",
+  "back": "Back"
 }

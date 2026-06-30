@@ -36,7 +36,7 @@ function SeafoodDetail() {
         setLoading(false)
       })
       .catch((err) => {
-        console.error("抓取失敗：", err)
+        console.error("failed to fetch seafood data:", err)
         setLoading(false)
       })
   }, [id, i18n.language])
@@ -82,7 +82,7 @@ function SeafoodDetail() {
               fontWeight: "bold"
             }}
           >
-            ← Back
+            ← {t("back")}
           </Button>
 
           <div style={{ marginTop: "20px" }}>

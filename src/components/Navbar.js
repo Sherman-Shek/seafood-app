@@ -65,7 +65,7 @@ function Navbar() {
         <Header style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "center", // 確保垂直居中
+            alignItems: "center",
             padding: "10px",
             background: 'rgba(0,0,0,0.8)',
             color: "white",
